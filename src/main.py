@@ -1,22 +1,11 @@
-import os
-import pathlib
-import shutil
-import markdown
+from harrix_markdown_to_html import HarrixMarkdownToHtml
 
 
-path = 'C:/Harrix/GitHub/harrix.dev-blog-2019/2019-07-23-add-2-num-android/2019-07-23-add-2-num-android.md'
-output_path = '../dist'
+def main():
+    markdown_filename = 'C:/Harrix/GitHub/harrix.dev-blog-2019/2019-07-23-add-2-num-android/2019-07-23-add-2-num-android.md'
+    output_path = '../dist'
+    h = HarrixMarkdownToHtml(markdown_filename, output_path)
 
-# shutil.rmtree(output_path)
 
-p = pathlib.Path(path)
-print(p.parents[0])
-destination = shutil.copytree(str(p.parents[0]) + "/img", output_path + "/img", dirs_exist_ok=True)
-
-with open(path, 'r', encoding='utf8') as markdown_file:
-    s = markdown_file.read()
-
-html = markdown.markdown(s)
-
-with open(output_path + "/output.html", 'w', encoding='utf8') as html_file:
-    html_file.write(html)
+if __name__ == '__main__':
+    main()
