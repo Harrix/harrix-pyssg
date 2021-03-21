@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "93683f9b43e1e564f71e63a7420c351c3a603bba290a527874d99427323afd2d"
+            "sha256": "655ddde7789099a511c47b239bf13201406ccb5e450046fd6e3d7c8d7b5760fd"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -16,6 +16,13 @@
         ]
     },
     "default": {
+        "harrix-pylib": {
+            "hashes": [
+                "sha256:fc135097a9956ce18408e23daaf493c211ceaadf276b59ce2bade966c9d5897d"
+            ],
+            "index": "pypi",
+            "version": "==0.0"
+        },
         "markdown": {
             "hashes": [
                 "sha256:31b5b491868dcc87d6c24b7e3d19a0d730d59d3e46f4eea6430a321bed387a49",

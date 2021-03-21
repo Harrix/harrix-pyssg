@@ -5,6 +5,7 @@ name = "pypi"
 
 [packages]
 markdown = "*"
+harrix-pylib = "*"
 
 [dev-packages]
 
