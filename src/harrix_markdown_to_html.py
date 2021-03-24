@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 import shutil
 import markdown
@@ -17,7 +16,6 @@ class HarrixMarkdownToHtml:
 
         markdown_text = h.open_file(self.markdown_filename)
 
-        # md = markdown.markdown(markdown_text)
         md = markdown.Markdown(extensions=['meta'])
         html = md.convert(markdown_text)
         print(md.Meta)
