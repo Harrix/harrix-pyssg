@@ -18,10 +18,10 @@
     "default": {
         "harrix-pylib": {
             "hashes": [
-                "sha256:fc135097a9956ce18408e23daaf493c211ceaadf276b59ce2bade966c9d5897d"
+                "sha256:4660a9bb85f051123da472a8df45b02927f5820d93f528fefdbccab3ecd5f859"
             ],
             "index": "pypi",
-            "version": "==0.0"
+            "version": "==0.1"
         },
         "markdown": {
             "hashes": [
