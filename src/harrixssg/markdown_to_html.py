@@ -5,7 +5,7 @@ import markdown
 import harrixpylib as h
 
 
-class HarrixMarkdownToHtml:
+class MarkdownToHtml:
     def __init__(self, markdown_filename, output_path):
         self.markdown_filename = Path(markdown_filename)
         self.output_path = Path(output_path)
@@ -30,4 +30,5 @@ class HarrixMarkdownToHtml:
     def copy_dir(self, directory):
         path_img = self.markdown_filename.parent / directory
         if path_img.is_dir():
-            shutil.copytree(path_img, self.output_path / directory, dirs_exist_ok=True)
+            shutil.copytree(path_img, self.output_path /
+                            directory, dirs_exist_ok=True)
