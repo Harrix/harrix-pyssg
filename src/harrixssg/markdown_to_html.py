@@ -10,6 +10,7 @@ class MarkdownToHtml:
         self.markdown_filename = Path(markdown_filename)
         self.output_path = Path(output_path)
 
+    def start(self):
         h.clear_directory(self.output_path)
 
         self.copy_dirs()
