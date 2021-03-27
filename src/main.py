@@ -1,4 +1,4 @@
-import harrixssg as hsg
+import harrixpyssg as hsg
 
 
 def main():
