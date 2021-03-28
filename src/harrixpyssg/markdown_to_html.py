@@ -21,7 +21,7 @@ class MarkdownToHtml:
         html = md.convert(markdown_text)
         print(md.Meta)
 
-        h.save_file(html, self.output_path / 'output.html')
+        h.save_file(html, self.output_path / 'index.html')
 
     def copy_dirs(self):
         dirs_of_files = ['img', 'files', 'demo', 'gallery']
