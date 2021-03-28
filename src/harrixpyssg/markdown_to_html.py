@@ -13,13 +13,12 @@ class MarkdownToHtml:
     def start(self):
         h.clear_directory(self.output_path)
 
-        self.copy_dirs()
-
         markdown_text = h.open_file(self.markdown_filename)
 
         md = markdown.Markdown(extensions=['meta'])
         html = md.convert(markdown_text)
-        print(md.Meta)
+
+        self.copy_dirs()
 
         h.save_file(html, self.output_path / 'index.html')
 
