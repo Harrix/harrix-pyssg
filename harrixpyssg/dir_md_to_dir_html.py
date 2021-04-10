@@ -7,9 +7,9 @@ class Dir_md_to_dir_html:
     def __init__(self, markdown_path, output_path):
         self.markdown_path = Path(markdown_path).resolve()
         self.output_path = Path(output_path).resolve()
+        print(self.output_path)
 
     def start(self):
-        h.clear_directory(self.output_path)
         for item in self.markdown_path.rglob("*.md"):
             parts = list(item.parts[len(self.markdown_path.parts)::])
             if len(item.suffixes) == 1:
