@@ -14,6 +14,7 @@ class MarkdownToHtml:
         self.markdown_filename = Path(markdown_filename)
         self.output_path = Path(output_path)
         self.article = Article()
+        self._dirs_of_files = ['img', 'files', 'demo', 'gallery']
 
     def start(self):
         h.clear_directory(self.output_path)
@@ -22,16 +23,17 @@ class MarkdownToHtml:
 
         md = markdown.Markdown(extensions=['meta'])
         html = md.convert(markdown_text)
+        path_html = self.output_path / 'index.html'
         self.article.meta = md.Meta
         self.article.md = h.remove_yaml_from_markdown(markdown_text)
+        self.article.path_html = path_html
 
         self.copy_dirs()
 
         h.save_file(html, self.output_path / 'index.html')
 
     def copy_dirs(self):
-        dirs_of_files = ['img', 'files', 'demo', 'gallery']
-        for d in dirs_of_files:
+        for d in self._dirs_of_files:
             self.copy_dir(d)
 
     def copy_dir(self, directory):
