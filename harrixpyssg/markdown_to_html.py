@@ -2,6 +2,10 @@ from pathlib import Path
 import shutil
 import markdown
 
+import re
+
+from .article import Article
+
 import harrixpylib as h
 
 
@@ -9,6 +13,7 @@ class MarkdownToHtml:
     def __init__(self, markdown_filename, output_path):
         self.markdown_filename = Path(markdown_filename)
         self.output_path = Path(output_path)
+        self.article = Article()
 
     def start(self):
         h.clear_directory(self.output_path)
@@ -17,6 +22,8 @@ class MarkdownToHtml:
 
         md = markdown.Markdown(extensions=['meta'])
         html = md.convert(markdown_text)
+        self.article.meta = md.Meta
+        self.article.md = h.remove_yaml_from_markdown(markdown_text)
 
         self.copy_dirs()
 
