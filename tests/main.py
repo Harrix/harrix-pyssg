@@ -7,7 +7,7 @@ import harrixpyssg as hsg
 
 
 def main():
-    markdown_paths = ['C:/Harrix/GitHub/harrix.dev-blog-2017/']
+    markdown_paths = ['C:/Harrix/GitHub/harrix.dev-blog-2013/']
     output_path = './dist_html'
     hsg.StaticSiteGenerator(markdown_paths, output_path).start()
 
