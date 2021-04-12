@@ -23,14 +23,11 @@ class DirMdToDirHtml:
                 pattern1 = r'^(\d{4})-(\d{2})-(\d{2})-(.*?)\.(\w{2})$'
                 pattern2 = r'^(\d{4})-(\d{2})-(\d{2})-(.*?)$'
                 search1 = re.findall(pattern1, stem)
-                search2 = re.findall(2, stem)
-                print()
-                if len():
-                    lst = list(filter(None, re.split(pattern1, stem)))
-                    parts = [lst[-2], lst[-1]]
-                elif re.match(pattern2, stem):
-                    lst = list(filter(None, re.split(pattern2, stem)))
-                    parts = [lst[-1], self.base_lang]
+                search2 = re.findall(pattern2, stem)
+                if search1:
+                    parts = [search1[0][-2], search1[0][-1]]
+                elif search2:
+                    parts = [search2[0][-1], self.base_lang]
 
             mth = MarkdownToHtml(item, self.output_path.joinpath(*parts))
             mth.start()
