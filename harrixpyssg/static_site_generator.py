@@ -14,3 +14,5 @@ class StaticSiteGenerator:
             d = DirMdToDirHtml(path, self.output_path, True)
             d.start()
             self.articles += d.articles
+        for article in self.articles:
+            print(article.path_html)
