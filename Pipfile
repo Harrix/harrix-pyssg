@@ -7,10 +7,16 @@ name = "pypi"
 setuptools = "*"
 twine = "*"
 markdown = "*"
-harrix-pylib = "*"
+harrix-pylib = {version = "*", index = "https://test.pypi.org/simple/"}
+wheel = "*"
 
 [dev-packages]
 autopep8 = "*"
+black = "*"
+harrix-pyssg = {editable = true, path = "."}
 
 [requires]
 python_version = "3.9"
+
+[pipenv]
+allow_prereleases = true

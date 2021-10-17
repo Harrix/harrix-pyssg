@@ -2,6 +2,7 @@ from .dir_md_to_dir_html import DirMdToDirHtml
 
 import harrixpylib as h
 
+
 class StaticSiteGenerator:
     def __init__(self, markdown_paths, output_path, log=False):
         self.markdown_paths = markdown_paths
