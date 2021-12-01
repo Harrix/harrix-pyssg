@@ -57,11 +57,11 @@
         },
         "harrix-pylib": {
             "hashes": [
-                "sha256:bffbb0d648c81339f4454a350ea4692d3b341868f4d82c4ce3d3fc6252980b8f",
-                "sha256:dbd236e2f53a52f13657e45a2a912e8b1719b5321fb3e37e91a315859e1fb7e2"
+                "sha256:341ef940039dd5899bc07444a442c6ca09a0c563abfc3ce20c1bfacaf2cd9168",
+                "sha256:e1e764f4684ecbacd5b363a8c48cc453611f46be729ded831b7eaf7060a258db"
             ],
             "index": "pypi",
-            "version": "==0.5"
+            "version": "==0.7"
         },
         "idna": {
             "hashes": [
@@ -246,11 +246,11 @@
         },
         "harrix-pylib": {
             "hashes": [
-                "sha256:bffbb0d648c81339f4454a350ea4692d3b341868f4d82c4ce3d3fc6252980b8f",
-                "sha256:dbd236e2f53a52f13657e45a2a912e8b1719b5321fb3e37e91a315859e1fb7e2"
+                "sha256:341ef940039dd5899bc07444a442c6ca09a0c563abfc3ce20c1bfacaf2cd9168",
+                "sha256:e1e764f4684ecbacd5b363a8c48cc453611f46be729ded831b7eaf7060a258db"
             ],
             "index": "pypi",
-            "version": "==0.5"
+            "version": "==0.7"
         },
         "harrix-pyssg": {
             "editable": true,
