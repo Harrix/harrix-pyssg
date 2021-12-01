@@ -6,7 +6,7 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="harrix-pyssg",
-    version="0.2",
+    version="0.4",
     description="Static site generator",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -15,4 +15,6 @@ setup(
     author_email="anton.b.sergienko@gmail.com",
     packages=find_packages(where="src"),
     package_dir={"": "src"},
+    install_requires=["markdown", "harrix-pylib"],
+    zip_safe=False
 )

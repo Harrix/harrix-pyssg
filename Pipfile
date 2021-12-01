@@ -7,11 +7,10 @@ name = "pypi"
 setuptools = "*"
 twine = "*"
 markdown = "*"
-harrix-pylib = {version = "*", index = "https://test.pypi.org/simple/"}
 wheel = "*"
+harrix-pylib = "*"
 
 [dev-packages]
-autopep8 = "*"
 black = "*"
 harrix-pyssg = {editable = true, path = "."}
 
