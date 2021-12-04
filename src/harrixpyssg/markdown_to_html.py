@@ -35,13 +35,9 @@ class MarkdownToHtml:
         h.save_file(html, self.output_path / "index.html")
 
     def copy_dirs(self):
-        for d in self._dirs_of_files:
-            self.copy_dir(d)
-
-    def copy_dir(self, directory):
-        path_img = self.markdown_filename.parent / directory
-        if path_img.is_dir():
-            shutil.copytree(path_img, self.output_path / directory, dirs_exist_ok=True)
+        for file in Path(self.markdown_filename.parent).iterdir():
+            if file.is_dir():
+                shutil.copytree(file, self.output_path / file.name, dirs_exist_ok=True)
 
     def copy_featured_image(self):
         for ext in self._featured_image_extensions:
