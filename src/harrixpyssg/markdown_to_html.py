@@ -28,18 +28,27 @@ class MarkdownToHtml:
 
         self.copy_dirs()
         self.copy_featured_image()
-        # attribution
+        self.copy_attribution()
 
         h.save_file(html, self.output_path / "index.html")
 
     def copy_dirs(self):
         for file in Path(self.markdown_filename.parent).iterdir():
             if file.is_dir():
-                  shutil.copytree(file, self.output_path / file.name, dirs_exist_ok=True)
+                shutil.copytree(file, self.output_path / file.name, dirs_exist_ok=True)
 
     def copy_featured_image(self):
         self.article.featured_image = []
         for file in Path(self.markdown_filename.parent).iterdir():
             if file.is_file() and file.name.startswith("featured-image"):
-                shutil.copy(file, self.output_path / file.name)
-                self.article.featured_image.append(self.output_path / file.name)
+                output = self.output_path / file.name
+                shutil.copy(file, output)
+                self.article.featured_image.append(output.name)
+
+    def copy_attribution(self):
+        self.article.attribution = False
+        file = Path(self.markdown_filename.parent / "attribution.json")
+        if file.is_file():
+            output = self.output_path / "attribution.json"
+            shutil.copy(file, output)
+            self.article.attribution = "attribution.json"
