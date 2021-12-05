@@ -12,8 +12,6 @@ class MarkdownToHtml:
         self.markdown_filename = Path(markdown_filename)
         self.output_path = Path(output_path)
         self.article = Article()
-        self._dirs_of_files = ["img", "files", "demo", "gallery"]
-        self._featured_image_extensions = ["webp", "jpg", "png"]
 
     def start(self):
         h.clear_directory(self.output_path)
@@ -37,18 +35,11 @@ class MarkdownToHtml:
     def copy_dirs(self):
         for file in Path(self.markdown_filename.parent).iterdir():
             if file.is_dir():
-                shutil.copytree(file, self.output_path / file.name, dirs_exist_ok=True)
+                  shutil.copytree(file, self.output_path / file.name, dirs_exist_ok=True)
 
     def copy_featured_image(self):
-        for ext in self._featured_image_extensions:
-            path = self.markdown_filename.parent / f"featured-image.{ext}"
-            # print(path)
-            if path.is_file():
-                shutil.copy(path, self.output_path)
-                output_path = self.output_path / f"featured-image.{ext}"
-                self.article.featured_image = output_path
-        path = self.markdown_filename.parent / "featured-image.svg"
-        if path.is_file():
-            shutil.copy(path, self.output_path)
-            output_path = self.output_path / "featured-image.svg"
-            self.article.featured_image_svg = output_path
+        self.article.featured_image = []
+        for file in Path(self.markdown_filename.parent).iterdir():
+            if file.is_file() and file.name.startswith("featured-image"):
+                shutil.copy(file, self.output_path / file.name)
+                self.article.featured_image.append(self.output_path / file.name)
