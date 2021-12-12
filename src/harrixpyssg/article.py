@@ -7,5 +7,5 @@ class Article:
         self.meta = dict()
         self.html = ""
         self.path_html = ""
-        self.featured_image = False
-        self.featured_image_svg = False
+        self.featured_image = None
+        self.attribution = None
