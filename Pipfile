@@ -9,6 +9,7 @@ twine = "*"
 markdown = "*"
 wheel = "*"
 harrix-pylib = "*"
+pdoc = "*"
 
 [dev-packages]
 black = "*"
