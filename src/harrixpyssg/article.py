@@ -4,7 +4,7 @@
 ```py
 markdown_filename = './tests/data/2022-01-04-test-article/2022-01-04-test-article.md'
 output_path = './build_site'
-a = hsg.Article().generate_from_markdown(markdown_filename, output_path)
+a = hsg.Article().generate_from_md(markdown_filename, output_path)
 ```
 """
 import shutil
@@ -15,10 +15,17 @@ import harrixpylib as h
 
 
 class Article:
-    """All information about an article of a site."""
+    """All information about one article from the site."""
 
     def __init__(self):
-        self.markdown_code = None
+        self.markdown_filename:str = None
+        """Full filename of Markdown file. Example:
+
+        ```py
+        './tests/data/2022-01-04-test-article/2022-01-04-test-article.md'
+        ```
+        """
+        self.markdown_code:str = None
         """The text of the article in the form of Markdown without YAML text. Example:
 
         ```md
@@ -27,18 +34,34 @@ class Article:
         Hello, world!
         ```
         """
-        self.markdown_filename = None
-        """Full filename of Markdown file."""
-        self.meta = dict()
-        """The dictionary of meta tags from YAML."""
-        self.featured_image = []
-        """Array of featured images."""
-        self.attribution = None
-        """The filename with attribution data."""
         self.html_output_folder = None
-        """Output folder for HTML file."""
+        """Output folder for HTML file. Example:
+
+        ```py
+        './build_site'
+        ```
+        """
+        self.featured_image_filenames = []
+        """Array of featured images. The files must be in the same folder as the markdown file. Example:
+
+        ```py
+        ['featured-image.png', 'featured-image.svg']
+        ```
+        """
+        self.attribution_filename = None
+        """The filename with attribution data. Example:
+
+        ```py
+
+        ```
+        """
         self.html_filename = None
-        """"""
+        """ Example:
+
+        ```py
+
+        ```
+        """
         self.html_code = None
         """HTML clean code from Markdown code. Example:
 
@@ -48,9 +71,16 @@ class Article:
         ```
         """
         self.permalink = None
-        """"""
+        """ Example:
 
-    def generate_from_markdown(self, markdown_filename: str, html_output_folder: str):
+        ```py
+
+        ```
+        """
+
+        self.__meta = dict()
+
+    def generate_from_md(self, markdown_filename: str, html_output_folder: str):
         """Generate HTML file with folders from markdown file with folders.
 
         Args:
@@ -68,7 +98,7 @@ class Article:
         md_engine = markdown.Markdown(extensions=["meta"])
         self.html_code = md_engine.convert(markdown_text)
         self.html_filename = self.html_output_folder / "index.html"
-        self.meta = md_engine.Meta
+        self.__meta = md_engine.Meta
         self.markdown_code = h.remove_yaml_from_markdown(markdown_text)
 
         h.clear_directory(self.html_output_folder)
@@ -88,7 +118,7 @@ class Article:
             if file.is_file() and file.name.startswith("featured-image"):
                 output = self.html_output_folder / file.name
                 shutil.copy(file, output)
-                self.featured_image.append(output.name)
+                self.featured_image_filenames.append(output.name)
 
     def __copy_attribution(self):
         filename = "attribution.json"
@@ -96,4 +126,4 @@ class Article:
         if file.is_file():
             output = self.html_output_folder / filename
             shutil.copy(file, output)
-            self.attribution = filename
+            self.attribution_filename = filename
