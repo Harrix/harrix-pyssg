@@ -129,7 +129,7 @@ class Article:
         md_engine = markdown.Markdown(extensions=["meta"])
         self.html_output_code = md_engine.convert(md_text)
         self.html_output_filename = self.html_output_folder / "index.html"
-        self.__meta = md_engine.Meta
+        self.__meta = md_engine.Meta # TODO
         self.md_code = h.remove_yaml_from_markdown(md_text)
         return self
 
