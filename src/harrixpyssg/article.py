@@ -105,7 +105,7 @@ class Article:
 
         h.clear_directory(self.html_output_folder)
         self.__copy_dirs()
-        self.__copy_featured_image()
+        self.__copy_featured_images()
         self.__copy_attribution()
         h.save_file(self.html_output_code, self.html_output_filename)
         return self
@@ -141,7 +141,7 @@ class Article:
                     file, self.html_output_folder / file.name, dirs_exist_ok=True
                 )
 
-    def __copy_featured_image(self):
+    def __copy_featured_images(self):
         """Copies all featured images from the directory with the Markdown file."""
         for file in Path(self.md_filename.parent).iterdir():
             if file.is_file() and file.name.startswith("featured-image"):
