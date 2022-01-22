@@ -16,26 +16,6 @@ markdown_filename = './tests/data/2022-01-04-test-article/2022-01-04-test-articl
 output_path = './build_site'
 a = hsg.Article().generate_from_md(markdown_filename, output_path)
 ```
-
-[ru]
-
-## Структура статьи
-
-```text
-data\2022-01-04-test-article
-├─ 2022-01-04-test-article.md
-├─ featured-image.png
-└─ img
-   └─ test-image.png
-```
-
-## Пример использования
-
-```py
-markdown_filename = './tests/data/2022-01-04-test-article/2022-01-04-test-article.md'
-output_path = './build_site'
-a = hsg.Article().generate_from_md(markdown_filename, output_path)
-```
 """
 import shutil
 from pathlib import Path
@@ -101,7 +81,7 @@ class Article:
         'attribution.json'
         ```
         """
-        self.permalink = None
+        self.permalink = None  # TODO
         """ Example:
 
         ```py
@@ -109,17 +89,17 @@ class Article:
         ```
         """
 
-        self.__meta = dict()
+        self.__meta = dict()  # TODO
 
     def generate_from_md(self, markdown_filename: str, html_output_folder: str):
         """Generate HTML file with folders from markdown file with folders.
 
         Args:
-            markdown_filename (str): [description]
-            html_output_folder (str): [description]
+            markdown_filename (str): Full filename of Markdown file.
+            html_output_folder (str): Output folder for HTML file.
 
         Returns:
-            [type]: [description]
+            Returns itself, that is, the article with calculated data.
         """
         self.get_info(markdown_filename, html_output_folder)
 
@@ -131,14 +111,15 @@ class Article:
         return self
 
     def get_info(self, markdown_filename: str, html_output_folder: str):
-        """Get all info of markdown file with folders. The method is used in the method generate_from_md().
+        """Get all info of markdown file with folders. The method is used in the method
+        generate_from_md(). It does not generate new files and folders.
 
         Args:
             markdown_filename (str): [description]
             html_output_folder (str): [description]
 
         Returns:
-            [type]: [description]
+            Returns itself, that is, the article with calculated data.
         """
         self.markdown_filename = Path(markdown_filename)
         self.html_output_folder = Path(html_output_folder)
@@ -153,11 +134,15 @@ class Article:
         return self
 
     def __copy_dirs(self):
+        """Copies all folders from the directory with the markdown file."""
         for file in Path(self.markdown_filename.parent).iterdir():
             if file.is_dir():
-                shutil.copytree(file, self.html_output_folder / file.name, dirs_exist_ok=True)
+                shutil.copytree(
+                    file, self.html_output_folder / file.name, dirs_exist_ok=True
+                )
 
     def __copy_featured_image(self):
+        """Copies all featured images from the directory with the markdown file."""
         for file in Path(self.markdown_filename.parent).iterdir():
             if file.is_file() and file.name.startswith("featured-image"):
                 output = self.html_output_folder / file.name
@@ -165,6 +150,7 @@ class Article:
                 self.featured_image_filenames.append(output.name)
 
     def __copy_attribution(self):
+        """Copies `attribution.json` from the directory with the markdown file."""
         filename = "attribution.json"
         file = Path(self.markdown_filename.parent / filename)
         if file.is_file():
