@@ -5,9 +5,9 @@ import harrixpyssg as hsg
 
 
 def main():
-    markdown_filename = './tests/data/2022-01-04-test-article/2022-01-04-test-article.md'
-    output_path = './build_site'
-    a = hsg.Article().generate_from_md(markdown_filename, output_path)
+    md_filename = './tests/data/2022-01-04-test-article/2022-01-04-test-article.md'
+    html_output_folder = './build_site'
+    a = hsg.Article().generate_from_md(md_filename, html_output_folder)
 
     # markdown_path = "C:/GitHub/harrix.dev-blog-2017/"
     # output_path = './build_site'
