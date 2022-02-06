@@ -9,11 +9,11 @@ twine = "*"
 markdown = "*"
 wheel = "*"
 harrix-pylib = "*"
-pdoc = "*"
 
 [dev-packages]
 black = "*"
 harrix-pyssg = {editable = true, path = "."}
+pdoc = "*"
 
 [requires]
 python_version = "3.9"
