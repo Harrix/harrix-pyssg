@@ -9,13 +9,13 @@ A simple static website generator in Python.
 Pip:
 
 ```console
-pip install harrix-pylib
+pip install harrix-pyssg
 ```
 
 Pipenv:
 
 ```console
-pip update harrix-pylib
+pip update harrix-pyssg
 ```
 
 ## Update
@@ -23,13 +23,13 @@ pip update harrix-pylib
 Pip:
 
 ```console
-pipenv install harrix-pylib
+pipenv install harrix-pyssg
 ```
 
 Pipenv:
 
 ```console
-pipenv update harrix-pylib
+pipenv update harrix-pyssg
 ```
 
 ## Development
