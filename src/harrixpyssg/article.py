@@ -82,7 +82,7 @@ class Article:
         ```
         """
         self.permalink = None  # TODO
-        """ Example:
+        """Example:
 
         ```py
 
