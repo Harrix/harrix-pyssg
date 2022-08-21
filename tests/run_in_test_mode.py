@@ -5,13 +5,15 @@ import harrixpyssg as hsg
 
 
 def main():
-    md_filename = './tests/data/2022-01-04-test-article/2022-01-04-test-article.md'
-    html_output_folder = './build_site'
-    a = hsg.Article().generate_from_md(md_filename, html_output_folder)
+    h.log.is_log_file = False
+    ...
+    # md_filename = './tests/data/2022-01-04-test-article/2022-01-04-test-article.md'
+    # html_output_folder = './build_site'
+    # a = hsg.Article().generate_from_md(md_filename, html_output_folder)
 
-    # markdown_path = "C:/GitHub/harrix.dev-blog-2017/"
-    # output_path = './build_site'
-    # hsg.DirMdToDirHtml(markdown_path, output_path).start()
+    md_folders = ["C:/GitHub/harrix.dev-blog-2017/"]
+    output_folder = './build_site'
+    hsg.StaticSiteGenerator(md_folders, output_folder).generate_articles()
 
 
 if __name__ == "__main__":
