@@ -47,9 +47,3 @@ Installing packages by file `Pipfile`:
 pipenv install --dev
 pipenv shell
 ```
-
-Generate docs:
-
-```console
-pdoc --docformat="google" src\harrixpyssg\
-```
