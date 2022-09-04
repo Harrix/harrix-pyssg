@@ -6,7 +6,7 @@ long_description = (here / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="harrix-pyssg",
-    version="0.5",
+    version="0.6",
     description="Static site generator",
     long_description=long_description,
     long_description_content_type="text/markdown",
