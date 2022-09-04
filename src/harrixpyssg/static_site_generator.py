@@ -18,7 +18,6 @@ class StaticSiteGenerator:
         self.generate_articles()
         for article in self.articles:
             # print(article.path_html)
-            h.log.info(article.path_html)
         return self
 
     def generate_articles(self, is_clear_output_folder=False):
@@ -27,7 +26,6 @@ class StaticSiteGenerator:
         for md_folder in self.md_folders:
             for item in md_folder.rglob("*.md"):
                 parts = list(item.parts[len(md_folder.parts) : :])
-                h.log.info(parts)
 
                 if self.is_md_filename_analysis:
                     stem = item.stem
@@ -39,10 +37,8 @@ class StaticSiteGenerator:
                         parts2 = [search1[0][-2], search1[0][-1]]
                     elif search2:
                         parts2 = [search2[0][-1], self.base_lang]
-                    h.log.info("parts2 = " + str(parts2))
 
                 html_output_folder = self.output_folder / parts[0]
                 a = Article().generate_from_md(item, html_output_folder)
                 self.articles.append(a)
-            h.log.info(md_folder)
         return self
