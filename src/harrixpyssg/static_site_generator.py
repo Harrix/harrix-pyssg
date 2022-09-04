@@ -17,6 +17,7 @@ class StaticSiteGenerator:
         h.clear_directory(self.output_folder)
         self.generate_articles()
         for article in self.articles:
+            ...
             # print(article.path_html)
         return self
 
