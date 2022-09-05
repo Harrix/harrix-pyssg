@@ -18,7 +18,7 @@ class StaticSiteGenerator:
         self.generate_articles()
         for article in self.articles:
             ...
-            # print(article.path_html)
+            print(article.path_html)
         return self
 
     def generate_articles(self, is_clear_output_folder=False):
