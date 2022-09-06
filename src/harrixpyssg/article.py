@@ -119,7 +119,10 @@ class Article:
 
         - `Article`: Returns itself, that is, the article with calculated data.
         """
-        self.get_info(md_filename, html_folder)
+        self.get_info(md_filename)
+
+        self.html_folder = Path(html_folder)
+        self.html_filename = self.html_folder / "index.html"
 
         h.clear_directory(self.html_folder)
         self.__copy_dirs()
@@ -128,7 +131,7 @@ class Article:
         self.html_filename.write_text(self.html_code, encoding="utf8")
         return self
 
-    def get_info(self, md_filename: str, html_folder: str):
+    def get_info(self, md_filename: str):
         """
         Get all info of the Markdown file with folders. The method is used in the method
         `generate_from_md()`. It does not generate new files and folders.
@@ -136,21 +139,19 @@ class Article:
         Args:
 
         - `md_filename` (str): Full filename of the Markdown file.
-        - `html_folder` (str): Output folder of the HTML file.
 
         Returns:
 
         - `Article`: Returns itself, that is, the article with calculated data.
         """
         self.md_filename = Path(md_filename)
-        self.html_folder = Path(html_folder)
+
 
         md = Path(self.md_filename).read_text(encoding="utf8")
 
         md_engine = markdown.Markdown(extensions=["meta"])
 
         self.html_code = md_engine.convert(md)
-        self.html_filename = self.html_folder / "index.html"
         self.md_without_yaml = h.remove_yaml_from_markdown(md)
         self.md_yaml = h.get_yaml_from_markdown(md)
         self.__meta = md_engine.Meta  # TODO
