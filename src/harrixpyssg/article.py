@@ -1,20 +1,51 @@
 """
-## Structure of the article
-
-```text
-data\2022-01-04-test-article
-├─ 2022-01-04-test-article.md
-├─ featured-image.png
-└─ img
-   └─ test-image.png
-```
-
 ## Usage example
 
 ```python
 md_filename = "./tests/data/2022-01-04-test/2022-01-04-test.md"
 html_folder = "./build_site"
 a = hsg.Article().generate_from_md(md_filename, html_folder)
+```
+
+## Example structure of the article
+
+Folder with the Markdown file:
+
+```text
+2022-01-04-test
+├─ 2022-01-04-test.md
+├─ featured-image.png
+└─ img
+   └─ test-image.png
+```
+
+Output HTML folder:
+
+```text
+├─ featured-image.png
+├─ img
+│  └─ test-image.png
+└─ index.html
+```
+
+Markdown file `2022-01-04-test.md`:
+
+```markdown
+---
+categories: [it, web]
+tags: [CSS]
+---
+
+# Title
+
+Hello, world!
+```
+
+HTML file `index.html`:
+
+```html
+<h1>Title</h1>
+<p>Hello, world!</p>
 ```
 """
 import shutil
@@ -142,4 +173,3 @@ class Article:
                 output = self.html_folder / file.name
                 shutil.copy(file, output)
                 self.featured_image_filenames.append(output.name)
-
