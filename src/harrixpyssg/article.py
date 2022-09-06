@@ -7,7 +7,7 @@ html_folder = "./build_site"
 a = hsg.Article().generate_from_md(md_filename, html_folder)
 ```
 
-## Example structure of the article
+## Example of folder structure
 
 Folder with the Markdown file:
 
