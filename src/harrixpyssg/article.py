@@ -60,7 +60,7 @@ class Article:
       <p>Hello, world!</p>
       ```
 
-    - `featured_image_filenames` (list(str)): Array of featured images. The files must
+    - `featured_image_filenames` (list[str]): Array of featured images. The files must
       be in the same folder as the Markdown file.
       Example: `["featured-image.png", "featured-image.svg"]`.
     """
