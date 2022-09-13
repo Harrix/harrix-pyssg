@@ -84,7 +84,7 @@ class StaticSiteGenerator:
         self.__clear_html_folder_directory()
 
         for article in self.articles:
-            parts = list(article.md_filename.parts[len(self.md_folder.parts) : :])
+            parts = list(article.md_filename.parts[len(self.md_folder.parts) : -1])
             html_folder_article = self.html_folder / "/".join(parts)
             html_folder_article.mkdir(parents=True, exist_ok=True)
             article.generate_html(html_folder_article)
