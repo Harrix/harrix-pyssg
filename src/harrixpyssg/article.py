@@ -10,13 +10,14 @@ hsg.Article(md_filename).generate_html(html_folder)
 ```python
 md_filename = "./tests/data/test/test.md"
 html_folder = "./build_site"
-a = hsg.Article(md_filename).generate_html(html_folder)
+article = hsg.Article(md_filename)
+article.generate_html(html_folder)
 ```
 
 ```python
 md_filename = "./tests/data/test/test.md"
-a = hsg.Article(md_filename)
-print(a.html_code)
+article = hsg.Article(md_filename)
+print(article.html_code)
 ```
 
 ## Example of folder structure
