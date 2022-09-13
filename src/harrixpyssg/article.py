@@ -59,8 +59,7 @@ HTML file `index.html`:
 import shutil
 from pathlib import Path
 import markdown
-
-import harrixpylib as h
+import re
 
 
 class Article:
@@ -119,8 +118,8 @@ class Article:
         md = Path(self.md_filename).read_text(encoding="utf8")
         md_engine = markdown.Markdown(extensions=["meta"])
 
-        self.md_without_yaml = h.remove_yaml_from_markdown(md)
-        self.md_yaml = h.get_yaml_from_markdown(md)
+        self.md_without_yaml = self.__remove_yaml_from_markdown(md)
+        self.md_yaml = self.__get_yaml_from_markdown(md)
         self.html_code = md_engine.convert(md)
 
         self.featured_image_filenames = []
@@ -156,16 +155,31 @@ class Article:
         self.html_filename.write_text(self.html_code, encoding="utf8")
         return self
 
+    def __remove_yaml_from_markdown(self, md_text: str) -> str:
+        """
+        This method removes YAML from text of the Markdown file.
+        """
+        return re.sub(r"^---(.|\n)*?---\n", "", md_text.lstrip()).lstrip()
+
+    def __get_yaml_from_markdown(self, md_text: str) -> str:
+        """
+        This method gets YAML from text of the Markdown file.
+        """
+        find = re.search(r"^---(.|\n)*?---\n", md_text.lstrip(), re.DOTALL)
+        if find:
+            return find.group().rstrip()
+        return ""
+
     def __clear_html_folder_directory(self):
         """
-        This method clear `self.html_folder` with sub-directories.
+        This method clears `self.html_folder` with sub-directories.
         """
         shutil.rmtree(self.html_folder)
         self.html_folder.mkdir(parents=True, exist_ok=True)
 
     def __copy_dirs(self):
         """
-        Copies all folders from the directory with the Markdown file.
+        This method copies all folders from the directory with the Markdown file.
         """
         for file in Path(self.md_filename).parent.iterdir():
             if file.is_dir():
@@ -173,7 +187,7 @@ class Article:
 
     def __copy_featured_images(self):
         """
-        Copies all featured images from the directory with the Markdown file.
+        This method copies all featured images from the directory with the Markdown file.
         """
         for file in Path(self.md_filename.parent).iterdir():
             if file.is_file() and file.name.startswith("featured-image"):

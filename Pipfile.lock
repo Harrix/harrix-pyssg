@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "79fe311945ffa27ae14c9eb6d3f5807c0472a2b6959438fdd327bd062da08f93"
+            "sha256": "8f5884ef485db66ca6ff30313ff9e676a0eeef61d4238d570a70b96155a3dc04"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -26,11 +26,11 @@
         },
         "certifi": {
             "hashes": [
-                "sha256:84c85a9078b11105f04f3036a9482ae10e4621616db313fe045dd24743a0820d",
-                "sha256:fe86415d55e84719d75f8b69414f6438ac3547d2078ab91b67e779ef69378412"
+                "sha256:43dadad18a7f168740e66944e4fa82c6611848ff9056ad910f8f7a3e46ab89e0",
+                "sha256:cffdcd380919da6137f76633531a5817e3a9f268575c128249fb637e4f9e73fb"
             ],
             "markers": "python_version >= '3.6'",
-            "version": "==2022.6.15"
+            "version": "==2022.6.15.1"
         },
         "charset-normalizer": {
             "hashes": [
@@ -54,13 +54,6 @@
             ],
             "markers": "python_version >= '3.7'",
             "version": "==0.19"
-        },
-        "harrix-pylib": {
-            "hashes": [
-                "sha256:7a7b4532261d49968615bcf353821b8933b35a70853cd3dbf0546a223e85f7d9"
-            ],
-            "index": "pypi",
-            "version": "==0.17"
         },
         "idna": {
             "hashes": [
@@ -88,11 +81,11 @@
         },
         "keyring": {
             "hashes": [
-                "sha256:4c32a31174faaee48f43a7e2c7e9c3216ec5e95acf22a2bebfb4a1d05056ee44",
-                "sha256:98f060ec95ada2ab910c195a2d4317be6ef87936a766b239c46aa3c7aac4f0db"
+                "sha256:3565b9e4ea004c96e158d2d332a49f466733d565bb24157a60fd2e49f41a0fd1",
+                "sha256:39e4f6572238d2615a82fcaa485e608b84b503cf080dc924c43bbbacb11c1c18"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==23.9.0"
+            "version": "==23.9.1"
         },
         "markdown": {
             "hashes": [
@@ -279,7 +272,6 @@
             "hashes": [
                 "sha256:7a7b4532261d49968615bcf353821b8933b35a70853cd3dbf0546a223e85f7d9"
             ],
-            "index": "pypi",
             "version": "==0.17"
         },
         "harrix-pyssg": {
