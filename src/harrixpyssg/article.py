@@ -2,13 +2,19 @@
 ## Usage examples
 
 ```python
+md_filename = "C:/GitHub/harrix.dev/content/en/blog/2013/kbd-style/kbd-style.md"
+html_folder = "C:/GitHub/harrix.dev/content/build_site"
+hsg.Article(md_filename).generate_from_md(html_folder)
+```
+
+```python
 md_filename = "./tests/data/test/test.md"
 html_folder = "./build_site"
 a = hsg.Article(md_filename).generate_from_md(html_folder)
 ```
 
 ```python
-md_filename = "C:/data/test/test.md"
+md_filename = "./tests/data/test/test.md"
 a = hsg.Article(md_filename)
 print(a.html_code)
 ```
