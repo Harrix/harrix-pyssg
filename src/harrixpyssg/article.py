@@ -8,7 +8,7 @@ a = hsg.Article(md_filename).generate_from_md(html_folder)
 ```
 
 ```python
-md_filename = "./tests/data/test/test.md"
+md_filename = "C:/data/test/test.md"
 a = hsg.Article(md_filename)
 print(a.html_code)
 ```
