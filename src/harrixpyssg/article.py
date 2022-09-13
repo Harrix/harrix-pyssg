@@ -1,10 +1,16 @@
 """
-## Usage example
+## Usage examples
 
 ```python
-md_filename = "./tests/data/2022-01-04-test/2022-01-04-test.md"
+md_filename = "./tests/data/test/test.md"
 html_folder = "./build_site"
-a = hsg.Article().generate_from_md(md_filename, html_folder)
+a = hsg.Article(md_filename).generate_from_md(html_folder)
+```
+
+```python
+md_filename = "./tests/data/test/test.md"
+a = hsg.Article(md_filename)
+print(a.html_code)
 ```
 
 ## Example of folder structure
@@ -12,8 +18,8 @@ a = hsg.Article().generate_from_md(md_filename, html_folder)
 Folder with the Markdown file:
 
 ```text
-2022-01-04-test
-├─ 2022-01-04-test.md
+test
+├─ test.md
 ├─ featured-image.png
 └─ img
    └─ test-image.png
@@ -22,16 +28,18 @@ Folder with the Markdown file:
 Output HTML folder:
 
 ```text
+build_site
 ├─ featured-image.png
 ├─ img
 │  └─ test-image.png
 └─ index.html
 ```
 
-Markdown file `2022-01-04-test.md`:
+Markdown file `test.md`:
 
 ```markdown
 ---
+date: 2022-09-13
 categories: [it, web]
 tags: [CSS]
 ---
@@ -62,7 +70,7 @@ class Article:
     Attributes:
 
     - `md_filename` (Path): Full filename of the Markdown file.
-      Example: `"./tests/data/2022-01-04-test/2022-01-04-test.md"`.
+      Example: `"./tests/data/test/test.md"`.
     - `md_without_yaml` (str): Text of the article in the form of Markdown without YAML
       text. Example:
 
@@ -71,19 +79,16 @@ class Article:
 
       Hello, world!
       ```
-    - `md_yaml` (str): YAML from thу Markdown file. Example:
+    - `md_yaml` (str): YAML from the Markdown file. Example:
 
-      ```md
+      ```yaml
       ---
+      date: 2022-09-13
       categories: [it, web]
       tags: [CSS]
       ---
       ```
 
-    - `html_folder` (Path): Output folder of HTML file.
-      Example: `./build_site`.
-    - `html_filename` (Path): Output folder of HTML file.
-      Example: `./build_site/index.html`.
     - `html_code` (str): HTML clean code from the Markdown code. Example:
 
       ```html
@@ -94,32 +99,52 @@ class Article:
     - `featured_image_filenames` (list[str]): Array of featured images. The files must
       be in the same folder as the Markdown file.
       Example: `["featured-image.png", "featured-image.svg"]`.
+    - `html_folder` (Path): Output folder of HTML file.
+      Example: `./build_site`.
+    - `html_filename` (Path): Output folder of HTML file.
+      Example: `./build_site/index.html`.
     """
 
-    def __init__(self):
-        self.md_filename = Path()
-        self.md_without_yaml = ""
-        self.md_yaml = ""
+    def __init__(self, md_filename: str | Path):
+        """
+        Get all info of the Markdown file with folders.
+        It does not generate new files and folders.
+
+        Args:
+
+        - `md_filename` (str | Path): Full filename of the Markdown file.
+        """
+        self.md_filename = Path(md_filename)
+
+        md = Path(self.md_filename).read_text(encoding="utf8")
+        md_engine = markdown.Markdown(extensions=["meta"])
+
+        self.md_without_yaml = h.remove_yaml_from_markdown(md)
+        self.md_yaml = h.get_yaml_from_markdown(md)
+        self.html_code = md_engine.convert(md)
+
+        self.featured_image_filenames = []
+        for file in self.md_filename.parent.iterdir():
+            if file.is_file() and file.name.startswith("featured-image"):
+                self.featured_image_filenames.append(file.name)
+
         self.html_folder = Path()
         self.html_filename = Path()
-        self.html_code = ""
-        self.featured_image_filenames = []
-        self.__meta = dict()  # TODO
 
-    def generate_from_md(self, md_filename: str, html_folder: str):
+        self.__meta = md_engine.Meta  # TODO
+
+    def generate_from_md(self, html_folder: str | Path):
         """
         Generate HTML file with folders from the Markdown file with folders.
 
         Args:
 
-        - `md_filename` (str): Full filename of the Markdown file.
-        - `html_folder` (str): Output folder of the HTML file.
+        - `html_folder` (str | Path): Output folder of the HTML file.
 
         Returns:
 
         - `Article`: Returns itself, that is, the article with calculated data.
         """
-        self.get_info(md_filename)
 
         self.html_folder = Path(html_folder)
         self.html_filename = self.html_folder / "index.html"
@@ -129,32 +154,6 @@ class Article:
         self.__copy_featured_images()
 
         self.html_filename.write_text(self.html_code, encoding="utf8")
-        return self
-
-    def get_info(self, md_filename: str):
-        """
-        Get all info of the Markdown file with folders. The method is used in the method
-        `generate_from_md()`. It does not generate new files and folders.
-
-        Args:
-
-        - `md_filename` (str): Full filename of the Markdown file.
-
-        Returns:
-
-        - `Article`: Returns itself, that is, the article with calculated data.
-        """
-        self.md_filename = Path(md_filename)
-
-
-        md = Path(self.md_filename).read_text(encoding="utf8")
-
-        md_engine = markdown.Markdown(extensions=["meta"])
-
-        self.html_code = md_engine.convert(md)
-        self.md_without_yaml = h.remove_yaml_from_markdown(md)
-        self.md_yaml = h.get_yaml_from_markdown(md)
-        self.__meta = md_engine.Meta  # TODO
         return self
 
     def __copy_dirs(self):
