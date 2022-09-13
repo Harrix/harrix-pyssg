@@ -21,6 +21,16 @@ Output HTML folder:
 
 ```text
 build_site
+├─ test
+│  ├─ featured-image.png
+│  ├─ img
+│  │  └─ test-image.png
+│  └─ index.html
+└─ test2
+   ├─ featured-image.png
+   ├─ img
+   │  └─ test-image.png
+   └─ index.html
 ```
 
 ## Usage examples
