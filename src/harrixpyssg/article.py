@@ -149,12 +149,19 @@ class Article:
         self.html_folder = Path(html_folder)
         self.html_filename = self.html_folder / "index.html"
 
-        h.clear_directory(self.html_folder)
+        self.__clear_html_folder_directory()
         self.__copy_dirs()
         self.__copy_featured_images()
 
         self.html_filename.write_text(self.html_code, encoding="utf8")
         return self
+
+    def __clear_html_folder_directory(self):
+        """
+        This method clear `self.html_folder` with sub-directories.
+        """
+        shutil.rmtree(self.html_folder)
+        self.html_folder.mkdir(parents=True, exist_ok=True)
 
     def __copy_dirs(self):
         """
