@@ -4,13 +4,13 @@
 ```python
 md_filename = "C:/GitHub/harrix.dev/content/en/blog/2013/kbd-style/kbd-style.md"
 html_folder = "C:/GitHub/harrix.dev/content/build_site"
-hsg.Article(md_filename).generate_from_md(html_folder)
+hsg.Article(md_filename).generate_html(html_folder)
 ```
 
 ```python
 md_filename = "./tests/data/test/test.md"
 html_folder = "./build_site"
-a = hsg.Article(md_filename).generate_from_md(html_folder)
+a = hsg.Article(md_filename).generate_html(html_folder)
 ```
 
 ```python
@@ -137,7 +137,7 @@ class Article:
 
         self.__meta = md_engine.Meta  # TODO
 
-    def generate_from_md(self, html_folder: str | Path) -> Article:
+    def generate_html(self, html_folder: str | Path) -> Article:
         """
         Generate HTML file with folders from the Markdown file with folders.
 
