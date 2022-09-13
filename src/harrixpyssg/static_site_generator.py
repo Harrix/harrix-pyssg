@@ -1,45 +1,107 @@
+"""
+## Example of folder structure
+
+Folder with the Markdown files:
+
+```text
+data
+├─ test
+│  ├─ featured-image.png
+│  ├─ img
+│  │  └─ test-image.png
+│  └─ test.md
+└─ test2
+   ├─ featured-image.png
+   ├─ img
+   │  └─ test-image.png
+   └─ test2.md
+```
+
+Output HTML folder:
+
+```text
+build_site
+```
+
+## Usage examples
+
+```python
+md_folder = "C:/GitHub/harrix.dev/content"
+html_folder = 'C:/GitHub/harrix.dev/build_site'
+sg = hsg.StaticSiteGenerator(md_folder)
+sg.generate_site(html_folder)
+```
+
+```python
+md_folder = "./tests/data"
+html_folder = './build_site'
+sg = hsg.StaticSiteGenerator(md_folder)
+sg.generate_site(html_folder)
+```
+"""
+from __future__ import annotations
+
+import shutil
 from pathlib import Path
-import re
 
 from .article import Article
-import harrixpylib as h
 
 
 class StaticSiteGenerator:
-    def __init__(self, md_paths, output_folder):
-        self.md_folders = [Path(p).resolve() for p in md_paths]
-        self.output_folder = Path(output_folder)
-        self.articles = list()
-        self.is_md_filename_analysis = True
-        self.base_lang = "ru"
+    """
+    Static site generator. The generator collects Markdown files from several folders.
 
-    def start(self):
-        h.clear_directory(self.output_folder)
-        self.generate_articles()
+    Attributes:
+
+    - `md_folder` (str | Path): Folder with Markdown files. Example: `"./tests/data"`.
+    - `articles` (list[Article]): list of all articles that is generated
+      in the `__init__()`.
+    - `html_folder` (str | Path): Output folder of HTML files.
+      Example: `"./build_site"`.
+    """
+
+    def __init__(self, md_folder: str | Path):
+        self.md_folder = Path(md_folder)
+        self.articles: list[Article] = list()
+        self.html_folder = Path()
+
+        self.__get_info_about_articles()
+
+    def generate_site(self, html_folder: str | Path) -> StaticSiteGenerator:
+        """
+        This method generates HTML files with folders from the Markdown files.
+
+        Args:
+
+        - `html_folder` (str | Path): Output folder of the HTML files.
+
+        Returns:
+
+        - `Article`: Returns itself.
+        """
+        self.html_folder = Path(html_folder)
+
+        self.__clear_html_folder_directory()
+
         for article in self.articles:
-            ...
-            print(article.path_html)
+            parts = list(article.md_filename.parts[len(self.md_folder.parts) : :])
+            html_folder_article = self.html_folder / "/".join(parts)
+            html_folder_article.mkdir(parents=True, exist_ok=True)
+            article.generate_html(html_folder_article)
+
         return self
 
-    def generate_articles(self, is_clear_output_folder=False):
-        if is_clear_output_folder:
-            h.clear_directory(self.output_folder)
-        for md_folder in self.md_folders:
-            for item in md_folder.rglob("*.md"):
-                parts = list(item.parts[len(md_folder.parts) : :])
+    def __get_info_about_articles(self):
+        for item in filter(
+            lambda path: not any((part for part in path.parts if part.startswith("."))),
+            Path(self.md_folder).rglob("*"),
+        ):
+            if item.is_file() and item.suffix.lower() == ".md":
+                self.articles.append(Article(item))
 
-                if self.is_md_filename_analysis:
-                    stem = item.stem
-                    pattern1 = r"^(\d{4})-(\d{2})-(\d{2})-(.*?)\.(\w{2})$"
-                    pattern2 = r"^(\d{4})-(\d{2})-(\d{2})-(.*?)$"
-                    search1 = re.findall(pattern1, stem)
-                    search2 = re.findall(pattern2, stem)
-                    if search1:
-                        parts2 = [search1[0][-2], search1[0][-1]]
-                    elif search2:
-                        parts2 = [search2[0][-1], self.base_lang]
-
-                html_output_folder = self.output_folder / parts[0]
-                a = Article().generate_from_md(item, html_output_folder)
-                self.articles.append(a)
-        return self
+    def __clear_html_folder_directory(self) -> None:
+        """
+        This method clears `self.html_folder` with sub-directories.
+        """
+        shutil.rmtree(self.html_folder)
+        self.html_folder.mkdir(parents=True, exist_ok=True)
