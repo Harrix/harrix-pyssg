@@ -56,10 +56,13 @@ HTML file `index.html`:
 <p>Hello, world!</p>
 ```
 """
+from __future__ import annotations
+
+import re
 import shutil
 from pathlib import Path
+
 import markdown
-import re
 
 
 class Article:
@@ -128,7 +131,7 @@ class Article:
 
         self.__meta = md_engine.Meta  # TODO
 
-    def generate_from_md(self, html_folder: str | Path):
+    def generate_from_md(self, html_folder: str | Path) -> Article:
         """
         Generate HTML file with folders from the Markdown file with folders.
 
