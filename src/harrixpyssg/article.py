@@ -121,11 +121,7 @@ class Article:
         self.md_without_yaml = self.__remove_yaml_from_markdown(md)
         self.md_yaml = self.__get_yaml_from_markdown(md)
         self.html_code = md_engine.convert(md)
-
-        self.featured_image_filenames = []
-        for file in self.md_filename.parent.iterdir():
-            if file.is_file() and file.name.startswith("featured-image"):
-                self.featured_image_filenames.append(file.name)
+        self.featured_image_filenames = self.__get_featured_image_filenames()
 
         self.html_folder = Path()
         self.html_filename = Path()
@@ -170,14 +166,25 @@ class Article:
             return find.group().rstrip()
         return ""
 
-    def __clear_html_folder_directory(self):
+    def __get_featured_image_filenames(self) -> list:
+        """
+        This method returns list of featured images filenames.
+        The Markdown and `featured-image.*`` files must be in the same folder.
+        """
+        res = []
+        for file in self.md_filename.parent.iterdir():
+            if file.is_file() and file.name.startswith("featured-image"):
+                res.append(file.name)
+        return res
+
+    def __clear_html_folder_directory(self) -> None:
         """
         This method clears `self.html_folder` with sub-directories.
         """
         shutil.rmtree(self.html_folder)
         self.html_folder.mkdir(parents=True, exist_ok=True)
 
-    def __copy_dirs(self):
+    def __copy_dirs(self) -> None:
         """
         This method copies all folders from the directory with the Markdown file.
         """
@@ -185,7 +192,7 @@ class Article:
             if file.is_dir():
                 shutil.copytree(file, self.html_folder / file.name, dirs_exist_ok=True)
 
-    def __copy_featured_images(self):
+    def __copy_featured_images(self) -> None:
         """
         This method copies all featured images from the directory with the Markdown file.
         """
