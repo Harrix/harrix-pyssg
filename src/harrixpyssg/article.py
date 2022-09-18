@@ -103,6 +103,8 @@ from pathlib import Path
 
 import markdown
 
+from .custom_logger import logger
+
 
 class Article:
     """
@@ -140,7 +142,7 @@ class Article:
     - `featured_image_filenames` (list[str]): Array of featured images. The files must
       be in the same folder as the Markdown file.
       Example: `["featured-image.png", "featured-image.svg"]`.
-    - `yaml_dict` (dict): List of article parameters from YAML.
+    - `yaml_dict` (dict): List of article parameters from YAML. # TODO
     - `html_folder` (Path): Output folder of HTML file.
       Example: `./build_site`.
     - `html_filename` (Path): Output folder of HTML file.
@@ -196,10 +198,21 @@ class Article:
 
     def __process_meta(self, md_engine):
         """
+        date: 2022-09-18
+        update: 2022-09-19
+        categories: [it, web]
+        tags: [CSS, CSS-Grids]
+        draft: false
+        latex: true
+        related-id: html-lesson
         This method removes YAML from text of the Markdown file.
         """
         res = dict()
-
+        meta = md_engine.meta
+        if not res:
+            logger.warning(
+                "File `{}` has not featured-image".format(self.md_filename.name)
+            )
         return res
 
     def __remove_yaml_from_markdown(self, md_text: str) -> str:
