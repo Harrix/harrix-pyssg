@@ -9,14 +9,15 @@ def main():
     ...
     # run_test()
     # run_test_article()
-    # run_test_static_site_generator()
-    run_get_yaml_tags()
+    run_test_static_site_generator()
+    # run_get_yaml_tags()
 
 def run_test():
     ...
 
 def run_test_static_site_generator():
-    md_folder = "C:/GitHub/harrix.dev/content"
+    # md_folder = "C:/GitHub/harrix.dev/content"
+    md_folder = "./tests/data"
     html_folder = "./build_site"
     sg = hsg.StaticSiteGenerator(md_folder)
     sg.generate_site(html_folder)
