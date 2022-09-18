@@ -46,7 +46,7 @@ Markdown file `test.md`:
 
 ```markdown
 ---
-date: 2022-09-13
+date: 2022-09-18
 categories: [it, web]
 tags: [CSS]
 ---
@@ -61,6 +61,38 @@ HTML file `index.html`:
 ```html
 <h1>Title</h1>
 <p>Hello, world!</p>
+```
+
+# List of processed YAML tags
+
+- `date`: Date of creation of the article.
+- `update`: Date of the article update.
+- `categories`: The list of categories to which the article belongs.
+  Spaces in category names are not allowed.
+- `tags`: The list of tags to which the article belongs.
+  Spaces in tags names are not allowed.
+- `draft`: `true` if the article is in drafts and should not be published.
+  If the tag is not in YAML, the default value is `false`.
+- `latex`: `true` if LaTeX is used in the article. Example: `$y = x^{2}$`
+  If the tag is not in YAML, the default value is `false`.
+- `related-id`: The key for linking several articles into a series of articles.
+  If this parameter is present, then at the bottom of the article there will be a list
+  of all articles with the same parameter value.
+- `demo`: .
+- `download`: .
+- `link`: .
+- `source`: .
+
+Example:
+
+```yaml
+date: 2022-09-18
+update: 2022-09-19
+categories: [it, web]
+tags: [CSS, CSS-Grids]
+draft: false
+latex: true
+related-id: html-lesson
 ```
 """
 from __future__ import annotations
@@ -92,7 +124,7 @@ class Article:
 
       ```yaml
       ---
-      date: 2022-09-13
+      date: 2022-09-18
       categories: [it, web]
       tags: [CSS]
       ---
@@ -108,6 +140,7 @@ class Article:
     - `featured_image_filenames` (list[str]): Array of featured images. The files must
       be in the same folder as the Markdown file.
       Example: `["featured-image.png", "featured-image.svg"]`.
+    - `yaml_dict` (dict): List of article parameters from YAML.
     - `html_folder` (Path): Output folder of HTML file.
       Example: `./build_site`.
     - `html_filename` (Path): Output folder of HTML file.
@@ -136,7 +169,7 @@ class Article:
         self.html_folder = Path()
         self.html_filename = Path()
 
-        self.__meta = md_engine.Meta  # TODO
+        self.yaml_dict = self.__process_meta(md_engine)
 
     def generate_html(self, html_folder: str | Path) -> Article:
         """
@@ -160,6 +193,14 @@ class Article:
 
         self.html_filename.write_text(self.html_code, encoding="utf8")
         return self
+
+    def __process_meta(self, md_engine):
+        """
+        This method removes YAML from text of the Markdown file.
+        """
+        res = dict()
+
+        return res
 
     def __remove_yaml_from_markdown(self, md_text: str) -> str:
         """
