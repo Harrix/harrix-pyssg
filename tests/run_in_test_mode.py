@@ -7,9 +7,13 @@ import harrixpyssg as hsg
 
 def main():
     ...
+    # run_test()
     # run_test_article()
-    run_test_static_site_generator()
-    # run_get_yaml_tags
+    # run_test_static_site_generator()
+    run_get_yaml_tags()
+
+def run_test():
+    ...
 
 def run_test_static_site_generator():
     md_folder = "C:/GitHub/harrix.dev/content"
