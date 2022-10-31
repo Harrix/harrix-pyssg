@@ -1,21 +1,28 @@
 """
 ## Usage examples
 
+Generate an HTML file (and other related files) from Markdown with the full filename:
+
 ```python
 md_filename = "C:/GitHub/harrix.dev/content/en/blog/2013/kbd-style/kbd-style.md"
 html_folder = "C:/GitHub/harrix.dev/content/build_site"
 hsg.Article(md_filename).generate_html(html_folder)
 ```
 
+Generate an HTML file (and other related files) from Markdown with a relative path
+to the file:
+
 ```python
-md_filename = "./tests/data/test/test.md"
+md_filename = "./tests/data/test_01/test_01.md"
 html_folder = "./build_site"
 article = hsg.Article(md_filename)
 article.generate_html(html_folder)
 ```
 
+Generate HTML code from Markdown without creating files:
+
 ```python
-md_filename = "./tests/data/test/test.md"
+md_filename = "./tests/data/test_01/test_01.md"
 article = hsg.Article(md_filename)
 print(article.html_code)
 ```
@@ -65,23 +72,19 @@ HTML file `index.html`:
 
 # List of processed YAML tags
 
-- `date`: Date of creation of the article.
-- `update`: Date of the article update.
-- `categories`: The list of categories to which the article belongs.
-  Spaces in category names are not allowed.
-- `tags`: The list of tags to which the article belongs.
-  Spaces in tags names are not allowed.
-- `draft`: `true` if the article is in drafts and should not be published.
-  If the tag is not in YAML, the default value is `false`.
-- `latex`: `true` if LaTeX is used in the article. Example: `$y = x^{2}$`
-  If the tag is not in YAML, the default value is `false`.
-- `related-id`: The key for linking several articles into a series of articles.
-  If this parameter is present, then at the bottom of the article there will be a list
-  of all articles with the same parameter value.
-- `demo`: .
-- `download`: .
-- `link`: .
-- `source`: .
+| Tag          | Description                                                                                                                                                                                         |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `date`       | Date of creation of the article.                                                                                                                                                                    |
+| `update`     | Date of the article update.                                                                                                                                                                         |
+| `categories` | The list of categories to which the article belongs. Spaces in category names are not allowed.                                                                                                      |
+| `tags`       | The list of tags to which the article belongs. Spaces in tags names are not allowed.                                                                                                                |
+| `draft`      | `true` if the article is in drafts and should not be published. If the tag is not in YAML, the default value is false`.                                                                             |
+| `latex`      | `true` if $LaTeX$ is used in the article. Example: `$y = x^{2}$`. If the tag is not in YAML, the default value is `false`.                                                                             |
+| `related-id` | The key for linking several articles into a series of articles. If this parameter is present, then at the bottom of the article there will be a list of all articles with the same parameter value. |
+| `demo`       |                                                                                                                                                                                                     |
+| `download`   |                                                                                                                                                                                                     |
+| `link`       |                                                                                                                                                                                                     |
+| `source`     |                                                                                                                                                                                                     |
 
 Example:
 
