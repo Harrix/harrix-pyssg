@@ -24,7 +24,7 @@ logger.critical("This is a critical-level message")
 Inside the library `harrix-pyssg`:
 
 ```python
-## without log file
+# without log file
 logger = init_logger("harrix-pyssg")
 logger.debug("This is a debug-level message")
 logger.info("This is an info-level message")
@@ -32,7 +32,7 @@ logger.warning("This is a warning-level message")
 logger.error("This is an error-level message")
 logger.critical("This is a critical-level message")
 
-## with log file
+# with log file
 logger = init_logger("harrix-pyssg", True)
 logger.debug("This is a debug-level message")
 logger.info("This is an info-level message")
