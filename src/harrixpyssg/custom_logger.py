@@ -41,8 +41,8 @@ logger.error("This is an error-level message")
 logger.critical("This is a critical-level message")
 ```
 """
-import logging
 import datetime
+import logging
 
 
 def init_logger(name, is_file_handler=False):
@@ -92,5 +92,6 @@ def init_logger(name, is_file_handler=False):
         custom_logger.addHandler(file_handler)
 
     return custom_logger
+
 
 logger = init_logger("harrix-pyssg")
