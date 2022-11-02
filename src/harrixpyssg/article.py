@@ -143,33 +143,46 @@ class Article:
 
         - `md_filename` (str | Path): Full filename of the Markdown file.
         """
-        self._md_filename = Path(md_filename)
-        self._process_md_file()
-
-    def _process_md_file(self):
-        self._md_content = Path(self.md_filename).read_text(encoding="utf8")
-        self._md_engine = markdown.Markdown(extensions=["meta"])
-
-        self.html_code = self._md_engine.convert(self._md_content)
-        self.featured_image_filenames = self._get_featured_image_filenames()
-
-        self.html_folder = Path()
-        self.html_filename = Path()
-
-        self.yaml_dict = self._process_meta(self._md_engine)
+        self.md_filename = Path(md_filename)
+        # Follow @md_filename.setter
 
     @property
     def md_filename(self):
         """
-        `Path`: Full filename of the Markdown file.
+        `str | Path`: Full filename of the Markdown file.
         Example: `"./tests/data/test_01/test_01.md"`.
         """
         return self._md_filename
 
     @md_filename.setter
-    def md_filename(self, new_value: str):
+    def md_filename(self, new_value: str | Path):
         self._md_filename = Path(new_value)
-        self._process_md_file()
+        self.md_content = Path(self.md_filename).read_text(encoding="utf8")
+        # Follow @md_filename.md_content
+
+    @property
+    def md_content(self):
+        """
+        `str`: The contents of the Markdown file. Example:
+
+        ```markdown
+        ---
+        date: 2022-09-18
+        categories: [it, web]
+        tags: [CSS]
+        ---
+
+        # Title
+
+        Hello, world!
+        ```
+        """
+        return self._md_content
+
+    @md_content.setter
+    def md_content(self, new_value: str):
+        self._md_content = new_value
+        self._process_md_content()
 
     @property
     def md_without_yaml(self):
@@ -182,11 +195,11 @@ class Article:
         Hello, world!
         ```
         """
-        return re.sub(r"^---(.|\n)*?---\n", "", self._md_content.lstrip()).lstrip()
+        return re.sub(r"^---(.|\n)*?---\n", "", self.md_content.lstrip()).lstrip()
 
     @md_without_yaml.setter
     def md_without_yaml(self, new_value: str):
-        self._md_content = f"{self.md_yaml}\n\n{new_value}"
+        self.md_content = f"{self.md_yaml}\n\n{new_value}"
 
     @property
     def md_yaml(self):
@@ -201,14 +214,14 @@ class Article:
         ---
         ```
         """
-        find = re.search(r"^---(.|\n)*?---\n", self._md_content.lstrip(), re.DOTALL)
+        find = re.search(r"^---(.|\n)*?---\n", self.md_content.lstrip(), re.DOTALL)
         if find:
             return find.group().rstrip()
         return ""
 
     @md_yaml.setter
     def md_yaml(self, new_value: str):
-        self._md_content = f"{new_value.lstrip()}\n\n{self.md_without_yaml}"
+        self.md_content = f"{new_value.lstrip()}\n\n{self.md_without_yaml}"
 
     def generate_html(self, html_folder: str | Path) -> Article:
         """
@@ -232,6 +245,17 @@ class Article:
 
         self.html_filename.write_text(self.html_code, encoding="utf8")
         return self
+
+    def _process_md_content(self):
+        self._md_engine = markdown.Markdown(extensions=["meta"])
+
+        self.html_code = self._md_engine.convert(self.md_content)
+        self.featured_image_filenames = self._get_featured_image_filenames()
+
+        self.html_folder = Path()
+        self.html_filename = Path()
+
+        self.yaml_dict = self._process_meta(self._md_engine)
 
     def _process_meta(self, md_engine):
         """
