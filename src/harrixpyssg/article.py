@@ -191,7 +191,7 @@ class Article:
         self.html_folder = Path()
         self.html_filename = Path()
 
-        self.yaml_dict = self._process_meta(self._md_engine)
+        # self.yaml_dict = self._process_meta(self._md_engine)
 
     @property
     def md_without_yaml(self):
@@ -254,26 +254,6 @@ class Article:
 
         self.html_filename.write_text(self.html_code, encoding="utf8")
         return self
-
-
-    def _process_meta(self, md_engine):
-        """
-        date: 2022-09-18
-        update: 2022-09-19
-        categories: [it, web]
-        tags: [CSS, CSS-Grids]
-        draft: false
-        latex: true
-        related-id: html-lesson
-        This method removes YAML from text of the Markdown file.
-        """
-        res = dict()
-        meta = self._md_engine.Meta
-        if not res:
-            logger.warning(
-                "File `{}` has not featured-image".format(self.md_filename.name)
-            )
-        return res
 
     def _get_featured_image_filenames(self) -> list:
         """
