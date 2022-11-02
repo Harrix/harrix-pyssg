@@ -168,15 +168,15 @@ class Article:
         md = Path(self.md_filename).read_text(encoding="utf8")
         self.__md_engine = markdown.Markdown(extensions=["meta"])
 
-        self.md_without_yaml = self.__remove_yaml_from_markdown(md)
-        self.md_yaml = self.__get_yaml_from_markdown(md)
+        self.md_without_yaml = self._remove_yaml_from_markdown(md)
+        self.md_yaml = self._get_yaml_from_markdown(md)
         self.html_code = self.__md_engine.convert(md)
-        self.featured_image_filenames = self.__get_featured_image_filenames()
+        self.featured_image_filenames = self._get_featured_image_filenames()
 
         self.html_folder = Path()
         self.html_filename = Path()
 
-        self.yaml_dict = self.__process_meta(self.__md_engine)
+        self.yaml_dict = self._process_meta(self.__md_engine)
 
     def generate_html(self, html_folder: str | Path) -> Article:
         """
@@ -194,14 +194,14 @@ class Article:
         self.html_folder = Path(html_folder)
         self.html_filename = self.html_folder / "index.html"
 
-        self.__clear_html_folder_directory()
-        self.__copy_dirs()
-        self.__copy_featured_images()
+        self._clear_html_folder_directory()
+        self._copy_dirs()
+        self._copy_featured_images()
 
         self.html_filename.write_text(self.html_code, encoding="utf8")
         return self
 
-    def __process_meta(self, md_engine):
+    def _process_meta(self, md_engine):
         """
         date: 2022-09-18
         update: 2022-09-19
@@ -220,13 +220,13 @@ class Article:
             )
         return res
 
-    def __remove_yaml_from_markdown(self, md_text: str) -> str:
+    def _remove_yaml_from_markdown(self, md_text: str) -> str:
         """
         This method removes YAML from text of the Markdown file.
         """
         return re.sub(r"^---(.|\n)*?---\n", "", md_text.lstrip()).lstrip()
 
-    def __get_yaml_from_markdown(self, md_text: str) -> str:
+    def _get_yaml_from_markdown(self, md_text: str) -> str:
         """
         This method gets YAML from text of the Markdown file.
         """
@@ -235,7 +235,7 @@ class Article:
             return find.group().rstrip()
         return ""
 
-    def __get_featured_image_filenames(self) -> list:
+    def _get_featured_image_filenames(self) -> list:
         """
         This method returns list of featured images filenames.
         The Markdown and `featured-image.*`` files must be in the same folder.
@@ -246,14 +246,14 @@ class Article:
                 res.append(file.name)
         return res
 
-    def __clear_html_folder_directory(self) -> None:
+    def _clear_html_folder_directory(self) -> None:
         """
         This method clears `self.html_folder` with sub-directories.
         """
         shutil.rmtree(self.html_folder)
         self.html_folder.mkdir(parents=True, exist_ok=True)
 
-    def __copy_dirs(self) -> None:
+    def _copy_dirs(self) -> None:
         """
         This method copies all folders from the directory with the Markdown file.
         """
@@ -261,7 +261,7 @@ class Article:
             if file.is_dir():
                 shutil.copytree(file, self.html_folder / file.name, dirs_exist_ok=True)
 
-    def __copy_featured_images(self) -> None:
+    def _copy_featured_images(self) -> None:
         """
         This method copies all featured images from the directory with the Markdown file.
         """
