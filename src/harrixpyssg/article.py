@@ -165,12 +165,12 @@ class Article:
         """
         self.md_filename = Path(md_filename)
 
-        md = Path(self.md_filename).read_text(encoding="utf8")
+        self._md_content = Path(self.md_filename).read_text(encoding="utf8")
         self._md_engine = markdown.Markdown(extensions=["meta"])
 
-        self.md_without_yaml = Article._remove_yaml_from_markdown(md)
-        self.md_yaml = Article._get_yaml_from_markdown(md)
-        self.html_code = self._md_engine.convert(md)
+        self.md_without_yaml = Article._remove_yaml_from_markdown(self._md_content)
+        self.md_yaml = Article._get_yaml_from_markdown(self._md_content)
+        self.html_code = self._md_engine.convert(self._md_content)
         self.featured_image_filenames = self._get_featured_image_filenames()
 
         self.html_folder = Path()
