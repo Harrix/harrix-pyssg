@@ -166,17 +166,17 @@ class Article:
         self.md_filename = Path(md_filename)
 
         md = Path(self.md_filename).read_text(encoding="utf8")
-        self.__md_engine = markdown.Markdown(extensions=["meta"])
+        self._md_engine = markdown.Markdown(extensions=["meta"])
 
         self.md_without_yaml = Article._remove_yaml_from_markdown(md)
         self.md_yaml = Article._get_yaml_from_markdown(md)
-        self.html_code = self.__md_engine.convert(md)
+        self.html_code = self._md_engine.convert(md)
         self.featured_image_filenames = self._get_featured_image_filenames()
 
         self.html_folder = Path()
         self.html_filename = Path()
 
-        self.yaml_dict = self._process_meta(self.__md_engine)
+        self.yaml_dict = self._process_meta(self._md_engine)
 
     def generate_html(self, html_folder: str | Path) -> Article:
         """
@@ -213,7 +213,7 @@ class Article:
         This method removes YAML from text of the Markdown file.
         """
         res = dict()
-        meta = self.__md_engine.Meta
+        meta = self._md_engine.Meta
         if not res:
             logger.warning(
                 "File `{}` has not featured-image".format(self.md_filename.name)
