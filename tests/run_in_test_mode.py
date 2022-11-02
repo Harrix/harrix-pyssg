@@ -7,6 +7,7 @@ def main():
     ...
     # run_test()
     run_test_article()
+    run_test_article_md_content()
     # run_test_article_meta()
     # run_test_static_site_generator()
     # run_get_yaml_tags()
@@ -22,10 +23,14 @@ def run_test_article():
     hsg.Article(md_filename).generate_html(html_folder)
 
 
-def run_test_article_meta():
+def run_test_article_md_content():
     md_filename = "./tests/data/test_01/test_01.md"
-    html_folder = "./build_site"
-    a = hsg.Article(md_filename).generate_html(html_folder)
+    a = hsg.Article(md_filename)
+    print(a.md_content)
+
+
+def run_test_article_meta():
+    ...
 
 
 def run_test_static_site_generator():
