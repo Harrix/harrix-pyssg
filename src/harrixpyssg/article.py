@@ -32,8 +32,8 @@ print(article.html_code)
 Folder with the Markdown file:
 
 ```text
-test
-├─ test.md
+test_01
+├─ test_01.md
 ├─ featured-image.png
 └─ img
    └─ test-image.png
@@ -49,7 +49,7 @@ build_site
 └─ index.html
 ```
 
-Markdown file `test.md`:
+Markdown file `test_01.md`:
 
 ```markdown
 ---
@@ -116,7 +116,7 @@ class Article:
     Attributes:
 
     - `md_filename` (Path): Full filename of the Markdown file.
-      Example: `"./tests/data/test/test.md"`.
+      Example: `"./tests/data/test_01/test_01.md"`.
     - `md_without_yaml` (str): Text of the article in the form of Markdown without YAML
       text. Example:
 
@@ -164,17 +164,17 @@ class Article:
         self.md_filename = Path(md_filename)
 
         md = Path(self.md_filename).read_text(encoding="utf8")
-        md_engine = markdown.Markdown(extensions=["meta"])
+        self.__md_engine = markdown.Markdown(extensions=["meta"])
 
         self.md_without_yaml = self.__remove_yaml_from_markdown(md)
         self.md_yaml = self.__get_yaml_from_markdown(md)
-        self.html_code = md_engine.convert(md)
+        self.html_code = self.__md_engine.convert(md)
         self.featured_image_filenames = self.__get_featured_image_filenames()
 
         self.html_folder = Path()
         self.html_filename = Path()
 
-        self.yaml_dict = self.__process_meta(md_engine)
+        self.yaml_dict = self.__process_meta(self.__md_engine)
 
     def generate_html(self, html_folder: str | Path) -> Article:
         """
@@ -211,7 +211,7 @@ class Article:
         This method removes YAML from text of the Markdown file.
         """
         res = dict()
-        meta = md_engine.meta
+        meta = self.__md_engine.Meta
         if not res:
             logger.warning(
                 "File `{}` has not featured-image".format(self.md_filename.name)
