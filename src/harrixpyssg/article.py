@@ -168,8 +168,8 @@ class Article:
         md = Path(self.md_filename).read_text(encoding="utf8")
         self.__md_engine = markdown.Markdown(extensions=["meta"])
 
-        self.md_without_yaml = self._remove_yaml_from_markdown(md)
-        self.md_yaml = self._get_yaml_from_markdown(md)
+        self.md_without_yaml = Article._remove_yaml_from_markdown(md)
+        self.md_yaml = Article._get_yaml_from_markdown(md)
         self.html_code = self.__md_engine.convert(md)
         self.featured_image_filenames = self._get_featured_image_filenames()
 
@@ -220,21 +220,6 @@ class Article:
             )
         return res
 
-    def _remove_yaml_from_markdown(self, md_text: str) -> str:
-        """
-        This method removes YAML from text of the Markdown file.
-        """
-        return re.sub(r"^---(.|\n)*?---\n", "", md_text.lstrip()).lstrip()
-
-    def _get_yaml_from_markdown(self, md_text: str) -> str:
-        """
-        This method gets YAML from text of the Markdown file.
-        """
-        find = re.search(r"^---(.|\n)*?---\n", md_text.lstrip(), re.DOTALL)
-        if find:
-            return find.group().rstrip()
-        return ""
-
     def _get_featured_image_filenames(self) -> list:
         """
         This method returns list of featured images filenames.
@@ -270,3 +255,20 @@ class Article:
                 output = self.html_folder / file.name
                 shutil.copy(file, output)
                 self.featured_image_filenames.append(output.name)
+
+    @staticmethod
+    def _remove_yaml_from_markdown(md_text: str) -> str:
+        """
+        This method removes YAML from text of the Markdown file.
+        """
+        return re.sub(r"^---(.|\n)*?---\n", "", md_text.lstrip()).lstrip()
+
+    @staticmethod
+    def _get_yaml_from_markdown(md_text: str) -> str:
+        """
+        This method gets YAML from text of the Markdown file.
+        """
+        find = re.search(r"^---(.|\n)*?---\n", md_text.lstrip(), re.DOTALL)
+        if find:
+            return find.group().rstrip()
+        return ""
