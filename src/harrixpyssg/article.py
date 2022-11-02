@@ -182,7 +182,16 @@ class Article:
     @md_content.setter
     def md_content(self, new_value: str):
         self._md_content = new_value
-        self._process_md_content()
+
+        self._md_engine = markdown.Markdown(extensions=["meta"])
+
+        self.html_code = self._md_engine.convert(self.md_content)
+        self.featured_image_filenames = self._get_featured_image_filenames()
+
+        self.html_folder = Path()
+        self.html_filename = Path()
+
+        self.yaml_dict = self._process_meta(self._md_engine)
 
     @property
     def md_without_yaml(self):
@@ -246,16 +255,6 @@ class Article:
         self.html_filename.write_text(self.html_code, encoding="utf8")
         return self
 
-    def _process_md_content(self):
-        self._md_engine = markdown.Markdown(extensions=["meta"])
-
-        self.html_code = self._md_engine.convert(self.md_content)
-        self.featured_image_filenames = self._get_featured_image_filenames()
-
-        self.html_folder = Path()
-        self.html_filename = Path()
-
-        self.yaml_dict = self._process_meta(self._md_engine)
 
     def _process_meta(self, md_engine):
         """
