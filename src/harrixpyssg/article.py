@@ -117,26 +117,6 @@ class Article:
 
     Attributes:
 
-    - `md_filename` (Path): Full filename of the Markdown file.
-      Example: `"./tests/data/test_01/test_01.md"`.
-    - `md_without_yaml` (str): Text of the article in the form of Markdown without YAML
-      text. Example:
-
-      ```md
-      # Title
-
-      Hello, world!
-      ```
-    - `md_yaml` (str): YAML from the Markdown file. Example:
-
-      ```yaml
-      ---
-      date: 2022-09-18
-      categories: [it, web]
-      tags: [CSS]
-      ---
-      ```
-
     - `html_code` (str): HTML clean code from the Markdown code. Example:
 
       ```html
@@ -163,13 +143,13 @@ class Article:
 
         - `md_filename` (str | Path): Full filename of the Markdown file.
         """
-        self.md_filename = Path(md_filename)
+        self._md_filename = Path(md_filename)
+        self._process_md_file()
 
+    def _process_md_file(self):
         self._md_content = Path(self.md_filename).read_text(encoding="utf8")
         self._md_engine = markdown.Markdown(extensions=["meta"])
 
-        self.md_without_yaml = Article._remove_yaml_from_markdown(self._md_content)
-        self.md_yaml = Article._get_yaml_from_markdown(self._md_content)
         self.html_code = self._md_engine.convert(self._md_content)
         self.featured_image_filenames = self._get_featured_image_filenames()
 
@@ -177,6 +157,58 @@ class Article:
         self.html_filename = Path()
 
         self.yaml_dict = self._process_meta(self._md_engine)
+
+    @property
+    def md_filename(self):
+        """
+        `Path`: Full filename of the Markdown file.
+        Example: `"./tests/data/test_01/test_01.md"`.
+        """
+        return self._md_filename
+
+    @md_filename.setter
+    def md_filename(self, new_value: str):
+        self._md_filename = Path(new_value)
+        self._process_md_file()
+
+    @property
+    def md_without_yaml(self):
+        """
+        `str`: Text of the article in the form of Markdown without YAML text. Example:
+
+        ```md
+        # Title
+
+        Hello, world!
+        ```
+        """
+        return re.sub(r"^---(.|\n)*?---\n", "", self._md_content.lstrip()).lstrip()
+
+    @md_without_yaml.setter
+    def md_without_yaml(self, new_value: str):
+        self._md_content = f"{self.md_yaml}\n\n{new_value}"
+
+    @property
+    def md_yaml(self):
+        """
+        `str`: YAML from the Markdown file. Example:
+
+        ```yaml
+        ---
+        date: 2022-09-18
+        categories: [it, web]
+        tags: [CSS]
+        ---
+        ```
+        """
+        find = re.search(r"^---(.|\n)*?---\n", self._md_content.lstrip(), re.DOTALL)
+        if find:
+            return find.group().rstrip()
+        return ""
+
+    @md_yaml.setter
+    def md_yaml(self, new_value: str):
+        self._md_content = f"{new_value.lstrip()}\n\n{self.md_without_yaml}"
 
     def generate_html(self, html_folder: str | Path) -> Article:
         """
@@ -255,20 +287,3 @@ class Article:
                 output = self.html_folder / file.name
                 shutil.copy(file, output)
                 self.featured_image_filenames.append(output.name)
-
-    @staticmethod
-    def _remove_yaml_from_markdown(md_text: str) -> str:
-        """
-        This method removes YAML from text of the Markdown file.
-        """
-        return re.sub(r"^---(.|\n)*?---\n", "", md_text.lstrip()).lstrip()
-
-    @staticmethod
-    def _get_yaml_from_markdown(md_text: str) -> str:
-        """
-        This method gets YAML from text of the Markdown file.
-        """
-        find = re.search(r"^---(.|\n)*?---\n", md_text.lstrip(), re.DOTALL)
-        if find:
-            return find.group().rstrip()
-        return ""
