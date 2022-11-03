@@ -6,8 +6,8 @@ import harrixpyssg as hsg
 def main():
     ...
     # run_test()
-    # run_test_article()
-    run_test_article_md_content()
+    run_test_article()
+    # run_test_article_md_content()
     # run_test_article_meta()
     # run_test_static_site_generator()
     # run_get_yaml_tags()

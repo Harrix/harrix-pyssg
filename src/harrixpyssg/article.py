@@ -116,10 +116,6 @@ class Article:
     All information about one article from the site.
 
     Attributes:
-
-    - `featured_image_filenames` (list[str]): Array of featured images. The files must
-      be in the same folder as the Markdown file.
-      Example: `["featured-image.png", "featured-image.svg"]`.
     - `yaml_dict` (dict): List of article parameters from YAML. # TODO
     """
 
@@ -177,8 +173,6 @@ class Article:
     @md_content.setter
     def md_content(self, new_value: str):
         self._md_content = new_value
-
-        self.featured_image_filenames = self._get_featured_image_filenames()
 
         # self._md_engine = markdown.Markdown(extensions=["meta"])
         # self.yaml_dict = self._process_meta(self._md_engine)
@@ -254,6 +248,18 @@ class Article:
         """
         return self.html_folder / "index.html"
 
+    @property
+    def featured_image_filenames(self):
+        """
+        `list[str]`: Array of featured images. The files must be in the same folder
+        as the Markdown file. Example: `["featured-image.png", "featured-image.svg"]`.
+        """
+        res = []
+        for file in self.md_filename.parent.iterdir():
+            if file.is_file() and file.name.startswith("featured-image"):
+                res.append(file.name)
+        return res
+
     def generate_html(self, html_folder: str | Path) -> Article:
         """
         Generate HTML file with folders from the Markdown file with folders.
@@ -275,17 +281,6 @@ class Article:
         self.html_filename.write_text(self.html_code, encoding="utf8")
         return self
 
-    def _get_featured_image_filenames(self) -> list:
-        """
-        This method returns list of featured images filenames.
-        The Markdown and `featured-image.*`` files must be in the same folder.
-        """
-        res = []
-        for file in self.md_filename.parent.iterdir():
-            if file.is_file() and file.name.startswith("featured-image"):
-                res.append(file.name)
-        return res
-
     def _clear_html_folder_directory(self) -> None:
         """
         This method clears `self.html_folder` with sub-directories.
@@ -305,8 +300,7 @@ class Article:
         """
         This method copies all featured images from the directory with the Markdown file.
         """
-        for file in Path(self.md_filename.parent).iterdir():
-            if file.is_file() and file.name.startswith("featured-image"):
-                output = self.html_folder / file.name
-                shutil.copy(file, output)
-                self.featured_image_filenames.append(output.name)
+        for filename in self.featured_image_filenames:
+            file = self.md_filename.parent / filename
+            output_file = self.html_folder / filename
+            shutil.copy(file, output_file)

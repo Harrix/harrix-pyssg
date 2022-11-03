@@ -63,6 +63,11 @@ class TestHarrixpyssg(unittest.TestCase):
         a.md_without_yaml = "# New Title"
         self.assertEqual(len(a.md_content.splitlines()), 5)
 
+    def test_article__08(self):
+        md_filename = "./tests/data/test_01/test_01.md"
+        a = hsg.Article(md_filename)
+        self.assertEqual(len(a.featured_image_filenames), 1)
+
     def test_static_site_generator__01(self):
         md_folder = "./tests/data"
         html_folder = "./build_site"
