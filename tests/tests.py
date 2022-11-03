@@ -23,7 +23,7 @@ class TestHarrixpyssg(unittest.TestCase):
         ):
             if item.is_file():
                 count_files += 1
-        self.assertEqual(count_files, 6)
+        self.assertEqual(count_files, 7)
 
 
 if __name__ == "__main__":
