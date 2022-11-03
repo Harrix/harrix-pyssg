@@ -136,6 +136,7 @@ class Article:
 
         - `md_filename` (str | Path): Full filename of the Markdown file.
         """
+        self._md_content = ""
         self.md_filename = Path(md_filename)
         # Follow @md_filename.setter
 
@@ -153,7 +154,7 @@ class Article:
         try:
             self.md_content = Path(self.md_filename).read_text(encoding="utf8")
         except:
-            logger.error("The file \"{new_value}\" does not open")
+            logger.error(f"The file \"{new_value}\" does not open")
         # Follow @md_filename.md_content
 
     @property
