@@ -117,13 +117,6 @@ class Article:
 
     Attributes:
 
-    - `html_code` (str): HTML clean code from the Markdown code. Example:
-
-      ```html
-      <h1>Title</h1>
-      <p>Hello, world!</p>
-      ```
-
     - `featured_image_filenames` (list[str]): Array of featured images. The files must
       be in the same folder as the Markdown file.
       Example: `["featured-image.png", "featured-image.svg"]`.
@@ -183,14 +176,12 @@ class Article:
     def md_content(self, new_value: str):
         self._md_content = new_value
 
-        self._md_engine = markdown.Markdown(extensions=["meta"])
-
-        self.html_code = self._md_engine.convert(self.md_content)
         self.featured_image_filenames = self._get_featured_image_filenames()
 
         self.html_folder = Path()
         self.html_filename = Path()
 
+        # self._md_engine = markdown.Markdown(extensions=["meta"])
         # self.yaml_dict = self._process_meta(self._md_engine)
 
     @property
@@ -231,6 +222,19 @@ class Article:
     @md_yaml.setter
     def md_yaml(self, new_value: str):
         self.md_content = f"{new_value.lstrip()}\n\n{self.md_without_yaml}"
+
+    @property
+    def html_code(self):
+        """
+        `str`: HTML clean code from the Markdown code (only getter). Example:
+
+        ```html
+        <h1>Title</h1>
+        <p>Hello, world!</p>
+        ```
+        """
+        md_engine = markdown.Markdown(extensions=["meta"])
+        return md_engine.convert(self.md_content)
 
     def generate_html(self, html_folder: str | Path) -> Article:
         """
