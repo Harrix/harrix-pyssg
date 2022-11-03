@@ -121,8 +121,6 @@ class Article:
       be in the same folder as the Markdown file.
       Example: `["featured-image.png", "featured-image.svg"]`.
     - `yaml_dict` (dict): List of article parameters from YAML. # TODO
-    - `html_filename` (Path): Output folder of HTML file.
-      Example: `./build_site/index.html`.
     """
 
     def __init__(self, md_filename: str | Path):
@@ -136,7 +134,6 @@ class Article:
         """
         self._md_content = ""
         self._html_folder = Path()
-        self._html_filename = Path()
 
         self.md_filename = Path(md_filename)
         # Follow @md_filename.setter
@@ -241,13 +238,21 @@ class Article:
     @property
     def html_folder(self):
         """
-        `Path`: (Path): Output folder of HTML file. Example: `./build_site`.
+        `Path`: Output folder of HTML file. Example: `./build_site`.
         """
         return self._html_folder
 
     @html_folder.setter
     def html_folder(self, new_value: Path):
         self._html_folder = new_value
+
+    @property
+    def html_filename(self):
+        """
+        `Path`: Output filename of HTML file (only getter).
+        Example: `./build_site/index.html`.
+        """
+        return self.html_folder / "index.html"
 
     def generate_html(self, html_folder: str | Path) -> Article:
         """
@@ -261,9 +266,7 @@ class Article:
 
         - `Article`: Returns itself, that is, the article with calculated data.
         """
-
         self.html_folder = Path(html_folder)
-        self.html_filename = self.html_folder / "index.html"
 
         self._clear_html_folder_directory()
         self._copy_dirs()
