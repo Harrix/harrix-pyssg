@@ -150,7 +150,10 @@ class Article:
     @md_filename.setter
     def md_filename(self, new_value: str | Path):
         self._md_filename = Path(new_value)
-        self.md_content = Path(self.md_filename).read_text(encoding="utf8")
+        try:
+            self.md_content = Path(self.md_filename).read_text(encoding="utf8")
+        except:
+            logger.error("The file \"{new_value}\" does not open")
         # Follow @md_filename.md_content
 
     @property
