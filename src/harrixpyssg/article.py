@@ -121,8 +121,6 @@ class Article:
       be in the same folder as the Markdown file.
       Example: `["featured-image.png", "featured-image.svg"]`.
     - `yaml_dict` (dict): List of article parameters from YAML. # TODO
-    - `html_folder` (Path): Output folder of HTML file.
-      Example: `./build_site`.
     - `html_filename` (Path): Output folder of HTML file.
       Example: `./build_site/index.html`.
     """
@@ -137,6 +135,9 @@ class Article:
         - `md_filename` (str | Path): Full filename of the Markdown file.
         """
         self._md_content = ""
+        self._html_folder = Path()
+        self._html_filename = Path()
+
         self.md_filename = Path(md_filename)
         # Follow @md_filename.setter
 
@@ -154,7 +155,7 @@ class Article:
         try:
             self.md_content = Path(self.md_filename).read_text(encoding="utf8")
         except:
-            logger.error(f"The file \"{new_value}\" does not open")
+            logger.error(f'The file "{new_value}" does not open')
         # Follow @md_filename.md_content
 
     @property
@@ -181,9 +182,6 @@ class Article:
         self._md_content = new_value
 
         self.featured_image_filenames = self._get_featured_image_filenames()
-
-        self.html_folder = Path()
-        self.html_filename = Path()
 
         # self._md_engine = markdown.Markdown(extensions=["meta"])
         # self.yaml_dict = self._process_meta(self._md_engine)
@@ -239,6 +237,17 @@ class Article:
         """
         md_engine = markdown.Markdown(extensions=["meta"])
         return md_engine.convert(self.md_content)
+
+    @property
+    def html_folder(self):
+        """
+        `Path`: (Path): Output folder of HTML file. Example: `./build_site`.
+        """
+        return self._html_folder
+
+    @html_folder.setter
+    def html_folder(self, new_value: Path):
+        self._html_folder = new_value
 
     def generate_html(self, html_folder: str | Path) -> Article:
         """
