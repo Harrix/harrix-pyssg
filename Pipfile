@@ -6,8 +6,8 @@ name = "pypi"
 [packages]
 setuptools = "*"
 twine = "*"
-markdown = "*"
 wheel = "*"
+markdown-it-py = {extras = ["linkify", "plugins"], version = "*"}
 
 [dev-packages]
 black = "*"

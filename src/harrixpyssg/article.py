@@ -106,7 +106,10 @@ import re
 import shutil
 from pathlib import Path
 
-import markdown
+from markdown_it import MarkdownIt
+from markdown_it.presets import gfm_like
+from mdit_py_plugins.footnote import footnote_plugin
+from mdit_py_plugins.front_matter import front_matter_plugin
 
 from .custom_logger import logger
 
@@ -223,8 +226,15 @@ class Article:
         <p>Hello, world!</p>
         ```
         """
-        md_engine = markdown.Markdown()
-        return md_engine.convert(self.md_without_yaml)
+        md = (
+            MarkdownIt("gfm-like")
+            .use(front_matter_plugin)
+            .use(footnote_plugin)
+            .disable("smartquotes")
+            .enable("table")
+        )
+
+        return md.render(self.md_without_yaml)
 
     @property
     def html_folder(self):
