@@ -6,7 +6,8 @@ import harrixpyssg as hsg
 def main():
     ...
     # run_test()
-    run_test_article()
+    # run_test_article()
+    run_test_article_test_03()
     # run_test_article_md_content()
     # run_test_article_meta()
     # run_test_static_site_generator()
@@ -19,6 +20,11 @@ def run_test():
 
 def run_test_article():
     md_filename = "./tests/data/test_01/test_01.md"
+    html_folder = "./build_site"
+    hsg.Article(md_filename).generate_html(html_folder)
+
+def run_test_article_test_03():
+    md_filename = "./tests/data/test_03/test_03.md"
     html_folder = "./build_site"
     hsg.Article(md_filename).generate_html(html_folder)
 
