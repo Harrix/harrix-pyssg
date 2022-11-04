@@ -51,21 +51,6 @@ class TestHarrixpyssg(unittest.TestCase):
     def test_article__06(self):
         md_filename = "./tests/data/test_01/test_01.md"
         a = hsg.Article(md_filename)
-        a.md_yaml = "---\ndate: 2022-11-03\n---"
-        self.assertEqual(
-            len(a.md_content.splitlines()), len(TEST_MD_CONTENT.splitlines()) - 2
-        )
-
-    def test_article__07(self):
-        md_filename = "./tests/data/test_01/test_01.md"
-        a = hsg.Article(md_filename)
-        a.md_yaml = "---\ndate: 2022-11-03\n---"
-        a.md_without_yaml = "# New Title"
-        self.assertEqual(len(a.md_content.splitlines()), 5)
-
-    def test_article__08(self):
-        md_filename = "./tests/data/test_01/test_01.md"
-        a = hsg.Article(md_filename)
         self.assertEqual(len(a.featured_image_filenames), 1)
 
     def test_static_site_generator__01(self):

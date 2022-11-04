@@ -106,6 +106,7 @@ import re
 import shutil
 from pathlib import Path
 
+import yaml
 from markdown_it import MarkdownIt
 from mdit_py_plugins.anchors import anchors_plugin
 from mdit_py_plugins.dollarmath import dollarmath_plugin
@@ -134,6 +135,7 @@ class Article:
         - `md_filename` (str | Path): Full filename of the Markdown file.
         """
         self._md_content = ""
+        self._md_yaml_dict = None
         self._html_folder = Path()
 
         self.md_filename = Path(md_filename)
@@ -197,9 +199,33 @@ class Article:
         self.md_content = f"{self.md_yaml}\n\n{new_value}"
 
     @property
+    def md_yaml_dict(self):
+        """
+        `dict`: YAML from the Markdown file. Example:
+
+        ```python
+        {'date': datetime.date(2022, 9, 18),
+        'categories': ['it', 'web'],
+        'tags': ['CSS']}
+        ```
+        """
+        if self._md_yaml_dict is not None:
+            return self._md_yaml_dict
+        find = re.search(r"^---(.|\n)*?---\n", self.md_content.lstrip(), re.DOTALL)
+        self._md_yaml_dict = dict()
+        if find:
+            yaml_text = find.group().rstrip()[:-4].rstrip()
+            self._md_yaml_dict = yaml.safe_load(yaml_text)
+        return self._md_yaml_dict
+
+    @md_yaml_dict.setter
+    def md_yaml_dict(self, new_value: dict):
+        self._md_yaml_dict = new_value
+
+    @property
     def md_yaml(self):
         """
-        `str`: YAML from the Markdown file. Example:
+        `str`: YAML from the Markdown file (only getter). Example:
 
         ```yaml
         ---
@@ -209,14 +235,18 @@ class Article:
         ---
         ```
         """
-        find = re.search(r"^---(.|\n)*?---\n", self.md_content.lstrip(), re.DOTALL)
-        if find:
-            return find.group().rstrip()
-        return ""
-
-    @md_yaml.setter
-    def md_yaml(self, new_value: str):
-        self.md_content = f"{new_value.lstrip()}\n\n{self.md_without_yaml}"
+        if len(self.md_yaml_dict) == 0:
+            return ""
+        return (
+            yaml.safe_dump(
+                self._md_yaml_dict,
+                sort_keys=False,
+                allow_unicode=True,
+                explicit_start=True,
+                default_flow_style=None,
+            )
+            + "---"
+        )
 
     @property
     def html_code(self):

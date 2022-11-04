@@ -8,6 +8,7 @@ setuptools = "*"
 twine = "*"
 wheel = "*"
 markdown-it-py = {extras = ["linkify", "plugins"], version = "*"}
+pyyaml = "*"
 
 [dev-packages]
 black = "*"

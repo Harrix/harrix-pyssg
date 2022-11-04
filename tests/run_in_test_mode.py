@@ -1,3 +1,4 @@
+import datetime
 from pathlib import Path
 
 import harrixpyssg as hsg
@@ -7,9 +8,9 @@ def main():
     ...
     # run_test()
     # run_test_article()
-    run_test_article_test_03()
+    # run_test_article_test_03()
     # run_test_article_md_content()
-    # run_test_article_meta()
+    run_test_article_md_yaml()
     # run_test_static_site_generator()
     # run_get_yaml_tags()
 
@@ -36,8 +37,13 @@ def run_test_article_md_content():
     print(a.md_content)
 
 
-def run_test_article_meta():
-    ...
+def run_test_article_md_yaml():
+    md_filename = "./tests/data/test_01/test_01.md"
+    a = hsg.Article(md_filename)
+    print(a.md_yaml)
+    print(a.md_yaml_dict)
+    a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
+    print(a.md_yaml)
 
 
 def run_test_static_site_generator():
