@@ -107,9 +107,11 @@ import shutil
 from pathlib import Path
 
 from markdown_it import MarkdownIt
-from markdown_it.presets import gfm_like
+from mdit_py_plugins.anchors import anchors_plugin
+from mdit_py_plugins.dollarmath import dollarmath_plugin
 from mdit_py_plugins.footnote import footnote_plugin
 from mdit_py_plugins.front_matter import front_matter_plugin
+from mdit_py_plugins.tasklists import tasklists_plugin
 
 from .custom_logger import logger
 
@@ -227,14 +229,16 @@ class Article:
         ```
         """
         md = (
-            MarkdownIt("gfm-like")
+            MarkdownIt("gfm-like", {"typographer": True, "linkify": False})
             .use(front_matter_plugin)
+            .use(tasklists_plugin)
+            .use(anchors_plugin)
+            .use(dollarmath_plugin)
             .use(footnote_plugin)
-            .disable("smartquotes")
-            .enable("table")
+            .enable(["replacements"])
         )
 
-        return md.render(self.md_without_yaml)
+        return md.render(self.md_content).lstrip()
 
     @property
     def html_folder(self):

@@ -23,6 +23,7 @@ def run_test_article():
     html_folder = "./build_site"
     hsg.Article(md_filename).generate_html(html_folder)
 
+
 def run_test_article_test_03():
     md_filename = "./tests/data/test_03/test_03.md"
     html_folder = "./build_site"
