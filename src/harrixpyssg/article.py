@@ -174,9 +174,6 @@ class Article:
     def md_content(self, new_value: str):
         self._md_content = new_value
 
-        # self._md_engine = markdown.Markdown(extensions=["meta"])
-        # self.yaml_dict = self._process_meta(self._md_engine)
-
     @property
     def md_without_yaml(self):
         """
@@ -226,8 +223,8 @@ class Article:
         <p>Hello, world!</p>
         ```
         """
-        md_engine = markdown.Markdown(extensions=["meta"])
-        return md_engine.convert(self.md_content)
+        md_engine = markdown.Markdown()
+        return md_engine.convert(self.md_without_yaml)
 
     @property
     def html_folder(self):
