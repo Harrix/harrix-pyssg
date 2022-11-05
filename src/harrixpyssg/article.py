@@ -152,7 +152,7 @@ class Article:
         ```python
         import harrixpyssg as hsg
 
-        article = hsg.Article("C:/data/test_01/test_01.md")
+        article = hsg.Article("C:/GitHub/harrix-pyssg/tests/data/test_01/test_01.md")
         ```
         """
         self._html_folder = Path()
