@@ -4,6 +4,8 @@
 Generate an HTML file (and other related files) from Markdown with the full filename:
 
 ```python
+import harrixpyssg as hsg
+
 md_filename = "C:/GitHub/harrix.dev/content/en/blog/2013/kbd-style/kbd-style.md"
 html_folder = "C:/GitHub/harrix.dev/content/build_site"
 hsg.Article(md_filename).generate_html(html_folder)
@@ -13,6 +15,8 @@ Generate an HTML file (and other related files) from Markdown with a relative pa
 to the file:
 
 ```python
+import harrixpyssg as hsg
+
 md_filename = "./tests/data/test_01/test_01.md"
 html_folder = "./build_site"
 article = hsg.Article(md_filename)
@@ -22,6 +26,8 @@ article.generate_html(html_folder)
 Generate HTML code from Markdown without creating files:
 
 ```python
+import harrixpyssg as hsg
+
 md_filename = "./tests/data/test_01/test_01.md"
 article = hsg.Article(md_filename)
 print(article.html_code)
@@ -60,14 +66,20 @@ tags: [CSS]
 
 # Title
 
+![Featured image](featured-image.png)
+
 Hello, world!
+
+![Alt text](img/test-image.png)
 ```
 
 HTML file `index.html`:
 
 ```html
-<h1>Title</h1>
+<h1 id="title">Title</h1>
+<p><img src="featured-image.png" alt="Featured image" /></p>
 <p>Hello, world!</p>
+<p><img src="img/test-image.png" alt="Alt text" /></p>
 ```
 
 # List of processed YAML tags
@@ -134,6 +146,14 @@ class Article:
         Args:
 
         - `md_filename` (str | Path): Full filename of the Markdown file.
+
+        Example:
+
+        ```python
+        import harrixpyssg as hsg
+
+        article = hsg.Article("C:/data/test_01/test_01.md")
+        ```
         """
         self._html_folder = Path()
         self.load(md_filename)
@@ -143,13 +163,36 @@ class Article:
         """
         `str | Path`: Full filename of the Markdown file (only getter).
         Example: `"./tests/data/test_01/test_01.md"`.
+
+        ```python
+        import harrixpyssg as hsg
+
+        article = hsg.Article("./tests/data/test_01/test_01.md")
+        print(article.md_filename)
+        # tests\data\test_01\test_01.md
+        ```
+
+        You can upload a new file and change the value of this variable via
+        method `load(path_new_md_file)`.
         """
         return self._md_filename
 
     @property
     def md_content(self) -> str:
         """
-        `str`: The contents of the Markdown file (only getter). Example:
+        `str`: The contents of the Markdown file (only getter). A block with YAML may
+        differ from how it looks in the Markdown file.
+
+        Example:
+
+        ```python
+        import harrixpyssg as hsg
+
+        article = hsg.Article("./tests/data/test_01/test_01.md")
+        print(article.md_content)
+        ```
+
+        Example output:
 
         ```markdown
         ---
@@ -160,7 +203,11 @@ class Article:
 
         # Title
 
+        ![Featured image](featured-image.png)
+
         Hello, world!
+
+        ![Alt text](img/test-image.png)
         ```
         """
         return f"{self.md_yaml}\n\n{self.md_content_no_yaml}".lstrip()
@@ -168,12 +215,38 @@ class Article:
     @property
     def md_content_no_yaml(self) -> str:
         """
-        `str`: Text of the article in the form of Markdown without YAML text. Example:
+        `str`: Text of the article in the form of Markdown without YAML text.
+
+        Example for the getter:
+
+        ```python
+        import harrixpyssg as hsg
+
+        article = hsg.Article("./tests/data/test_01/test_01.md")
+        print(article.md_content_no_yaml)
+        ```
+
+        Example output:
 
         ```md
         # Title
 
+        ![Featured image](featured-image.png)
+
         Hello, world!
+
+        ![Alt text](img/test-image.png)
+        ```
+
+        Example for the setter:
+
+        ```python
+        import harrixpyssg as hsg
+
+        article = hsg.Article("./tests/data/test_01/test_01.md")
+        article.md_content_no_yaml = "# New content"
+        print(article.md_content_no_yaml)
+        # # New content
         ```
         """
         return self._md_content_no_yaml
@@ -186,12 +259,31 @@ class Article:
     def md_yaml_dict(self) -> dict:
         """
         `dict`: YAML from the Markdown file (only getter, but you can change
-        the contents of the dictionary ). Example:
+        the contents of the dictionary).
+
+        Example:
 
         ```python
-        {'date': datetime.date(2022, 9, 18),
-        'categories': ['it', 'web'],
-        'tags': ['CSS']}
+        import datetime
+        import harrixpyssg as hsg
+
+        article = hsg.Article("./tests/data/test_01/test_01.md")
+        print(*article.md_yaml_dict.items(), sep="\n")
+        article.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
+        print(article.md_yaml)
+        ```
+
+        Example output:
+
+        ```console
+        ('date', datetime.date(2022, 9, 18))
+        ('categories', ['it', 'web'])
+        ('tags', ['CSS'])
+        ---
+        date: 2022-11-04
+        categories: [it, web]
+        tags: [CSS]
+        ---
         ```
         """
         return self._md_yaml_dict
@@ -199,7 +291,18 @@ class Article:
     @property
     def md_yaml(self) -> str:
         """
-        `str`: YAML from the Markdown file (only getter). Example:
+        `str`: YAML from the Markdown file (only getter).
+
+        Example:
+
+        ```python
+        import harrixpyssg as hsg
+
+        article = hsg.Article("./tests/data/test_01/test_01.md")
+        print(article.md_yaml)
+        ```
+
+        Example output:
 
         ```yaml
         ---
@@ -225,11 +328,24 @@ class Article:
     @property
     def html_code(self) -> str:
         """
-        `str`: HTML clean code from the Markdown code (only getter). Example:
+        `str`: HTML clean code from the Markdown code (only getter).
+
+        Example:
+
+        ```python
+        import harrixpyssg as hsg
+
+        article = hsg.Article("./tests/data/test_01/test_01.md")
+        print(article.html_code())
+        ```
+
+        Example output:
 
         ```html
-        <h1>Title</h1>
+        <h1 id="title">Title</h1>
+        <p><img src="featured-image.png" alt="Featured image" /></p>
         <p>Hello, world!</p>
+        <p><img src="img/test-image.png" alt="Alt text" /></p>
         ```
         """
         md = (
@@ -247,19 +363,48 @@ class Article:
     @property
     def html_folder(self) -> Path:
         """
-        `Path`: Output folder of HTML file. Example: `./build_site`.
+        `Path`: Output folder of HTML file.
+
+        Example for the getter:
+
+        ```python
+        import harrixpyssg as hsg
+
+        article = hsg.Article("./tests/data/test_01/test_01.md")
+        article.generate_html("./build_site")
+        print(article.html_folder)
+        # build_site
+        ```
+
+        Example for the setter:
+
+        ```python
+        import harrixpyssg as hsg
+
+        article = hsg.Article("./tests/data/test_01/test_01.md")
+        article.html_folder = "./build_site"
+        article.generate_html()
+        ```
         """
         return self._html_folder
 
     @html_folder.setter
-    def html_folder(self, new_value: Path) -> None:
-        self._html_folder = new_value
+    def html_folder(self, new_value: str | Path) -> None:
+        self._html_folder = Path(new_value)
 
     @property
     def html_filename(self) -> Path:
         """
         `Path`: Output filename of HTML file (only getter).
-        Example: `./build_site/index.html`.
+
+        ```python
+        import harrixpyssg as hsg
+
+        article = hsg.Article("./tests/data/test_01/test_01.md")
+        article.html_folder = "./build_site"
+        print(article.html_filename)
+        # build_site\index.html
+        ```
         """
         return self.html_folder / "index.html"
 
@@ -268,6 +413,17 @@ class Article:
         """
         `list[str]`: Array of featured images. The files must be in the same folder
         as the Markdown file. Example: `["featured-image.png", "featured-image.svg"]`.
+
+        Example:
+
+        ```python
+        import harrixpyssg as hsg
+
+        article = hsg.Article("./tests/data/test_01/test_01.md")
+        article.html_folder = "./build_site"
+        print(article.featured_image_filenames)
+        # ['featured-image.png']
+        ```
         """
         res = []
         for file in self.md_filename.parent.iterdir():
@@ -282,6 +438,17 @@ class Article:
         Args:
 
         - `md_filename` (str | Path): Full filename of the Markdown file.
+
+        Example:
+
+        ```python
+        import harrixpyssg as hsg
+
+        article = hsg.Article("./tests/data/test_01/test_01.md")
+        article.load("./tests/data/test_02/test_02.md")
+        print(article.md_filename)
+        # tests\data\test_02\test_02.md
+        ```
         """
         self._md_filename = Path(md_filename)
         try:
@@ -296,19 +463,31 @@ class Article:
         except:
             logger.error(f'The file "{md_filename}" does not open')
 
-    def generate_html(self, html_folder: str | Path) -> Article:
+    def generate_html(self, html_folder=None) -> Article:
         """
         Generate HTML file with folders from the Markdown file with folders.
 
         Args:
 
-        - `html_folder` (str | Path): Output folder of the HTML file.
+        - `html_folder` (str | Path): Output folder of the HTML file. Default: `None`.
 
         Returns:
 
         - `Article`: Returns itself, that is, the article with calculated data.
+
+        Example:
+
+        ```python
+        import harrixpyssg as hsg
+
+        md_filename = "./tests/data/test_01/test_01.md"
+        html_folder = "./build_site"
+        article = hsg.Article(md_filename)
+        article.generate_html(html_folder)
+        ```
         """
-        self.html_folder = Path(html_folder)
+        if html_folder is not None:
+            self.html_folder = html_folder
 
         self._clear_html_folder_directory()
         self._copy_dirs()
@@ -321,7 +500,8 @@ class Article:
         """
         This method clears `self.html_folder` with sub-directories.
         """
-        shutil.rmtree(self.html_folder)
+        if self.html_folder.exists() and self.html_folder.is_dir():
+            shutil.rmtree(self.html_folder)
         self.html_folder.mkdir(parents=True, exist_ok=True)
 
     def _copy_dirs(self) -> None:

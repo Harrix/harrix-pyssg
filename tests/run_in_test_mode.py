@@ -6,8 +6,8 @@ import harrixpyssg as hsg
 
 def main():
     ...
-    # run_test()
-    run_test_article()
+    run_test()
+    # run_test_article()
     # run_test_article_test_03()
     # run_test_article_md_content()
     # run_test_article_md_yaml()
@@ -16,11 +16,8 @@ def main():
 
 
 def run_test():
-    md_filename = "./tests/data/test_01/test_01.md"
-    a = hsg.Article(md_filename)
-    a.md_content_no_yaml = "# New Title"
-    print(a.md_content)
-    # a.save()
+    if True:
+        ...
 
 
 def run_test_article():
