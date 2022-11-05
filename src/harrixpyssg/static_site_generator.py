@@ -2,15 +2,19 @@
 ## Usage examples
 
 ```python
+import harrixpyssg as hsg
+
 md_folder = "C:/GitHub/harrix.dev/content"
-html_folder = 'C:/GitHub/harrix.dev/build_site'
+html_folder = "C:/GitHub/harrix.dev/build_site"
 sg = hsg.StaticSiteGenerator(md_folder)
 sg.generate_site(html_folder)
 ```
 
 ```python
+import harrixpyssg as hsg
+
 md_folder = "./tests/data"
-html_folder = './build_site'
+html_folder = "./build_site"
 sg = hsg.StaticSiteGenerator(md_folder)
 sg.generate_site(html_folder)
 ```
@@ -60,23 +64,51 @@ from .custom_logger import logger
 
 class StaticSiteGenerator:
     """
-    Static site generator. The generator collects Markdown files from several folders.
-
-    Attributes:
-
-    - `md_folder` (str | Path): Folder with Markdown files. Example: `"./tests/data"`.
-    - `articles` (list[Article]): list of all articles that is generated
-      in the `__init__()`.
-    - `html_folder` (str | Path): Output folder of HTML files.
-      Example: `"./build_site"`.
+    Static site generator. It collects Markdown files from folder and sub-folders.
     """
 
     def __init__(self, md_folder: str | Path):
-        self.md_folder = Path(md_folder)
+        """
+        The generator collects Markdown files from folder and sub-folders.
+        Constructor `__init__` does not generate new files and folders.
+
+        Attributes:
+
+        - `md_folder` (str | Path): Folder with Markdown files. Example: `"./tests/data"`.
+        - `articles` (list[Article]): list of all articles that is generated
+        in the `__init__()`.
+        - `html_folder` (str | Path): Output folder of HTML files.
+        Example: `"./build_site"`.
+
+        Example:
+
+        ```python
+        import harrixpyssg as hsg
+
+        sg = hsg.StaticSiteGenerator("C:/GitHub/harrix.dev/content")
+        ```
+        """
+        self._md_folder = Path(md_folder)
         self.articles: list[Article] = list()
         self.html_folder = Path()
 
         self.__get_info_about_articles()
+
+    @property
+    def md_folder(self):
+        """
+        `Path`: Folder with Markdown files (only getter).
+
+        ```python
+        import harrixpyssg as hsg
+
+        md_folder = "./tests/data"
+        sg = hsg.StaticSiteGenerator(md_folder)
+        print(sg._md_folder)
+        # tests\data
+        ```
+        """
+        return self._md_folder
 
     def generate_site(self, html_folder: str | Path) -> StaticSiteGenerator:
         """
