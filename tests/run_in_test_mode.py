@@ -11,7 +11,7 @@ def main():
     # run_test_article_test_03()
     # run_test_article_md_content()
     # run_test_article_md_yaml()
-    # run_test_static_site_generator()
+    run_test_static_site_generator()
     # run_get_yaml_tags()
 
 
@@ -46,7 +46,6 @@ def run_test_article_md_yaml():
 
 
 def run_test_static_site_generator():
-    # md_folder = "C:/GitHub/harrix.dev/content"
     md_folder = "./tests/data"
     html_folder = "./build_site"
     sg = hsg.StaticSiteGenerator(md_folder)
