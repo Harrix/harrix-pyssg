@@ -1,38 +1,4 @@
 """
-## Example of folder structure
-
-Folder with the Markdown files:
-
-```text
-data
-├─ test
-│  ├─ featured-image.png
-│  ├─ img
-│  │  └─ test-image.png
-│  └─ test.md
-└─ test2
-   ├─ featured-image.png
-   ├─ img
-   │  └─ test-image.png
-   └─ test2.md
-```
-
-Output HTML folder:
-
-```text
-build_site
-├─ test
-│  ├─ featured-image.png
-│  ├─ img
-│  │  └─ test-image.png
-│  └─ index.html
-└─ test2
-   ├─ featured-image.png
-   ├─ img
-   │  └─ test-image.png
-   └─ index.html
-```
-
 ## Usage examples
 
 ```python
@@ -47,6 +13,40 @@ md_folder = "./tests/data"
 html_folder = './build_site'
 sg = hsg.StaticSiteGenerator(md_folder)
 sg.generate_site(html_folder)
+```
+
+## Example of folder structure
+
+Folder with the Markdown files:
+
+```text
+data
+├─ test_01
+│  ├─ featured-image.png
+│  ├─ img
+│  │  └─ test-image.png
+│  └─ test_01.md
+└─ test_02
+   ├─ featured-image.png
+   ├─ img
+   │  └─ test-image.png
+   └─ test_02.md
+```
+
+Output HTML folder:
+
+```text
+build_site
+├─ test_01
+│  ├─ featured-image.png
+│  ├─ img
+│  │  └─ test-image.png
+│  └─ index.html
+└─ test_02
+   ├─ featured-image.png
+   ├─ img
+   │  └─ test-image.png
+   └─ index.html
 ```
 """
 from __future__ import annotations
