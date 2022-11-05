@@ -37,13 +37,13 @@ class TestHarrixpyssg(unittest.TestCase):
     def test_article__04(self):
         md_filename = "./tests/data/test_01/test_01.md"
         a = hsg.Article(md_filename)
-        a.md_without_yaml = "# New Title"
-        self.assertEqual(len(a.md_without_yaml.splitlines()), 1)
+        a.md_content_without_yaml = "# New Title"
+        self.assertEqual(len(a.md_content_without_yaml.splitlines()), 1)
 
     def test_article__05(self):
         md_filename = "./tests/data/test_01/test_01.md"
         a = hsg.Article(md_filename)
-        a.md_without_yaml = "# New Title"
+        a.md_content_without_yaml = "# New Title"
         self.assertEqual(
             len(a.md_content.splitlines()), len(TEST_MD_CONTENT.splitlines()) - 2
         )

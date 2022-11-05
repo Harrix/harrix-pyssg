@@ -150,10 +150,9 @@ class Article:
     def md_filename(self, new_value: str | Path):
         self._md_filename = Path(new_value)
         try:
-            self.md_content = Path(self.md_filename).read_text(encoding="utf8")
+            self._md_content = Path(self.md_filename).read_text(encoding="utf8")
         except:
             logger.error(f'The file "{new_value}" does not open')
-        # Follow @md_filename.md_content
 
     @property
     def md_content(self):
@@ -174,12 +173,8 @@ class Article:
         """
         return self._md_content
 
-    @md_content.setter
-    def md_content(self, new_value: str):
-        self._md_content = new_value
-
     @property
-    def md_without_yaml(self):
+    def md_content_without_yaml(self):
         """
         `str`: Text of the article in the form of Markdown without YAML text. Example:
 
@@ -191,9 +186,9 @@ class Article:
         """
         return re.sub(r"^---(.|\n)*?---\n", "", self.md_content.lstrip()).lstrip()
 
-    @md_without_yaml.setter
-    def md_without_yaml(self, new_value: str):
-        self.md_content = f"{self.md_yaml}\n\n{new_value}"
+    @md_content_without_yaml.setter
+    def md_content_without_yaml(self, new_value: str):
+        self._md_content = f"{self.md_yaml}\n\n{new_value}"
 
     @property
     def md_yaml_dict(self):
