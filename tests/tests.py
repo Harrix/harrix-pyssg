@@ -54,13 +54,11 @@ class TestHarrixpyssg(unittest.TestCase):
         a = hsg.Article(md_filename)
         self.assertEqual(len(a.featured_image_filenames), 1)
 
-    # def test_article__07(self):
-    #     md_filename = "./tests/data/test_01/test_01.md"
-    #     a = hsg.Article(md_filename)
-    #     a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
-    #     self.assertEqual(
-    #         len(a.md_content.splitlines()), len(TEST_MD_CONTENT.splitlines()) - 2
-    #     )
+    def test_article__07(self):
+        md_filename = "./tests/data/test_01/test_01.md"
+        a = hsg.Article(md_filename)
+        a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
+        self.assertEqual(a.md_content.splitlines()[1], "date: 2022-11-04")
 
     # def test_static_site_generator__01(self):
     #     md_folder = "./tests/data"
