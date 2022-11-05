@@ -89,7 +89,7 @@ class StaticSiteGenerator:
         ```
         """
         self._md_folder = Path(md_folder)
-        self.articles: list[Article] = list()
+        self._articles: list[Article] = list()
         self.html_folder = Path()
 
         self.__get_info_about_articles()
@@ -104,11 +104,28 @@ class StaticSiteGenerator:
 
         md_folder = "./tests/data"
         sg = hsg.StaticSiteGenerator(md_folder)
-        print(sg._md_folder)
+        print(sg.md_folder)
         # tests\data
         ```
         """
         return self._md_folder
+
+    @property
+    def articles(self):
+        """
+        `list[Article]`: list of all articles that is generated in the `__init__()`.
+
+        ```python
+        import harrixpyssg as hsg
+
+        md_folder = "./tests/data"
+        sg = hsg.StaticSiteGenerator(md_folder)
+        articles = sg.articles # list of all articles
+        print(sg.articles[0].md_filename)
+        # C:\GitHub\harrix-pyssg\tests\data\test_01\test_01.md
+        ```
+        """
+        return self._articles
 
     def generate_site(self, html_folder: str | Path) -> StaticSiteGenerator:
         """

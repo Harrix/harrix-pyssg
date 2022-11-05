@@ -83,6 +83,11 @@ class TestHarrixpyssg(unittest.TestCase):
     #             count_files += 1
     #     self.assertEqual(count_files, 7)
 
+    def test_static_site_generator__02(self):
+        md_folder = "./tests/data"
+        sg = hsg.StaticSiteGenerator(md_folder)
+        self.assertEqual(len(sg.articles), 3)
+
 
 if __name__ == "__main__":
     unittest.main()
