@@ -331,7 +331,8 @@ class Article:
 
     def _copy_featured_images(self) -> None:
         """
-        This method copies all featured images from the directory with the Markdown file.
+        This method copies all featured images from the directory with
+        the Markdown file.
         """
         for filename in self.featured_image_filenames:
             file = self.md_filename.parent / filename
