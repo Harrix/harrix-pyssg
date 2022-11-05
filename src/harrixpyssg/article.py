@@ -155,7 +155,7 @@ class Article:
         article = hsg.Article("C:/GitHub/harrix-pyssg/tests/data/test_01/test_01.md")
         ```
         """
-        self._html_folder = Path()
+        self._html_folder = None
         self.load(md_filename)
 
     @property
@@ -361,9 +361,9 @@ class Article:
         return md.render(self.md_content).lstrip()
 
     @property
-    def html_folder(self) -> Path:
+    def html_folder(self) -> Path | None:
         """
-        `Path`: Output folder of HTML file.
+        `Path | None`: Output folder of HTML file.
 
         Example for the getter:
 
@@ -373,7 +373,7 @@ class Article:
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.generate_html("./build_site")
         print(article.html_folder)
-        # build_site
+        # C:\GitHub\harrix-pyssg\build_site
         ```
 
         Example for the setter:
@@ -386,16 +386,18 @@ class Article:
         article.generate_html()
         ```
         """
-        return self._html_folder
+        if self._html_folder is not None:
+            return self._html_folder.absolute()
+        return None
 
     @html_folder.setter
     def html_folder(self, new_value: str | Path) -> None:
         self._html_folder = Path(new_value)
 
     @property
-    def html_filename(self) -> Path:
+    def html_filename(self) -> Path | None:
         """
-        `Path`: Output filename of HTML file (only getter).
+        `Path | None`: Output filename of HTML file (only getter).
 
         ```python
         import harrixpyssg as hsg
@@ -403,10 +405,12 @@ class Article:
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.html_folder = "./build_site"
         print(article.html_filename)
-        # build_site\index.html
+        # C:\GitHub\harrix-pyssg\build_site\index.html
         ```
         """
-        return self.html_folder / "index.html"
+        if self._html_folder is not None:
+            return (self._html_folder / "index.html").absolute()
+        return None
 
     @property
     def featured_image_filenames(self) -> list[str]:
