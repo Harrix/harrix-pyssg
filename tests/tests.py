@@ -60,6 +60,12 @@ class TestHarrixpyssg(unittest.TestCase):
         a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
         self.assertEqual(a.md_content.splitlines()[1], "date: 2022-11-04")
 
+    def test_article__08(self):
+        md_filename = "./tests/data/test_01/test_01.md"
+        a = hsg.Article(md_filename)
+        a.md_yaml_dict["categories"].append("test")
+        self.assertEqual(a.md_content.splitlines()[2], "categories: [it, web, test]")
+
     # def test_static_site_generator__01(self):
     #     md_folder = "./tests/data"
     #     html_folder = "./build_site"
