@@ -6,4 +6,8 @@ tags: [CSS]
 
 # Title
 
+![Featured image](featured-image.png)
+
 Hello, world!
+
+![Alt text](img/test-image.png)
