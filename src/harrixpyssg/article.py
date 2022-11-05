@@ -161,7 +161,7 @@ class Article:
     @property
     def md_filename(self) -> Path:
         """
-        `str | Path`: Full filename of the Markdown file (only getter).
+        `Path`: Full filename of the Markdown file (only getter).
         Example: `"./tests/data/test_01/test_01.md"`.
 
         ```python
