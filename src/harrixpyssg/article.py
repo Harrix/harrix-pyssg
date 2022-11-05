@@ -135,28 +135,16 @@ class Article:
 
         - `md_filename` (str | Path): Full filename of the Markdown file.
         """
-        self._md_content = ""
-        self._md_yaml_dict = None
         self._html_folder = Path()
-
-        self.md_filename = Path(md_filename)
-        # Follow @md_filename.setter
+        self.load(md_filename)
 
     @property
     def md_filename(self) -> Path:
         """
-        `str | Path`: Full filename of the Markdown file.
+        `str | Path`: Full filename of the Markdown file (only getter).
         Example: `"./tests/data/test_01/test_01.md"`.
         """
         return self._md_filename
-
-    @md_filename.setter
-    def md_filename(self, new_value: str | Path) -> None:
-        self._md_filename = Path(new_value)
-        try:
-            self._md_content = Path(self.md_filename).read_text(encoding="utf8")
-        except:
-            logger.error(f'The file "{new_value}" does not open')
 
     @property
     def md_content(self) -> str:
@@ -175,10 +163,10 @@ class Article:
         Hello, world!
         ```
         """
-        return self._md_content
+        return f"{self.md_yaml}\n\n{self.md_content_no_yaml}".lstrip()
 
     @property
-    def md_content_without_yaml(self) -> str:
+    def md_content_no_yaml(self) -> str:
         """
         `str`: Text of the article in the form of Markdown without YAML text. Example:
 
@@ -188,16 +176,17 @@ class Article:
         Hello, world!
         ```
         """
-        return re.sub(r"^---(.|\n)*?---\n", "", self.md_content.lstrip()).lstrip()
+        return self._md_content_no_yaml
 
-    @md_content_without_yaml.setter
-    def md_content_without_yaml(self, new_value: str) -> None:
-        self._md_content = f"{self.md_yaml}\n\n{new_value}"
+    @md_content_no_yaml.setter
+    def md_content_no_yaml(self, new_value: str) -> None:
+        self._md_content_no_yaml = new_value
 
     @property
     def md_yaml_dict(self) -> dict:
         """
-        `dict`: YAML from the Markdown file. Example:
+        `dict`: YAML from the Markdown file (only getter, but you can change
+        the contents of the dictionary ). Example:
 
         ```python
         {'date': datetime.date(2022, 9, 18),
@@ -205,18 +194,7 @@ class Article:
         'tags': ['CSS']}
         ```
         """
-        if self._md_yaml_dict is not None:
-            return self._md_yaml_dict
-        find = re.search(r"^---(.|\n)*?---\n", self.md_content.lstrip(), re.DOTALL)
-        self._md_yaml_dict = dict()
-        if find:
-            yaml_text = find.group().rstrip()[:-4].rstrip()
-            self._md_yaml_dict = yaml.safe_load(yaml_text)
         return self._md_yaml_dict
-
-    @md_yaml_dict.setter
-    def md_yaml_dict(self, new_value: dict) -> None:
-        self._md_yaml_dict = new_value
 
     @property
     def md_yaml(self) -> str:
@@ -296,6 +274,27 @@ class Article:
             if file.is_file() and file.name.startswith("featured-image"):
                 res.append(file.name)
         return res
+
+    def load(self, md_filename: str | Path) -> None:
+        """
+        Loads a new Markdown file.
+
+        Args:
+
+        - `md_filename` (str | Path): Full filename of the Markdown file.
+        """
+        self._md_filename = Path(md_filename)
+        try:
+            md = Path(self.md_filename).read_text(encoding="utf8").lstrip()
+
+            self._md_content_no_yaml = re.sub(r"^---(.|\n)*?---\n", "", md).lstrip()
+
+            find = re.search(r"^---(.|\n)*?---\n", md, re.DOTALL)
+            if find:
+                yaml_text = find.group().rstrip()[:-4].rstrip()
+                self._md_yaml_dict = yaml.safe_load(yaml_text)
+        except:
+            logger.error(f'The file "{md_filename}" does not open')
 
     def generate_html(self, html_folder: str | Path) -> Article:
         """
