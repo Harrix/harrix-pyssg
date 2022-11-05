@@ -72,19 +72,23 @@ HTML file `index.html`:
 
 # List of processed YAML tags
 
-| Tag          | Description                                                                                                                                                                                         |
-| ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `date`       | Date of creation of the article.                                                                                                                                                                    |
-| `update`     | Date of the article update.                                                                                                                                                                         |
-| `categories` | The list of categories to which the article belongs. Spaces in category names are not allowed.                                                                                                      |
-| `tags`       | The list of tags to which the article belongs. Spaces in tags names are not allowed.                                                                                                                |
-| `draft`      | `true` if the article is in drafts and should not be published. If the tag is not in YAML, the default value is false`.                                                                             |
-| `latex`      | `true` if $LaTeX$ is used in the article. Example: `$y = x^{2}$`. If the tag is not in YAML, the default value is `false`.                                                                             |
-| `related-id` | The key for linking several articles into a series of articles. If this parameter is present, then at the bottom of the article there will be a list of all articles with the same parameter value. |
-| `demo`       |                                                                                                                                                                                                     |
-| `download`   |                                                                                                                                                                                                     |
-| `link`       |                                                                                                                                                                                                     |
-| `source`     |                                                                                                                                                                                                     |
+- `date`: Date of creation of the article.
+- `update`: Date of the article update.
+- `categories`: The list of categories to which the article belongs. Spaces in category
+  names are not allowed.
+- `tags`: The list of tags to which the article belongs. Spaces in tags names are
+  not allowed.
+- `draft`: `true` if the article is in drafts and should not be published. If the tag
+  is not in YAML, the default value is false`.
+- `latex`: `true` if $LaTeX$ is used in the article. Example: `$y = x^{2}$`.
+  If the tag is not in YAML, the default value is `false`.
+- `related-id`: The key for linking several articles into a series of articles.
+  If this parameter is present, then at the bottom of the article there will be
+  a list of all articles with the same parameter value.
+- `demo`:
+- `download`:
+- `link`:
+- `source`:
 
 TODO
 
