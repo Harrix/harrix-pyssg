@@ -200,6 +200,10 @@ class StaticSiteGenerator:
         return self
 
     def _get_info_about_articles(self):
+        """
+        This method gets info from all Markdown files and fills
+        the list `self.articles`.
+        """
         for item in filter(
             lambda path: not any((part for part in path.parts if part.startswith("."))),
             Path(self.md_folder).rglob("*"),
