@@ -86,7 +86,7 @@ class StaticSiteGenerator:
         ```
         """
         self._md_folder = Path(md_folder)
-        self._articles = list()
+        self._articles:list[Article] = list()
         self._html_folder = None
 
         self._get_info_about_articles()
@@ -198,6 +198,32 @@ class StaticSiteGenerator:
             article.generate_html(html_folder_article)
 
         return self
+
+    def get_set_variables_from_yaml(self):
+        """
+        This method generates a set of all variables from YAML from all articles.
+
+        Returns:
+
+        - `set[str]`: Sorted set of all variables from YAML from all articles.
+          Example: `['categories', 'date', 'tags']`.
+
+        Example:
+
+        ```python
+        import harrixpyssg as hsg
+
+        md_folder = "./tests/data"
+        sg = hsg.StaticSiteGenerator(md_folder)
+        print(sg.get_set_variables_from_yaml())
+        # ['categories', 'date', 'tags']
+        ```
+        """
+        res = set()
+        for article in self.articles:
+            for key in article.md_yaml_dict:
+                res.add(key)
+        return sorted(list(res))
 
     def _get_info_about_articles(self):
         """

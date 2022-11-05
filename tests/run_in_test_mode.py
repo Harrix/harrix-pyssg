@@ -6,13 +6,13 @@ import harrixpyssg as hsg
 
 def main():
     ...
-    run_test()
+    # run_test()
     # run_test_article()
     # run_test_article_test_03()
     # run_test_article_md_content()
     # run_test_article_md_yaml()
-    run_test_static_site_generator()
-    # run_get_yaml_tags()
+    # run_test_static_site_generator()
+    run_get_set_variables_from_yaml()
 
 
 def run_test():
@@ -52,10 +52,11 @@ def run_test_static_site_generator():
     sg.generate_site(html_folder)
 
 
-def run_get_yaml_tags():
-    md_folder = "C:/GitHub/harrix.dev/content"
+def run_get_set_variables_from_yaml():
+    # md_folder = "C:/GitHub/harrix.dev/content"
+    md_folder = "./tests/data"
     sg = hsg.StaticSiteGenerator(md_folder)
-    sg.get_yaml()
+    print(sg.get_set_variables_from_yaml())
 
 
 if __name__ == "__main__":

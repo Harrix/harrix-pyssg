@@ -88,6 +88,11 @@ class TestHarrixpyssg(unittest.TestCase):
         sg = hsg.StaticSiteGenerator(md_folder)
         self.assertEqual(len(sg.articles), 3)
 
+    def test_static_site_generator__get_set_variables_from_yaml(self):
+        md_folder = "./tests/data"
+        sg = hsg.StaticSiteGenerator(md_folder)
+        self.assertEqual(len(sg.get_set_variables_from_yaml()), 3)
+
 
 if __name__ == "__main__":
     unittest.main()
