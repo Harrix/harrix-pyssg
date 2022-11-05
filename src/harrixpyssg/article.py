@@ -169,13 +169,13 @@ class Article:
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         print(article.md_filename)
-        # tests\data\test_01\test_01.md
+        # C:\GitHub\harrix-pyssg\tests\data\test_01\test_01.md
         ```
 
         You can upload a new file and change the value of this variable via
         method `load(path_new_md_file)`.
         """
-        return self._md_filename
+        return self._md_filename.absolute()
 
     @property
     def md_content(self) -> str:
