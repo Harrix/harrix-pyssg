@@ -55,6 +55,7 @@ import shutil
 from pathlib import Path
 
 from .article import Article
+from .custom_logger import logger
 
 
 class StaticSiteGenerator:
