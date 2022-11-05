@@ -120,9 +120,6 @@ from .custom_logger import logger
 class Article:
     """
     All information about one article from the site.
-
-    Attributes:
-    - `yaml_dict` (dict): List of article parameters from YAML. # TODO
     """
 
     def __init__(self, md_filename: str | Path):
