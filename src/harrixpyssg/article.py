@@ -139,7 +139,7 @@ class Article:
         # Follow @md_filename.setter
 
     @property
-    def md_filename(self):
+    def md_filename(self) -> Path:
         """
         `str | Path`: Full filename of the Markdown file.
         Example: `"./tests/data/test_01/test_01.md"`.
@@ -147,7 +147,7 @@ class Article:
         return self._md_filename
 
     @md_filename.setter
-    def md_filename(self, new_value: str | Path):
+    def md_filename(self, new_value: str | Path) -> None:
         self._md_filename = Path(new_value)
         try:
             self._md_content = Path(self.md_filename).read_text(encoding="utf8")
@@ -155,9 +155,9 @@ class Article:
             logger.error(f'The file "{new_value}" does not open')
 
     @property
-    def md_content(self):
+    def md_content(self) -> str:
         """
-        `str`: The contents of the Markdown file. Example:
+        `str`: The contents of the Markdown file (only getter). Example:
 
         ```markdown
         ---
@@ -174,7 +174,7 @@ class Article:
         return self._md_content
 
     @property
-    def md_content_without_yaml(self):
+    def md_content_without_yaml(self) -> str:
         """
         `str`: Text of the article in the form of Markdown without YAML text. Example:
 
@@ -187,11 +187,11 @@ class Article:
         return re.sub(r"^---(.|\n)*?---\n", "", self.md_content.lstrip()).lstrip()
 
     @md_content_without_yaml.setter
-    def md_content_without_yaml(self, new_value: str):
+    def md_content_without_yaml(self, new_value: str) -> None:
         self._md_content = f"{self.md_yaml}\n\n{new_value}"
 
     @property
-    def md_yaml_dict(self):
+    def md_yaml_dict(self) -> dict:
         """
         `dict`: YAML from the Markdown file. Example:
 
@@ -211,11 +211,11 @@ class Article:
         return self._md_yaml_dict
 
     @md_yaml_dict.setter
-    def md_yaml_dict(self, new_value: dict):
+    def md_yaml_dict(self, new_value: dict) -> None:
         self._md_yaml_dict = new_value
 
     @property
-    def md_yaml(self):
+    def md_yaml(self) -> str:
         """
         `str`: YAML from the Markdown file (only getter). Example:
 
@@ -241,7 +241,7 @@ class Article:
         )
 
     @property
-    def html_code(self):
+    def html_code(self) -> str:
         """
         `str`: HTML clean code from the Markdown code (only getter). Example:
 
@@ -263,18 +263,18 @@ class Article:
         return md.render(self.md_content).lstrip()
 
     @property
-    def html_folder(self):
+    def html_folder(self) -> Path:
         """
         `Path`: Output folder of HTML file. Example: `./build_site`.
         """
         return self._html_folder
 
     @html_folder.setter
-    def html_folder(self, new_value: Path):
+    def html_folder(self, new_value: Path) -> None:
         self._html_folder = new_value
 
     @property
-    def html_filename(self):
+    def html_filename(self) -> Path:
         """
         `Path`: Output filename of HTML file (only getter).
         Example: `./build_site/index.html`.
@@ -282,7 +282,7 @@ class Article:
         return self.html_folder / "index.html"
 
     @property
-    def featured_image_filenames(self):
+    def featured_image_filenames(self) -> list[str]:
         """
         `list[str]`: Array of featured images. The files must be in the same folder
         as the Markdown file. Example: `["featured-image.png", "featured-image.svg"]`.
