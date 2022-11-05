@@ -497,13 +497,16 @@ class Article:
         self._copy_dirs()
         self._copy_featured_images()
 
-        self.html_filename.write_text(self.html_code, encoding="utf8")
+        if self.html_filename is not None:
+            self.html_filename.write_text(self.html_code, encoding="utf8")
         return self
 
     def _clear_html_folder_directory(self) -> None:
         """
         This method clears `self.html_folder` with sub-directories.
         """
+        if self.html_folder is None:
+            return
         if self.html_folder.exists() and self.html_folder.is_dir():
             shutil.rmtree(self.html_folder)
         self.html_folder.mkdir(parents=True, exist_ok=True)
@@ -512,6 +515,8 @@ class Article:
         """
         This method copies all folders from the directory with the Markdown file.
         """
+        if self.html_folder is None:
+            return
         for file in Path(self.md_filename).parent.iterdir():
             if file.is_dir():
                 shutil.copytree(file, self.html_folder / file.name, dirs_exist_ok=True)
@@ -521,6 +526,8 @@ class Article:
         This method copies all featured images from the directory with
         the Markdown file.
         """
+        if self.html_folder is None:
+            return
         for filename in self.featured_image_filenames:
             file = self.md_filename.parent / filename
             output_file = self.html_folder / filename

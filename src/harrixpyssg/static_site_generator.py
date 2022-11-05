@@ -75,8 +75,6 @@ class StaticSiteGenerator:
         Attributes:
 
         - `md_folder` (str | Path): Folder with Markdown files. Example: `"./tests/data"`.
-        - `articles` (list[Article]): list of all articles that is generated
-        in the `__init__()`.
         - `html_folder` (str | Path): Output folder of HTML files.
         Example: `"./build_site"`.
 
