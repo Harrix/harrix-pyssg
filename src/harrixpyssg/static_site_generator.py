@@ -74,9 +74,8 @@ class StaticSiteGenerator:
 
         Attributes:
 
-        - `md_folder` (str | Path): Folder with Markdown files. Example: `"./tests/data"`.
-        - `html_folder` (str | Path): Output folder of HTML files.
-        Example: `"./build_site"`.
+        - `md_folder` (str | Path): Folder with Markdown files.
+          Example: `"./tests/data"`.
 
         Example:
 
@@ -87,10 +86,10 @@ class StaticSiteGenerator:
         ```
         """
         self._md_folder = Path(md_folder)
-        self._articles: list[Article] = list()
-        self.html_folder = Path()
+        self._articles = list()
+        self._html_folder = None
 
-        self.__get_info_about_articles()
+        self._get_info_about_articles()
 
     @property
     def md_folder(self):
@@ -103,10 +102,10 @@ class StaticSiteGenerator:
         md_folder = "./tests/data"
         sg = hsg.StaticSiteGenerator(md_folder)
         print(sg.md_folder)
-        # tests\data
+        # C:\GitHub\harrix-pyssg\tests\data
         ```
         """
-        return self._md_folder
+        return self._md_folder.absolute()
 
     @property
     def articles(self):
@@ -125,21 +124,72 @@ class StaticSiteGenerator:
         """
         return self._articles
 
-    def generate_site(self, html_folder: str | Path) -> StaticSiteGenerator:
+    @property
+    def html_folder(self) -> Path | None:
         """
-        This method generates HTML files with folders from the Markdown files.
+        `Path | None`: Output folder of HTML files.
+
+        Example for the getter:
+
+        ```python
+        import harrixpyssg as hsg
+
+        md_folder = "./tests/data"
+        html_folder = "./build_site"
+        sg = hsg.StaticSiteGenerator(md_folder)
+        sg.generate_site(html_folder)
+        print(sg.html_folder)
+        # C:\GitHub\harrix-pyssg\build_site
+        ```
+
+        Example for the setter:
+
+        ```python
+        import harrixpyssg as hsg
+
+        md_folder = "./tests/data"
+        sg = hsg.StaticSiteGenerator(md_folder)
+        sg.html_folder = "./build_site"
+        sg.generate_site()
+        ```
+        """
+        if self._html_folder is not None:
+            return self._html_folder.absolute()
+        return None
+
+    @html_folder.setter
+    def html_folder(self, new_value: str | Path) -> None:
+        self._html_folder = Path(new_value)
+
+    def generate_site(self, html_folder=None) -> StaticSiteGenerator:
+        """
+        This method generates HTML files with folders from Markdown files.
 
         Args:
 
-        - `html_folder` (str | Path): Output folder of the HTML files.
+        - `html_folder` (str | Path): Output folder of the HTML files. Default: `None`.
 
         Returns:
 
         - `Article`: Returns itself.
-        """
-        self.html_folder = Path(html_folder)
 
-        self.__clear_html_folder_directory()
+        Example:
+
+        ```python
+        import harrixpyssg as hsg
+
+        md_folder = "./tests/data"
+        html_folder = "./build_site"
+        sg = hsg.StaticSiteGenerator(md_folder)
+        sg.generate_site(html_folder)
+        ```
+        """
+        if html_folder is not None:
+            self.html_folder = html_folder
+        if self.html_folder is None:
+            return self
+
+        self._clear_html_folder_directory()
 
         for article in self.articles:
             parts = list(article.md_filename.parts[len(self.md_folder.parts) : -1])
@@ -149,7 +199,7 @@ class StaticSiteGenerator:
 
         return self
 
-    def __get_info_about_articles(self):
+    def _get_info_about_articles(self):
         for item in filter(
             lambda path: not any((part for part in path.parts if part.startswith("."))),
             Path(self.md_folder).rglob("*"),
@@ -157,9 +207,12 @@ class StaticSiteGenerator:
             if item.is_file() and item.suffix.lower() == ".md":
                 self.articles.append(Article(item))
 
-    def __clear_html_folder_directory(self) -> None:
+    def _clear_html_folder_directory(self) -> None:
         """
         This method clears `self.html_folder` with sub-directories.
         """
-        shutil.rmtree(self.html_folder)
+        if self.html_folder is None:
+            return
+        if self.html_folder.exists() and self.html_folder.is_dir():
+            shutil.rmtree(self.html_folder)
         self.html_folder.mkdir(parents=True, exist_ok=True)

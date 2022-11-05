@@ -69,19 +69,19 @@ class TestHarrixpyssg(unittest.TestCase):
         a.md_yaml_dict["categories"].append("test")
         self.assertEqual(a.md_content.splitlines()[2], "categories: [it, web, test]")
 
-    # def test_static_site_generator__01(self):
-    #     md_folder = "./tests/data"
-    #     html_folder = "./build_site"
-    #     sg = hsg.StaticSiteGenerator(md_folder)
-    #     sg.generate_site(html_folder)
-    #     count_files = 0
-    #     for item in filter(
-    #         lambda path: not any((part for part in path.parts if part.startswith("."))),
-    #         Path(html_folder).rglob("*"),
-    #     ):
-    #         if item.is_file():
-    #             count_files += 1
-    #     self.assertEqual(count_files, 7)
+    def test_static_site_generator__01(self):
+        md_folder = "./tests/data"
+        html_folder = "./build_site"
+        sg = hsg.StaticSiteGenerator(md_folder)
+        sg.generate_site(html_folder)
+        count_files = 0
+        for item in filter(
+            lambda path: not any((part for part in path.parts if part.startswith("."))),
+            Path(html_folder).rglob("*"),
+        ):
+            if item.is_file():
+                count_files += 1
+        self.assertEqual(count_files, 7)
 
     def test_static_site_generator__02(self):
         md_folder = "./tests/data"
