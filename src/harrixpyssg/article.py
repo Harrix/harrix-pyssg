@@ -82,7 +82,7 @@ HTML file `index.html`:
 <p><img src="img/test-image.png" alt="Alt text" /></p>
 ```
 
-# List of processed YAML tags
+# List of processed YAML variables
 
 - `date`: Date of creation of the article.
 - `update`: Date of the article update.
