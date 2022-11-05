@@ -156,6 +156,7 @@ class Article:
         ```
         """
         self._html_folder = None
+        self._md_yaml_dict = dict()
         self.load(md_filename)
 
     @property
