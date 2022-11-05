@@ -141,7 +141,7 @@ class Article:
     def __init__(self, md_filename: str | Path):
         """
         Get all info of the Markdown file with folders.
-        It does not generate new files and folders.
+        Constructor `__init__` does not generate new files and folders.
 
         Args:
 
