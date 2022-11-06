@@ -88,6 +88,15 @@ class TestHarrixpyssg(unittest.TestCase):
         sg = hsg.StaticSiteGenerator(md_folder)
         self.assertEqual(len(sg.articles), 3)
 
+    def test_static_site_generator__03(self):
+        md_folder = "./tests/data"
+        html_folder = "./build_site"
+        sg = hsg.StaticSiteGenerator(md_folder)
+        sg.html_folder = html_folder
+        sg._clear_html_folder_directory()
+        sg.generate_site()
+        self.assertEqual((Path(html_folder) / "test_01/index.html").exists(), True)
+
     def test_static_site_generator__get_set_variables_from_yaml(self):
         md_folder = "./tests/data"
         sg = hsg.StaticSiteGenerator(md_folder)
