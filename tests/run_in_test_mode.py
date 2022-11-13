@@ -11,7 +11,7 @@ def main():
     # run_test_article_test_03()
     # run_test_article_md_content()
     # run_test_article_md_yaml()
-    run_test_article_md_save()
+    # run_test_article_md_save()
     # run_test_static_site_generator()
     # run_get_set_variables_from_yaml()
 
@@ -51,7 +51,7 @@ def run_test_article_md_save():
     a = hsg.Article(md_filename)
     a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
     a.md_content_no_yaml = "# New title\n\nNew content"
-    a.save()
+    a.save()  # Be careful!
     new_content = Path(md_filename).read_text(encoding="utf8").lstrip()
     print(new_content)
 
