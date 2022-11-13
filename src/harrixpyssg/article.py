@@ -211,7 +211,7 @@ class Article:
         ![Alt text](img/test-image.png)
         ```
         """
-        return f"{self.md_yaml}\n\n{self.md_content_no_yaml}".lstrip()
+        return f"{self.md_yaml}\n\n{self.md_content_no_yaml.rstrip()}\n".lstrip()
 
     @property
     def md_content_no_yaml(self) -> str:
@@ -479,7 +479,7 @@ class Article:
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
-        a.md_content_no_yaml = "# New title\n\n New content"
+        a.md_content_no_yaml = "# New title\n\nNew content"
         a.save()
         ```
         """
