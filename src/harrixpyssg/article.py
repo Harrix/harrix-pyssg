@@ -468,6 +468,26 @@ class Article:
         except:
             logger.error(f'The file "{md_filename}" does not open')
 
+    def save(self) -> None:
+        """
+        Save the Markdown file.
+
+        Example:
+
+        ```python
+        import harrixpyssg as hsg
+
+        article = hsg.Article("./tests/data/test_01/test_01.md")
+        a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
+        a.md_content_no_yaml = "# New title\n\n New content"
+        a.save()
+        ```
+        """
+        try:
+            Path(self.md_filename).write_text(self.md_content, encoding="utf8")
+        except:
+            logger.error(f'The file "{self.md_filename}" does not save')
+
     def generate_html(self, html_folder=None) -> Article:
         """
         Generate HTML file with folders from the Markdown file with folders.
