@@ -50,7 +50,7 @@ def run_test_article_md_save():
     md_filename = "./tests/data/test_01/test_01.md"
     a = hsg.Article(md_filename)
     a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
-    a.md_content_no_yaml = "# New title\n\n New content"
+    a.md_content_no_yaml = "# New title\n\nNew content"
     a.save()
     new_content = Path(md_filename).read_text(encoding="utf8").lstrip()
     print(new_content)

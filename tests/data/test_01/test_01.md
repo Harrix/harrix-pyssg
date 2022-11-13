@@ -1,13 +1,9 @@
 ---
-date: 2022-09-18
+date: 2022-11-04
 categories: [it, web]
 tags: [CSS]
 ---
 
-# Title
+# New title
 
-![Featured image](featured-image.png)
-
-Hello, world!
-
-![Alt text](img/test-image.png)
+New content
