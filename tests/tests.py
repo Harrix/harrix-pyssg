@@ -69,6 +69,16 @@ class TestHarrixpyssg(unittest.TestCase):
         a.md_yaml_dict["categories"].append("test")
         self.assertEqual(a.md_content.splitlines()[2], "categories: [it, web, test]")
 
+    def test_article__save(self):
+        md_filename = "./tests/data/test_01/test_01.md"
+        a = hsg.Article(md_filename)
+        a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
+        a.md_content_no_yaml = "# New title\n\nNew content"
+        a.save()
+        new_content = Path(md_filename).read_text(encoding="utf8").lstrip()
+        self.assertEqual(len(new_content.splitlines()), 9)
+        Path(a.md_filename).write_text(TEST_MD_CONTENT, encoding="utf8")
+
     def test_static_site_generator__01(self):
         md_folder = "./tests/data"
         html_folder = "./build_site"
