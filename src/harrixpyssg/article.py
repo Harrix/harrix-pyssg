@@ -97,8 +97,8 @@ HTML file `index.html`:
 - `related-id`: The key for linking several articles into a series of articles.
   If this parameter is present, then at the bottom of the article there will be
   a list of all articles with the same parameter value.
-- `demo`:
-- `download`:
+- `demo`: The link to the demo page.
+- `download`: The link to the download file.
 - `link`:
 - `source`:
 
@@ -114,6 +114,10 @@ tags: [CSS, CSS-Grids]
 draft: false
 latex: true
 related-id: html-lesson
+demo: https://codepen.io/Harrix/pen/pZZZxg
+download: https://github.com/Harrix/harrix.dev-blog-2013/raw/main/latex-and-illustrator/files/LaTeX.zip
+link:
+source:
 ```
 """
 from __future__ import annotations
