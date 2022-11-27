@@ -114,6 +114,7 @@ demo: https://codepen.io/Harrix/pen/pZZZxg
 download: https://github.com/Harrix/harrix.dev-blog-2013/raw/main/latex-and-illustrator/files/LaTeX.zip
 ```
 """
+
 from __future__ import annotations
 
 import re
