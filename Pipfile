@@ -11,8 +11,8 @@ markdown-it-py = {extras = ["linkify", "plugins"], version = "*"}
 pyyaml = "*"
 
 [dev-packages]
-black = "*"
 harrix-pyssg = {editable = true, path = "."}
+black = "*"
 
 [requires]
 python_version = "3.10"
