@@ -99,9 +99,6 @@ HTML file `index.html`:
   a list of all articles with the same parameter value.
 - `demo`: The link to the demo page.
 - `download`: The link to the download file.
-- `link`:
-
-TODO
 
 Example:
 
@@ -115,7 +112,6 @@ latex: true
 related-id: html-lesson
 demo: https://codepen.io/Harrix/pen/pZZZxg
 download: https://github.com/Harrix/harrix.dev-blog-2013/raw/main/latex-and-illustrator/files/LaTeX.zip
-link:
 ```
 """
 from __future__ import annotations
