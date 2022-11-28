@@ -256,39 +256,6 @@ class Article:
         self._md_content_no_yaml = new_value
 
     @property
-    def md_content_no_yaml_parts(self) -> list:
-        """
-        """
-        res = list()
-        lines = self._md_content_no_yaml.splitlines()
-        starts = ["`" * 6, "`" * 5, "`" * 4, "`" * 3]
-        part = list()
-        is_code = False
-        start_code_now = None
-        for i in range(len(lines)):
-            for start_code in starts:
-                if not is_code and lines[i].startswith(start_code):
-                    if part:
-                        res.append(("\n".join(part), is_code))
-                    part = [lines[i]]
-                    is_code = True
-                    start_code_now = start_code
-                    break
-                elif lines[i].startswith(start_code) and start_code_now == start_code:
-                    part.append(lines[i])
-                    if part:
-                        res.append(("\n".join(part), is_code))
-                    is_code = False
-                    start_code_now = None
-                    part = list()
-                    break
-            else:
-                part.append(lines[i])
-        if part:
-            res.append(("\n".join(part), is_code))
-        return res
-
-    @property
     def md_yaml_dict(self) -> dict:
         """
         `dict`: YAML from the Markdown file (only getter, but you can change
@@ -585,3 +552,54 @@ class Article:
             file = self.md_filename.parent / filename
             output_file = self.html_folder / filename
             shutil.copy(file, output_file)
+
+    def _get_nocode_code_parts(self) -> list:
+        """ """
+        res = list()
+        lines = self.md_content_no_yaml.splitlines()
+        starts = ["`" * 6, "`" * 5, "`" * 4, "`" * 3]
+        start_space = " " * 4
+        part = list()
+        is_code = False
+        start_code_now = None
+        for i in range(len(lines)):
+            for start_code in starts:
+                if not is_code and lines[i].startswith(start_code):
+                    if part:
+                        res.append(("\n".join(part), is_code))
+                    part = [lines[i]]
+                    is_code = True
+                    start_code_now = start_code
+                    break
+                elif lines[i].startswith(start_code) and start_code_now == start_code:
+                    part.append(lines[i])
+                    if part:
+                        res.append(("\n".join(part), is_code))
+                    is_code = False
+                    start_code_now = None
+                    part = list()
+                    break
+            else:
+                if not is_code and lines[i].startswith(start_space):
+                    if i == 0 or lines[i - 1] == "":
+                        if part:
+                            res.append(("\n".join(part), is_code))
+                        part = [lines[i]]
+                        is_code = True
+                        start_code_now = start_space
+                elif is_code and start_code_now == start_space and i < len(lines) - 1:
+                    next_line = lines[i + 1].rstrip()
+                    if len(next_line) > 0 and next_line[0] != " ":
+                        part.append(lines[i])
+                        if part:
+                            res.append(("\n".join(part), is_code))
+                        is_code = False
+                        start_code_now = None
+                        part = list()
+                    else:
+                        part.append(lines[i])
+                else:
+                    part.append(lines[i])
+        if part:
+            res.append(("\n".join(part), is_code))
+        return res
