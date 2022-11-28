@@ -10,6 +10,7 @@ def main():
     # run_test_article()
     # run_test_article_test_03()
     # run_test_article_md_content()
+    run_test_article_md_content_no_yaml_parts()
     # run_test_article_md_yaml()
     # run_test_article_md_save()
     # run_test_static_site_generator()
@@ -37,6 +38,12 @@ def run_test_article_md_content():
     md_filename = "./tests/data/test_01/test_01.md"
     a = hsg.Article(md_filename)
     print(a.md_content)
+
+
+def run_test_article_md_content_no_yaml_parts():
+    md_filename = "./tests/data/test_03/test_03.md"
+    a = hsg.Article(md_filename)
+    print(*a.md_content_no_yaml_parts, sep="\n----------------\n")
 
 
 def run_test_article_md_yaml():

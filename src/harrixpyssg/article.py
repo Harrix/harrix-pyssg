@@ -256,6 +256,36 @@ class Article:
         self._md_content_no_yaml = new_value
 
     @property
+    def md_content_no_yaml_parts(self) -> list:
+        """
+        """
+        res = list()
+        lines = self._md_content_no_yaml.splitlines()
+        starts = ["`" * 6, "`" * 5, "`" * 4, "`" * 3]
+        part = list()
+        is_code = False
+        start_code_now = None
+        for i in range(len(lines)):
+            for start_code in starts:
+                if not is_code and lines[i].startswith(start_code):
+                    res.append(("\n".join(part), is_code))
+                    part = [lines[i]]
+                    is_code = True
+                    start_code_now = start_code
+                    break
+                elif lines[i].startswith(start_code) and start_code_now == start_code:
+                    part.append(lines[i])
+                    res.append(("\n".join(part), is_code))
+                    is_code = False
+                    start_code_now = None
+                    part = list()
+                    break
+            else:
+                part.append(lines[i])
+        res.append(("\n".join(part), is_code))
+        return res
+
+    @property
     def md_yaml_dict(self) -> dict:
         """
         `dict`: YAML from the Markdown file (only getter, but you can change
