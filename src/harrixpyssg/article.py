@@ -268,21 +268,24 @@ class Article:
         for i in range(len(lines)):
             for start_code in starts:
                 if not is_code and lines[i].startswith(start_code):
-                    res.append(("\n".join(part), is_code))
+                    if part:
+                        res.append(("\n".join(part), is_code))
                     part = [lines[i]]
                     is_code = True
                     start_code_now = start_code
                     break
                 elif lines[i].startswith(start_code) and start_code_now == start_code:
                     part.append(lines[i])
-                    res.append(("\n".join(part), is_code))
+                    if part:
+                        res.append(("\n".join(part), is_code))
                     is_code = False
                     start_code_now = None
                     part = list()
                     break
             else:
                 part.append(lines[i])
-        res.append(("\n".join(part), is_code))
+        if part:
+            res.append(("\n".join(part), is_code))
         return res
 
     @property
