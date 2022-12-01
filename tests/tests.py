@@ -63,6 +63,12 @@ class TestHarrixpyssg(unittest.TestCase):
         a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
         self.assertEqual(a.md_content.splitlines()[1], "date: 2022-11-04")
 
+    def test_article__get_nocode_code_parts(self):
+        md_filename = "./tests/data/test_03/test_03.md"
+        a = hsg.Article(md_filename)
+        from_parts = "\n".join([part[0] for part in a._get_nocode_code_parts()])
+        self.assertEqual(a.md_content_no_yaml.rstrip(), from_parts.rstrip())
+
     def test_article__08(self):
         md_filename = "./tests/data/test_01/test_01.md"
         a = hsg.Article(md_filename)
