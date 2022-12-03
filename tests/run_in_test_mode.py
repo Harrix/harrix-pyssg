@@ -43,7 +43,7 @@ def run_test_article_md_content():
 def run_test_article_get_nocode_code_parts():
     md_filename = "./tests/data/test_03/test_03.md"
     a = hsg.Article(md_filename)
-    print(*a._get_nocode_code_parts(), sep="\n----------------\n")
+    print(a._get_nocode_code_parts())
 
 
 def run_test_article_md_yaml():
