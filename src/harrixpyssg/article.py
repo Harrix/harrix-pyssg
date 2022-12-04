@@ -560,7 +560,7 @@ class Article:
 
         Example:
 
-        `test.md`:
+        File `test.md`:
 
         ```
         # Heading
