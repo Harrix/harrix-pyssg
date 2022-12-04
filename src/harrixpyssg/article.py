@@ -554,7 +554,36 @@ class Article:
             shutil.copy(file, output_file)
 
     def _get_nocode_code_parts(self) -> list:
-        """ """
+        """
+        The method returns an array of tuples: part of the markdown file,
+        True if part of the file is a piece of code.
+
+        Example:
+
+        `test.md`:
+
+        ```
+        # Heading
+
+        Text.
+
+        ```python
+        x = input()
+        ```
+
+        Text 2.
+
+        ```
+
+        ```python
+        md_filename = "test.md"
+        a = hsg.Article(md_filename)
+        print(*a._get_nocode_code_parts(), sep="\n")
+        # ('# Heading\n\nText.\n', False)
+        # ('```python\nx = input()\n```', True)
+        # ('\nText 2.', False)
+        ```
+        """
         res = list()
         lines = self.md_content_no_yaml.splitlines()
         starts = ["`" * 6, "`" * 5, "`" * 4, "`" * 3]
