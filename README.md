@@ -17,7 +17,7 @@ pip install harrix-pyssg
 Pipenv:
 
 ```console
-pip update harrix-pyssg
+pipenv install harrix-pyssg
 ```
 
 ## Update
@@ -25,7 +25,7 @@ pip update harrix-pyssg
 Pip:
 
 ```console
-pipenv install harrix-pyssg
+pip update harrix-pyssg
 ```
 
 Pipenv:
