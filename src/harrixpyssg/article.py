@@ -111,7 +111,7 @@ draft: false
 latex: true
 related-id: html-lesson
 demo: https://codepen.io/Harrix/pen/pZZZxg
-download: https://github.com/Harrix/harrix.dev-blog-2013/raw/main/latex-and-illustrator/files/LaTeX.zip
+download: https://github.com/Harrix/Russian-Nouns/releases
 ```
 """
 
