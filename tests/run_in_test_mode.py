@@ -6,7 +6,7 @@ import harrixpyssg as hsg
 
 def main():
     ...
-    # run_test()
+    run_test()
     # run_test_article()
     # run_test_article_test_03()
     # run_test_article_md_content()
@@ -20,6 +20,10 @@ def main():
 def run_test():
     if True:
         ...
+        md_folder = "./tests/data"
+        html_folder = "./build_site"
+        sg = hsg.StaticSiteGenerator(md_folder)
+        sg.generate_site(html_folder)
 
 
 def run_test_article():
