@@ -171,7 +171,7 @@ class StaticSiteGenerator:
 
         Returns:
 
-        - `Article`: Returns itself.
+        - `StaticSiteGenerator`: Returns itself.
 
         Example:
 
