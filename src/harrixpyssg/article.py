@@ -314,16 +314,22 @@ class Article:
         """
         if len(self.md_yaml_dict) == 0:
             return ""
-        return (
-            yaml.safe_dump(
+        res = yaml.safe_dump(
+            self._md_yaml_dict,
+            sort_keys=False,
+            allow_unicode=True,
+            explicit_start=True,
+            default_flow_style=None,
+        )
+        if res.startswith("--- {"):
+            res = yaml.safe_dump(
                 self._md_yaml_dict,
                 sort_keys=False,
                 allow_unicode=True,
                 explicit_start=True,
-                default_flow_style=None,
+                default_flow_style=False,
             )
-            + "---"
-        )
+        return res + "---"
 
     @property
     def html_code(self) -> str:
