@@ -199,6 +199,35 @@ class StaticSiteGenerator:
 
         return self
 
+    def add_yaml_tag_to_all_md(self, tuple_yaml_tag) -> None:
+        """
+        This method adds a YAML tag to all markdown files and save them.
+
+        Args:
+
+        - `tuple_yaml_tag`: Tuple of YAML tag. Example: `("author", "Anton Sergienko")`
+
+        Returns:
+
+        - `None`.
+
+        Example:
+
+        ```python
+        import harrixpyssg as hsg
+
+        md_folder = "./tests/data"
+        sg = hsg.StaticSiteGenerator(md_folder)
+        sg.add_yaml_tag_to_all_md(("author", "Anton Sergienko"))
+        ```
+        """
+        if not isinstance(tuple_yaml_tag, tuple) and len(tuple_yaml_tag) != 2:
+            return
+
+        for article in self.articles:
+            article.md_yaml_dict[tuple_yaml_tag[0]] = tuple_yaml_tag[1]
+            article.save()
+
     def get_set_variables_from_yaml(self):
         """
         This method generates a set of all variables from YAML from all articles.
@@ -225,7 +254,7 @@ class StaticSiteGenerator:
                 res.add(key)
         return sorted(list(res))
 
-    def _get_info_about_articles(self):
+    def _get_info_about_articles(self) -> None:
         """
         This method gets info from all Markdown files and fills
         the list `self.articles`.

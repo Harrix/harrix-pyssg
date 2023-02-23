@@ -15,15 +15,12 @@ def main():
     # run_test_article_md_save()
     # run_test_static_site_generator()
     # run_get_set_variables_from_yaml()
+    run_add_yaml_tag_to_all_md()
 
 
 def run_test():
     if True:
         ...
-        md_folder = "./tests/data"
-        html_folder = "./build_site"
-        sg = hsg.StaticSiteGenerator(md_folder)
-        sg.generate_site(html_folder)
 
 
 def run_test_article():
@@ -79,6 +76,11 @@ def run_get_set_variables_from_yaml():
     # md_folder = "./tests/data"
     sg = hsg.StaticSiteGenerator(md_folder)
     print(sg.get_set_variables_from_yaml())
+
+def run_add_yaml_tag_to_all_md():
+    md_folder = "./tests/data"
+    sg = hsg.StaticSiteGenerator(md_folder)
+    sg.add_yaml_tag_to_all_md(("author", "Anton Sergienko"))
 
 
 if __name__ == "__main__":
