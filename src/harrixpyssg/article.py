@@ -99,11 +99,19 @@ HTML file `index.html`:
   a list of all articles with the same parameter value.
 - `demo`: The link to the demo page.
 - `download`: The link to the download file.
+- `author`: Name of the author of the article.
+- `author-email`: Email of the author of the article.
+- `url`: The URL address of the article on the website.
+- `url-src`: The URL address of the markdown file on GitHub (for example).
+- `license`: The license name of this article.
+- `license-url`: The URL address of the license file.
+- `src`: The link to the source of the material.
 
 Example:
 
 ```yaml
-date: 2022-09-18
+---
+date: 2018-08-03
 update: 2022-09-19
 categories: [it, web]
 tags: [CSS, CSS-Grids]
@@ -112,6 +120,14 @@ latex: true
 related-id: html-lesson
 demo: https://codepen.io/Harrix/pen/pZZZxg
 download: https://github.com/Harrix/Russian-Nouns/releases
+author: Anton Sergienko
+author-email: anton.b.sergienko@gmail.com
+url-src: https://github.com/Harrix/harrix.dev-blog-2018/blob/main/install-latex/install-latex.md
+url: https://harrix.dev/ru/blog/2018/install-latex/
+license: CC BY 4.0
+license-url: https://github.com/Harrix/harrix.dev/blob/main/LICENSE.md
+src: https://en.wikipedia.org/wiki/Genetic_algorithm
+---
 ```
 """
 
