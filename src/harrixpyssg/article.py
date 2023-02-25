@@ -555,11 +555,20 @@ class Article:
                     continue
                 if str(lines[j]).startswith("![Featured image]("):
                     continue
-                regexp = r'\!\[(.*?)\]\((.*?)\)'
+                regexp = r"\!\[(.*?)\]\((.*?)\)"
                 find = re.search(regexp, lines[j], re.S)
                 if find:
-                    caption = f"_Рисунок {index_images} — {find.group(1)}_"
-                    if j < len(lines) - 2 and lines[j + 2].startswith("_Рис"):
+                    if (
+                        "lang" in self.md_yaml_dict
+                        and self.md_yaml_dict["lang"] == "ru"
+                    ):
+                        caption = f"_Рисунок {index_images} — {find.group(1)}_"
+                    else:
+                        caption = f"_Figure {index_images}: {find.group(1)}_"
+                    if j < len(lines) - 2 and (
+                        lines[j + 2].startswith("_Рис")
+                        or lines[j + 2].startswith("_Fig")
+                    ):
                         lines[j + 2] = caption
                     else:
                         lines[j] += "\n\n" + caption
@@ -595,7 +604,6 @@ class Article:
             content_parts[i] = (processed_part, content_parts[i][1])
         processed_content = "\n".join([x[0] for x in content_parts])
         self._md_content_no_yaml = processed_content
-
 
     def _clear_html_folder_directory(self) -> None:
         """
