@@ -94,8 +94,8 @@ def run_test_add_yaml_tag_to_all_md():
 
 
 def run_test_add_image_captions():
-    md_folder = "C:/GitHub/_content__harrix-dev"
-    # md_folder = "./tests/data"
+    # md_folder = "C:/GitHub/_content__harrix-dev"
+    md_folder = "./tests/data"
     sg = hsg.StaticSiteGenerator(md_folder)
     sg.add_image_captions()
 
