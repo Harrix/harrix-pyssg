@@ -547,6 +547,17 @@ class Article:
         """
         This method handles all parts of the markdown without the code
         using the function `func`.
+
+        Example:
+
+        ```python
+        def fix_part(no_code_part):
+            lines = no_code_part.split("\n")
+            lines.append("Код:")
+            return "\n".join(lines)
+
+        self._process_no_code_content(fix_part)
+        ```
         """
         content_parts = self._get_nocode_code_parts()
         for i in range(len(content_parts)):
