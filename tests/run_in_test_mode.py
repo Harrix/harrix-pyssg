@@ -17,6 +17,7 @@ def main():
     # run_test_get_set_variables_from_yaml()
     # run_test_add_yaml_tag_to_all_md()
     # run_test_article_add_image_captions()
+    run_test_add_image_captions()
 
 
 def run_test():
@@ -85,10 +86,17 @@ def run_test_get_set_variables_from_yaml():
     sg = hsg.StaticSiteGenerator(md_folder)
     print(sg.get_set_variables_from_yaml())
 
+
 def run_test_add_yaml_tag_to_all_md():
     md_folder = "./tests/data"
     sg = hsg.StaticSiteGenerator(md_folder)
     sg.add_yaml_tag_to_all_md(("author", "Anton Sergienko"))
+
+
+def run_test_add_image_captions():
+    md_folder = "./tests/data"
+    sg = hsg.StaticSiteGenerator(md_folder)
+    sg.add_image_captions()
 
 
 if __name__ == "__main__":

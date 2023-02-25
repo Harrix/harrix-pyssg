@@ -86,7 +86,7 @@ class StaticSiteGenerator:
         ```
         """
         self._md_folder = Path(md_folder)
-        self._articles:list[Article] = list()
+        self._articles: list[Article] = list()
         self._html_folder = None
 
         self._get_info_about_articles()
@@ -197,6 +197,71 @@ class StaticSiteGenerator:
             html_folder_article.mkdir(parents=True, exist_ok=True)
             article.generate_html(html_folder_article)
 
+        return self
+
+    def add_image_captions(self) -> StaticSiteGenerator:
+        """
+        Add captions to all images in all markdown files. The method ignores
+        a featured image (for example, `![Featured image](featured-image.svg)`).
+        The method saves changes to the file. The method automatically numbers
+        the images.
+
+        Returns:
+
+        - `Article`: Returns itself.
+
+        Example:
+
+        ```python
+        import harrixpyssg as hsg
+
+        md_filename = "./tests/data/test_01/test_01.md"
+        a = hsg.Article(md_filename)
+        a.add_image_captions()
+        print(a.md_content)
+        ```
+
+        Before:
+
+        ```
+        ---
+        date: 2022-09-18
+        categories: [it, web]
+        tags: [CSS]
+        ---
+
+        # Title
+
+        ![Featured image](featured-image.png)
+
+        Hello, world!
+
+        ![Alt text](img/test-image.png)
+        ```
+
+        After:
+
+        ```
+        ---
+        date: 2022-09-18
+        categories: [it, web]
+        tags: [CSS]
+        ---
+
+        # Title
+
+        ![Featured image](featured-image.png)
+
+        Hello, world!
+
+        ![Alt text](img/test-image.png)
+
+        _Figure 1: Alt text_
+        ```
+        """
+        for article in self.articles:
+            article.add_image_captions()
+            article.save()
         return self
 
     def add_yaml_tag_to_all_md(self, tuple_yaml_tag) -> None:
