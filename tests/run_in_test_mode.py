@@ -81,8 +81,8 @@ def run_test_static_site_generator():
 
 
 def run_test_get_set_variables_from_yaml():
-    md_folder = "C:/GitHub/harrix.dev/content"
-    # md_folder = "./tests/data"
+    # md_folder = "C:/GitHub/harrix.dev/content"
+    md_folder = "./tests/data"
     sg = hsg.StaticSiteGenerator(md_folder)
     print(sg.get_set_variables_from_yaml())
 
