@@ -737,14 +737,17 @@ class Article:
         start_code_now = None
         for i in range(len(lines)):
             for start_code in starts:
-                if not is_code and lines[i].startswith(start_code):
+                if not is_code and lines[i].lstrip().startswith(start_code):
                     if part:
                         res.append(("\n".join(part), is_code))
                     part = [lines[i]]
                     is_code = True
                     start_code_now = start_code
                     break
-                elif lines[i].startswith(start_code) and start_code_now == start_code:
+                elif (
+                    lines[i].lstrip().startswith(start_code)
+                    and start_code_now == start_code
+                ):
                     part.append(lines[i])
                     if part:
                         res.append(("\n".join(part), is_code))
