@@ -17,7 +17,7 @@ def main():
     # run_test_get_set_variables_from_yaml()
     # run_test_add_yaml_tag_to_all_md()
     # run_test_article_add_image_captions()
-    run_test_add_image_captions()
+    # run_test_add_image_captions()
 
 
 def run_test():
