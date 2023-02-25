@@ -543,6 +543,21 @@ class Article:
             self.html_filename.write_text(self.html_code, encoding="utf8")
         return self
 
+    def _process_no_code_content(self, func):
+        """
+        This method handles all parts of the markdown without the code
+        using the function `func`.
+        """
+        content_parts = self._get_nocode_code_parts()
+        for i in range(len(content_parts)):
+            if content_parts[i][1]:
+                continue
+            processed_part = func(content_parts[i][0])
+            content_parts[i] = (processed_part, content_parts[i][1])
+        processed_content = "\n".join([x[0] for x in content_parts])
+        self._md_content_no_yaml = processed_content
+
+
     def _clear_html_folder_directory(self) -> None:
         """
         This method clears `self.html_folder` with sub-directories.
