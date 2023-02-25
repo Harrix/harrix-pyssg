@@ -15,7 +15,8 @@ def main():
     # run_test_article_md_save()
     # run_test_static_site_generator()
     # run_get_set_variables_from_yaml()
-    run_add_yaml_tag_to_all_md()
+    # run_add_yaml_tag_to_all_md()
+    run_test_article_fix_images()
 
 
 def run_test():
@@ -62,6 +63,12 @@ def run_test_article_md_save():
     a.save()  # Be careful!
     new_content = Path(md_filename).read_text(encoding="utf8").lstrip()
     print(new_content)
+
+
+def run_test_article_fix_images():
+    md_filename = "./tests/data/test_01/test_01.md"
+    a = hsg.Article(md_filename)
+    a.fix_images()
 
 
 def run_test_static_site_generator():

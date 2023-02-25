@@ -543,6 +543,34 @@ class Article:
             self.html_filename.write_text(self.html_code, encoding="utf8")
         return self
 
+    def fix_images(self) -> None:
+        index_images = 1
+        content_parts = self._get_nocode_code_parts()
+        for i in range(len(content_parts)):
+            if content_parts[i][1]:
+                continue
+            lines = content_parts[i][0].split("\n")
+            for j in range(len(lines)):
+                if not str(lines[j]).startswith("!["):
+                    continue
+                if str(lines[j]).startswith("![Featured image]("):
+                    continue
+                regexp = r'\!\[(.*?)\]\((.*?)\)'
+                find = re.search(regexp, lines[j], re.S)
+                if find:
+                    caption = f"_Рисунок {index_images} — {find.group(1)}_"
+                    if j < len(lines) - 2 and lines[j + 2].startswith("_Рис"):
+                        lines[j + 2] = caption
+                    else:
+                        lines[j] += "\n\n" + caption
+                    index_images += 1
+            processed_part = "\n".join(lines)
+            content_parts[i] = (processed_part, content_parts[i][1])
+        processed_content = "\n".join([x[0] for x in content_parts])
+        self._md_content_no_yaml = processed_content
+        print(self.md_content)
+        self.save()
+
     def _process_no_code_content(self, func):
         """
         This method handles all parts of the markdown without the code
