@@ -75,6 +75,12 @@ class TestHarrixpyssg(unittest.TestCase):
         a.md_yaml_dict["categories"].append("test")
         self.assertEqual(a.md_content.splitlines()[2], "categories: [it, web, test]")
 
+    def test_article__add_image_captions(self):
+        md_filename = "./tests/data/test_01/test_01.md"
+        a = hsg.Article(md_filename)
+        a.add_image_captions()
+        self.assertEqual(len(a.md_content.splitlines()), 15)
+
     def test_article__save(self):
         md_filename = "./tests/data/test_01/test_01.md"
         a = hsg.Article(md_filename)

@@ -545,7 +545,66 @@ class Article:
             self.html_filename.write_text(self.html_code, encoding="utf8")
         return self
 
-    def fix_images(self) -> None:
+    def add_image_captions(self) -> Article:
+        """
+        Add captions to images. The method ignores a featured image
+        (for example, `![Featured image](featured-image.svg)`). The method does not
+        save changes to the file. This should be done using the `save()` method.
+        The method automatically numbers the images.
+
+        Returns:
+
+        - `Article`: Returns itself, that is, the article with calculated data.
+
+        Example:
+
+        ```python
+        import harrixpyssg as hsg
+
+        md_filename = "./tests/data/test_01/test_01.md"
+        a = hsg.Article(md_filename)
+        a.add_image_captions()
+        print(a.md_content)
+        ```
+
+        Before:
+
+        ```
+        ---
+        date: 2022-09-18
+        categories: [it, web]
+        tags: [CSS]
+        ---
+
+        # Title
+
+        ![Featured image](featured-image.png)
+
+        Hello, world!
+
+        ![Alt text](img/test-image.png)
+        ```
+
+        After:
+
+        ```
+        ---
+        date: 2022-09-18
+        categories: [it, web]
+        tags: [CSS]
+        ---
+
+        # Title
+
+        ![Featured image](featured-image.png)
+
+        Hello, world!
+
+        ![Alt text](img/test-image.png)
+
+        _Figure 1: Alt text_
+        ```
+        """
         index_images = 1
         content_parts = self._get_nocode_code_parts()
         for i in range(len(content_parts)):
@@ -579,8 +638,7 @@ class Article:
             content_parts[i] = (processed_part, content_parts[i][1])
         processed_content = "\n".join([x[0] for x in content_parts])
         self._md_content_no_yaml = processed_content
-        print(self.md_content)
-        self.save()
+        return self
 
     def _process_no_code_content(self, func):
         """
