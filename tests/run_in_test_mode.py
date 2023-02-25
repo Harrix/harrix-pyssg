@@ -81,7 +81,7 @@ def run_test_static_site_generator():
 
 
 def run_test_get_set_variables_from_yaml():
-    # md_folder = "C:/GitHub/harrix.dev/content"
+    # md_folder = "C:/GitHub/_content__harrix-dev"
     md_folder = "./tests/data"
     sg = hsg.StaticSiteGenerator(md_folder)
     print(sg.get_set_variables_from_yaml())
@@ -94,7 +94,8 @@ def run_test_add_yaml_tag_to_all_md():
 
 
 def run_test_add_image_captions():
-    md_folder = "./tests/data"
+    md_folder = "C:/GitHub/_content__harrix-dev"
+    # md_folder = "./tests/data"
     sg = hsg.StaticSiteGenerator(md_folder)
     sg.add_image_captions()
 
