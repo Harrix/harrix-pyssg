@@ -14,9 +14,9 @@ def main():
     # run_test_article_md_yaml()
     # run_test_article_md_save()
     # run_test_static_site_generator()
-    # run_get_set_variables_from_yaml()
-    # run_add_yaml_tag_to_all_md()
-    run_test_article_add_image_captions()
+    # run_test_get_set_variables_from_yaml()
+    # run_test_add_yaml_tag_to_all_md()
+    # run_test_article_add_image_captions()
 
 
 def run_test():
@@ -79,13 +79,13 @@ def run_test_static_site_generator():
     sg.generate_site(html_folder)
 
 
-def run_get_set_variables_from_yaml():
+def run_test_get_set_variables_from_yaml():
     md_folder = "C:/GitHub/harrix.dev/content"
     # md_folder = "./tests/data"
     sg = hsg.StaticSiteGenerator(md_folder)
     print(sg.get_set_variables_from_yaml())
 
-def run_add_yaml_tag_to_all_md():
+def run_test_add_yaml_tag_to_all_md():
     md_folder = "./tests/data"
     sg = hsg.StaticSiteGenerator(md_folder)
     sg.add_yaml_tag_to_all_md(("author", "Anton Sergienko"))
