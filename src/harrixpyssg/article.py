@@ -106,6 +106,7 @@ HTML file `index.html`:
 - `license`: The license name of this article.
 - `license-url`: The URL address of the license file.
 - `src`: The link to the source of the material.
+- `lang`: Language of the article.
 
 Example:
 
@@ -127,6 +128,7 @@ url: https://harrix.dev/ru/blog/2018/install-latex/
 license: CC BY 4.0
 license-url: https://github.com/Harrix/harrix.dev/blob/main/LICENSE.md
 src: https://en.wikipedia.org/wiki/Genetic_algorithm
+lang: ru
 ---
 ```
 """
