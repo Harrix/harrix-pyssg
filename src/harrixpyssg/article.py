@@ -90,8 +90,8 @@ HTML file `index.html`:
   names are not allowed.
 - `tags`: The list of tags to which the article belongs. Spaces in tags names are
   not allowed.
-- `draft`: `true` if the article is in drafts and should not be published. If the tag
-  is not in YAML, the default value is false`.
+- `published`: `false` if the article is in drafts and should not be published.
+  If the tag is not in YAML, the default value is `true`.
 - `latex`: `true` if $LaTeX$ is used in the article. Example: `$y = x^{2}$`.
   If the tag is not in YAML, the default value is `false`.
 - `related-id`: The key for linking several articles into a series of articles.
@@ -116,7 +116,7 @@ date: 2018-08-03
 update: 2022-09-19
 categories: [it, web]
 tags: [CSS, CSS-Grids]
-draft: false
+published: false
 latex: true
 related-id: html-lesson
 demo: https://codepen.io/Harrix/pen/pZZZxg
