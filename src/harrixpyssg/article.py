@@ -101,8 +101,8 @@ HTML file `index.html`:
 - `download`: The link to the download file.
 - `author`: Name of the author of the article.
 - `author-email`: Email of the author of the article.
-- `url`: The URL address of the article on the website.
-- `url-src`: The URL address of the markdown file on GitHub (for example).
+- `permalink`: The URL address of the article on the website.
+- `permalink-source`: The URL address of the markdown file on GitHub (for example).
 - `license`: The license name of this article.
 - `license-url`: The URL address of the license file.
 - `src`: The link to the source of the material.
@@ -123,8 +123,8 @@ demo: https://codepen.io/Harrix/pen/pZZZxg
 download: https://github.com/Harrix/Russian-Nouns/releases
 author: Anton Sergienko
 author-email: anton.b.sergienko@gmail.com
-url-src: https://github.com/Harrix/harrix.dev-blog-2018/blob/main/install-latex/install-latex.md
-url: https://harrix.dev/ru/blog/2018/install-latex/
+permalink: https://harrix.dev/ru/blog/2018/install-latex/
+permalink-source: https://github.com/Harrix/harrix.dev-blog-2018/blob/main/install-latex/install-latex.md
 license: CC BY 4.0
 license-url: https://github.com/Harrix/harrix.dev/blob/main/LICENSE.md
 src: https://en.wikipedia.org/wiki/Genetic_algorithm
