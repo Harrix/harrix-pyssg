@@ -18,6 +18,7 @@ def main():
     # run_test_add_yaml_tag_to_all_md()
     # run_test_article_add_image_captions()
     # run_test_add_image_captions()
+    # run_test_static_site_generator_save()
 
 
 def run_test():
@@ -99,6 +100,14 @@ def run_test_add_image_captions():
     md_folder = "./tests/data"
     sg = hsg.StaticSiteGenerator(md_folder)
     sg.add_image_captions()
+
+
+def run_test_static_site_generator_save():
+    # md_folder = "C:/GitHub/_content__harrix-dev"
+    md_folder = "./tests/data"
+    sg = hsg.StaticSiteGenerator(md_folder)
+    for a in sg.articles:
+        a.save()
 
 
 if __name__ == "__main__":
