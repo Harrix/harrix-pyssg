@@ -105,7 +105,7 @@ HTML file `index.html`:
 - `permalink-source`: The URL address of the markdown file on GitHub (for example).
 - `license`: The license name of this article.
 - `license-url`: The URL address of the license file.
-- `src`: The link to the source of the material.
+- `attribution`: The link (or array of links) to the source of the material.
 - `lang`: Language of the article.
 
 Example:
@@ -127,7 +127,7 @@ permalink: https://harrix.dev/ru/blog/2018/install-latex/
 permalink-source: https://github.com/Harrix/harrix.dev-blog-2018/blob/main/install-latex/install-latex.md
 license: CC BY 4.0
 license-url: https://github.com/Harrix/harrix.dev/blob/main/LICENSE.md
-src: https://en.wikipedia.org/wiki/Genetic_algorithm
+attribution: https://en.wikipedia.org/wiki/Genetic_algorithm
 lang: ru
 ---
 ```
