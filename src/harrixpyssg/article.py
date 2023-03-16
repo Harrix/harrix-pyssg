@@ -612,12 +612,15 @@ class Article:
                 continue
             lines = content_parts[i][0].split("\n")
             for j in range(len(lines)):
-                if not str(lines[j]).startswith("!["):
+                if str(lines[j])[:2] not in ["![", "<i"]:
                     continue
                 if str(lines[j]).startswith("![Featured image]("):
                     continue
-                regexp = r"\!\[(.*?)\]\((.*?)\)"
+                regexp = r"^\!\[(.*?)\]\((.*?)\)"
+                regexp_html = r"^\<img alt=\"(.*?)\" src=\"(.*?)\" (.*?)\>"
                 find = re.search(regexp, lines[j], re.S)
+                if not find:
+                    find = re.search(regexp_html, lines[j], re.S)
                 if find:
                     if (
                         "lang" in self.md_yaml_dict
