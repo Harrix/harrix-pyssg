@@ -96,6 +96,8 @@ def run_test_add_yaml_tag_to_all_md():
 
 
 def run_test_add_image_captions():
+    # md_folder = "D:/Dropbox/Notes"
+    # md_folder = "D:/Dropbox/Diaries"
     # md_folder = "C:/GitHub/_content__harrix-dev"
     md_folder = "./tests/data"
     sg = hsg.StaticSiteGenerator(md_folder)
@@ -103,8 +105,8 @@ def run_test_add_image_captions():
 
 
 def run_test_static_site_generator_save():
-    # md_folder = "C:/GitHub/_content__harrix-dev"
-    md_folder = "./tests/data"
+    md_folder = "C:/GitHub/_content__harrix-dev"
+    # md_folder = "./tests/data"
     sg = hsg.StaticSiteGenerator(md_folder)
     for a in sg.articles:
         a.save()
