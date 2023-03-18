@@ -2,7 +2,7 @@
 
 ## Title
 
-![Featured image](featured-image.png)
+![Featured image](test_01/featured-image.png)
 
 Hello, world!
 
