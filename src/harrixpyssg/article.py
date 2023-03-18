@@ -646,8 +646,6 @@ class Article:
     def to_sub_article(self) -> str:
         """ """
 
-        folder = self.md_filename.parts[-2]
-
         def fix_part(no_code_part):
             """
             Replace `# Title` to `## Title`.
@@ -666,7 +664,11 @@ class Article:
                 if not is_title:
                     regexp = r"(?:(?!`|`!))\[(.*?)\]\(((?!http).*?)\)"
                     pattern = re.compile(regexp)
-                    lines[i] = re.sub(pattern, r"[\1]({}/\2)".format(folder), lines[i])
+                    lines[i] = re.sub(
+                        pattern,
+                        r"[\1]({}/\2)".format(self.md_filename.parts[-2]),
+                        lines[i],
+                    )
 
             return "\n".join(lines)
 
