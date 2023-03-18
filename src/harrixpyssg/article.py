@@ -643,7 +643,38 @@ class Article:
         self._md_content_no_yaml = processed_content
         return self
 
-    def _process_no_code_content(self, func):
+    def to_sub_article(self) -> str:
+        """ """
+
+        folder = self.md_filename.parts[-2]
+
+        def fix_part(no_code_part):
+            """
+            Replace `# Title` to `## Title`.
+            """
+            lines = no_code_part.split("\n")
+            for i in range(len(lines)):
+                is_title = False
+                for j in range(5):
+                    hash = "#" * (j + 1) + " "
+                    hash_replace = "#" * (j + 2) + " "
+                    if not lines[i].startswith(hash):
+                        continue
+                    lines[i] = lines[i].replace(hash, hash_replace, 1)
+                    is_title = True
+                    break
+                if not is_title:
+                    regexp = r"(?:[^`]|^)!\[(.*?)\]\(img/(.*?)\)"
+                    pattern = re.compile(regexp)
+                    lines[i] = re.sub(
+                        pattern, r"![\1]({}/img/\2)".format(folder), lines[i]
+                    )
+
+            return "\n".join(lines)
+
+        return self._process_no_code_content(fix_part)
+
+    def _process_no_code_content(self, func) -> str:
         """
         This method handles all parts of the markdown without the code
         using the function `func`.
@@ -656,7 +687,7 @@ class Article:
             lines.append("Код:")
             return "\n".join(lines)
 
-        self._process_no_code_content(fix_part)
+        self._md_content_no_yaml = self._process_no_code_content(fix_part)
         ```
         """
         content_parts = self._get_nocode_code_parts()
@@ -665,8 +696,7 @@ class Article:
                 continue
             processed_part = func(content_parts[i][0])
             content_parts[i] = (processed_part, content_parts[i][1])
-        processed_content = "\n".join([x[0] for x in content_parts])
-        self._md_content_no_yaml = processed_content
+        return "\n".join([x[0] for x in content_parts])
 
     def _clear_html_folder_directory(self) -> None:
         """

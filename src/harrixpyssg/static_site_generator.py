@@ -293,6 +293,32 @@ class StaticSiteGenerator:
             article.md_yaml_dict[tuple_yaml_tag[0]] = tuple_yaml_tag[1]
             article.save()
 
+    def generate_generalized_md(self) -> None:
+        """ """
+        paths_generalized_md = set()
+        # Get a list of paths that have MD files (without `.auto.md`)
+        for article in self.articles:
+            if ".auto.md" not in article.md_filename.name.lower():
+                paths_generalized_md.add(article.md_filename.parent.parent)
+        for path in paths_generalized_md:
+            content_of_articles = []
+            # Collect all articles from one folder
+            for article in self.articles:
+                if article.md_filename.parent.parent != path:
+                    continue
+                yaml = article.md_yaml_dict
+                content = article.to_sub_article().strip()
+
+                content_of_articles.append(content)
+            # Save a new article in a directory level higher
+            if content_of_articles:
+                folder = path.parts[-1]
+                title = f"# {folder} (auto-generated)\n\n"
+                content = title + "\n\n".join(content_of_articles) + "\n"
+                Path(path / f"{folder}.auto.md").write_text(
+                    content, encoding="utf8"
+                )
+
     def get_set_variables_from_yaml(self):
         """
         This method generates a set of all variables from YAML from all articles.

@@ -24,6 +24,9 @@ def main():
 def run_test():
     if True:
         ...
+        md_folder = "./tests/data"
+        sg = hsg.StaticSiteGenerator(md_folder)
+        sg.generate_generalized_md()
 
 
 def run_test_article():
