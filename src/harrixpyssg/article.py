@@ -664,11 +664,9 @@ class Article:
                     is_title = True
                     break
                 if not is_title:
-                    regexp = r"(?:[^`]|^)!\[(.*?)\]\(img/(.*?)\)"
+                    regexp = r"(?:(?!`|`!))\[(.*?)\]\(((?!http).*?)\)"
                     pattern = re.compile(regexp)
-                    lines[i] = re.sub(
-                        pattern, r"![\1]({}/img/\2)".format(folder), lines[i]
-                    )
+                    lines[i] = re.sub(pattern, r"[\1]({}/\2)".format(folder), lines[i])
 
             return "\n".join(lines)
 
