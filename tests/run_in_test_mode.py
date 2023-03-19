@@ -25,6 +25,7 @@ def run_test():
     if True:
         ...
         md_folder = "./tests/data"
+        # md_folder = "D:/Dropbox/Notes"
         sg = hsg.StaticSiteGenerator(md_folder)
         sg.generate_generalized_md()
 
