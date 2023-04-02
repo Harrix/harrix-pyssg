@@ -1,6 +1,6 @@
 # Test page with the code
 
-Some kind of text.
+Some kind of text. Add links <https://habr.com/> and [Habr](https://habr.com/).
 
 ## Subtitle
 
