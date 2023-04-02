@@ -1,8 +1,8 @@
-# Тестовая страница с кодом
+# Test page with the code
 
-Текст какой-то.
+Some kind of text.
 
-## Подзаголовок
+## Subtitle
 
 ```python
 x = input()
@@ -12,7 +12,7 @@ x = input()
 y = input()
 ```
 
-Тут комментарий.
+There's a comment here.
 
 <details>
 <summary>Summary</summary>
@@ -27,41 +27,41 @@ for i in range(1, a):
         k += 1
 print(a)
 if k == 1:
-    print("ПРОСТОЕ")
+    print("Prime")
 else:
-    print("НЕТ")
+    print("No")
 ```
 ````
 
-**Жирный текст.**
+**Bold text.**
 
 </details>
 
-Текст.
+Text.
 
 ```
-a = list("Пример")
+a = list("Example")
 print(a)
 for i in range(len(a)):
-    if a[i] == "р":
-        a[i] = "л"
+    if a[i] == "a":
+        a[i] = "o"
 print("".join(a))
 ```
 
-Код:
+Code:
 
-    a = list("Пример")
+    a = list("Example")
     print(a)
     for i in range(len(a)):
-        if a[i] == "р":
-            a[i] = "л"
+        if a[i] == "a":
+            a[i] = "o"
     print("".join(a))
 
-Еще код
+More code:
 
-    a = list("Пример")
+    a = list("Example")
     print(a)
     for i in range(len(a)):
-        if a[i] == "р":
-            a[i] = "л"
+        if a[i] == "a":
+            a[i] = "o"
     print("".join(a))
