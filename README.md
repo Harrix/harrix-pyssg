@@ -1,4 +1,4 @@
-# Harrix-Static-Site-Generator
+# Harrix-Static-Site-Generator (harrix-pyssg)
 
 **In development.**
 
