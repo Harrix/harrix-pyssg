@@ -1,6 +1,6 @@
 # Harrix-Static-Site-Generator (harrix-pyssg)
 
-**In development.**
+**In development. 2023**
 
 A simple static website generator in Python.
 
