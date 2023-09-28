@@ -4,7 +4,7 @@
 
 Simple static website generator in Python.
 
-Markdown processor: [markdown-it-py](https://pypi.org/project/markdown-it-py).
+Markdown processor: [markdown-it-py](https://pypi.org/project/markdown-it-py) <https://pypistats.org/packages/markdown-it-py>.
 
 ## Install
 
