@@ -315,9 +315,7 @@ class StaticSiteGenerator:
                 folder = path.parts[-1]
                 title = f"# {folder} (auto-generated)\n\n"
                 content = title + "\n\n".join(content_of_articles) + "\n"
-                Path(path / f"{folder}.auto.md").write_text(
-                    content, encoding="utf8"
-                )
+                Path(path / f"{folder}.auto.md").write_text(content, encoding="utf8")
 
     def get_set_variables_from_yaml(self):
         """
