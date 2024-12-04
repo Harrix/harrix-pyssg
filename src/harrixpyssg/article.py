@@ -649,11 +649,14 @@ class Article:
         def fix_part(no_code_part):
             """
             Replace `# Title` to `## Title`.
+            Replace `![Alt text](img/test-image.png)`
+            to `![Alt text](test_01/img/test-image.png)`.
             """
             lines = no_code_part.split("\n")
             for i in range(len(lines)):
                 is_title = False
                 for j in range(5):
+                    # Replace headings.
                     hash = "#" * (j + 1) + " "
                     hash_replace = "#" * (j + 2) + " "
                     if not lines[i].startswith(hash):
@@ -662,6 +665,7 @@ class Article:
                     is_title = True
                     break
                 if not is_title:
+                    # Replace headings.
                     regexp = r"(?:(?!`|`!))\[(.*?)\]\(((?!http).*?)\)"
                     pattern = re.compile(regexp)
                     lines[i] = re.sub(
