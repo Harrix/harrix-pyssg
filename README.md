@@ -10,13 +10,13 @@ Markdown processor: [markdown-it-py](https://pypi.org/project/markdown-it-py) <h
 
 Pip:
 
-```console
+```shell
 pip install harrix-pyssg
 ```
 
 Pipenv:
 
-```console
+```shell
 pipenv install harrix-pyssg
 ```
 
@@ -24,13 +24,13 @@ pipenv install harrix-pyssg
 
 Pip:
 
-```console
+```shell
 pip update harrix-pyssg
 ```
 
 Pipenv:
 
-```console
+```shell
 pipenv update harrix-pyssg
 ```
 
