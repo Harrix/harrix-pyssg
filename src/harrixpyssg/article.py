@@ -293,7 +293,7 @@ class Article:
 
         Example output:
 
-        ```console
+        ```shell
         ('date', datetime.date(2022, 9, 18))
         ('categories', ['it', 'web'])
         ('tags', ['CSS'])
