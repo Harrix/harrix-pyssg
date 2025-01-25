@@ -1,138 +1,3 @@
-"""
-## Usage examples
-
-Generate an HTML file (and other related files) from Markdown with the full filename:
-
-```python
-import harrixpyssg as hsg
-
-md_filename = "C:/GitHub/harrix.dev/content/en/blog/2013/kbd-style/kbd-style.md"
-html_folder = "C:/GitHub/harrix.dev/content/build_site"
-hsg.Article(md_filename).generate_html(html_folder)
-```
-
-Generate an HTML file (and other related files) from Markdown with a relative path
-to the file:
-
-```python
-import harrixpyssg as hsg
-
-md_filename = "./tests/data/test_01/test_01.md"
-html_folder = "./build_site"
-article = hsg.Article(md_filename)
-article.generate_html(html_folder)
-```
-
-Generate HTML code from Markdown without creating files:
-
-```python
-import harrixpyssg as hsg
-
-md_filename = "./tests/data/test_01/test_01.md"
-article = hsg.Article(md_filename)
-print(article.html_code)
-```
-
-## Example of folder structure
-
-Folder with the Markdown file:
-
-```text
-test_01
-├─ test_01.md
-├─ featured-image.png
-└─ img
-   └─ test-image.png
-```
-
-Output HTML folder:
-
-```text
-build_site
-├─ featured-image.png
-├─ img
-│  └─ test-image.png
-└─ index.html
-```
-
-Markdown file `test_01.md`:
-
-```markdown
----
-date: 2022-09-18
-categories: [it, web]
-tags: [CSS]
----
-
-# Title
-
-![Featured image](featured-image.png)
-
-Hello, world!
-
-![Alt text](img/test-image.png)
-```
-
-HTML file `index.html`:
-
-```html
-<h1 id="title">Title</h1>
-<p><img src="featured-image.png" alt="Featured image" /></p>
-<p>Hello, world!</p>
-<p><img src="img/test-image.png" alt="Alt text" /></p>
-```
-
-# List of processed YAML variables
-
-- `date`: Date of creation of the article.
-- `update`: Date of the article update.
-- `categories`: The list of categories to which the article belongs. Spaces in category
-  names are not allowed.
-- `tags`: The list of tags to which the article belongs. Spaces in tags names are
-  not allowed.
-- `published`: `false` if the article is in drafts and should not be published.
-  If the tag is not in YAML, the default value is `true`.
-- `latex`: `true` if $LaTeX$ is used in the article. Example: `$y = x^{2}$`.
-  If the tag is not in YAML, the default value is `false`.
-- `related-id`: The key for linking several articles into a series of articles.
-  If this parameter is present, then at the bottom of the article there will be
-  a list of all articles with the same parameter value.
-- `demo`: The link to the demo page.
-- `download`: The link to the download file.
-- `author`: Name of the author of the article.
-- `author-email`: Email of the author of the article.
-- `permalink`: The URL address of the article on the website.
-- `permalink-source`: The URL address of the markdown file on GitHub (for example).
-- `license`: The license name of this article.
-- `license-url`: The URL address of the license file.
-- `attribution`: The link (or array of links) to the source of the material.
-- `lang`: Language of the article.
-
-Example:
-
-```yaml
----
-date: 2018-08-03
-update: 2022-09-19
-categories: [it, web]
-tags: [CSS, CSS-Grids]
-published: false
-latex: true
-related-id: html-lesson
-demo: https://codepen.io/Harrix/pen/pZZZxg
-download: https://github.com/Harrix/Russian-Nouns/releases
-author: Anton Sergienko
-author-email: anton.b.sergienko@gmail.com
-permalink: https://harrix.dev/ru/blog/2018/install-latex/
-permalink-source: https://github.com/Harrix/harrix.dev-blog-2018/blob/main/install-latex/install-latex.md
-license: CC BY 4.0
-license-url: https://github.com/Harrix/harrix.dev/blob/main/LICENSE.md
-attribution: https://en.wikipedia.org/wiki/Genetic_algorithm
-lang: ru
----
-```
-"""
-
 from __future__ import annotations
 
 import re
@@ -153,6 +18,139 @@ from .custom_logger import logger
 class Article:
     """
     All information about one article from the site.
+
+    ## Usage examples
+
+    Generate an HTML file (and other related files) from Markdown with the full filename:
+
+    ```python
+    import harrixpyssg as hsg
+
+    md_filename = "C:/GitHub/harrix.dev/content/en/blog/2013/kbd-style/kbd-style.md"
+    html_folder = "C:/GitHub/harrix.dev/content/build_site"
+    hsg.Article(md_filename).generate_html(html_folder)
+    ```
+
+    Generate an HTML file (and other related files) from Markdown with a relative path
+    to the file:
+
+    ```python
+    import harrixpyssg as hsg
+
+    md_filename = "./tests/data/test_01/test_01.md"
+    html_folder = "./build_site"
+    article = hsg.Article(md_filename)
+    article.generate_html(html_folder)
+    ```
+
+    Generate HTML code from Markdown without creating files:
+
+    ```python
+    import harrixpyssg as hsg
+
+    md_filename = "./tests/data/test_01/test_01.md"
+    article = hsg.Article(md_filename)
+    print(article.html_code)
+    ```
+
+    ## Example of folder structure
+
+    Folder with the Markdown file:
+
+    ```text
+    test_01
+    ├─ test_01.md
+    ├─ featured-image.png
+    └─ img
+    └─ test-image.png
+    ```
+
+    Output HTML folder:
+
+    ```text
+    build_site
+    ├─ featured-image.png
+    ├─ img
+    │  └─ test-image.png
+    └─ index.html
+    ```
+
+    Markdown file `test_01.md`:
+
+    ```markdown
+    ---
+    date: 2022-09-18
+    categories: [it, web]
+    tags: [CSS]
+    ---
+
+    # Title
+
+    ![Featured image](featured-image.png)
+
+    Hello, world!
+
+    ![Alt text](img/test-image.png)
+    ```
+
+    HTML file `index.html`:
+
+    ```html
+    <h1 id="title">Title</h1>
+    <p><img src="featured-image.png" alt="Featured image" /></p>
+    <p>Hello, world!</p>
+    <p><img src="img/test-image.png" alt="Alt text" /></p>
+    ```
+
+    # List of processed YAML variables
+
+    - `date`: Date of creation of the article.
+    - `update`: Date of the article update.
+    - `categories`: The list of categories to which the article belongs. Spaces in category
+    names are not allowed.
+    - `tags`: The list of tags to which the article belongs. Spaces in tags names are
+    not allowed.
+    - `published`: `false` if the article is in drafts and should not be published.
+    If the tag is not in YAML, the default value is `true`.
+    - `latex`: `true` if $LaTeX$ is used in the article. Example: `$y = x^{2}$`.
+    If the tag is not in YAML, the default value is `false`.
+    - `related-id`: The key for linking several articles into a series of articles.
+    If this parameter is present, then at the bottom of the article there will be
+    a list of all articles with the same parameter value.
+    - `demo`: The link to the demo page.
+    - `download`: The link to the download file.
+    - `author`: Name of the author of the article.
+    - `author-email`: Email of the author of the article.
+    - `permalink`: The URL address of the article on the website.
+    - `permalink-source`: The URL address of the markdown file on GitHub (for example).
+    - `license`: The license name of this article.
+    - `license-url`: The URL address of the license file.
+    - `attribution`: The link (or array of links) to the source of the material.
+    - `lang`: Language of the article.
+
+    Example:
+
+    ```yaml
+    ---
+    date: 2018-08-03
+    update: 2022-09-19
+    categories: [it, web]
+    tags: [CSS, CSS-Grids]
+    published: false
+    latex: true
+    related-id: html-lesson
+    demo: https://codepen.io/Harrix/pen/pZZZxg
+    download: https://github.com/Harrix/Russian-Nouns/releases
+    author: Anton Sergienko
+    author-email: anton.b.sergienko@gmail.com
+    permalink: https://harrix.dev/ru/blog/2018/install-latex/
+    permalink-source: https://github.com/Harrix/harrix.dev-blog-2018/blob/main/install-latex/install-latex.md
+    license: CC BY 4.0
+    license-url: https://github.com/Harrix/harrix.dev/blob/main/LICENSE.md
+    attribution: https://en.wikipedia.org/wiki/Genetic_algorithm
+    lang: ru
+    ---
+    ```
     """
 
     def __init__(self, md_filename: str | Path):

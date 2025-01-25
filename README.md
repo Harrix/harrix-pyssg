@@ -1,5 +1,7 @@
 # Harrix-Static-Site-Generator (harrix-pyssg)
 
+markdown-it-py = {extras = ["linkify", "plugins"], version = "*"}
+
 **In development. 2023**
 
 Simple static website generator in Python.

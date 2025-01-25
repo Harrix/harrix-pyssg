@@ -1,58 +1,3 @@
-"""
-## Usage examples
-
-```python
-import harrixpyssg as hsg
-
-md_folder = "C:/GitHub/harrix.dev/content"
-html_folder = "C:/GitHub/harrix.dev/build_site"
-sg = hsg.StaticSiteGenerator(md_folder)
-sg.generate_site(html_folder)
-```
-
-```python
-import harrixpyssg as hsg
-
-md_folder = "./tests/data"
-html_folder = "./build_site"
-sg = hsg.StaticSiteGenerator(md_folder)
-sg.generate_site(html_folder)
-```
-
-## Example of folder structure
-
-Folder with the Markdown files:
-
-```text
-data
-├─ test_01
-│  ├─ featured-image.png
-│  ├─ img
-│  │  └─ test-image.png
-│  └─ test_01.md
-└─ test_02
-   ├─ featured-image.png
-   ├─ img
-   │  └─ test-image.png
-   └─ test_02.md
-```
-
-Output HTML folder:
-
-```text
-build_site
-├─ test_01
-│  ├─ featured-image.png
-│  ├─ img
-│  │  └─ test-image.png
-│  └─ index.html
-└─ test_02
-   ├─ featured-image.png
-   ├─ img
-   │  └─ test-image.png
-   └─ index.html
-```
-"""
 from __future__ import annotations
 
 import shutil
@@ -65,6 +10,60 @@ from .custom_logger import logger
 class StaticSiteGenerator:
     """
     Static site generator. It collects Markdown files from folder and sub-folders.
+
+    ## Usage examples
+
+    ```python
+    import harrixpyssg as hsg
+
+    md_folder = "C:/GitHub/harrix.dev/content"
+    html_folder = "C:/GitHub/harrix.dev/build_site"
+    sg = hsg.StaticSiteGenerator(md_folder)
+    sg.generate_site(html_folder)
+    ```
+
+    ```python
+    import harrixpyssg as hsg
+
+    md_folder = "./tests/data"
+    html_folder = "./build_site"
+    sg = hsg.StaticSiteGenerator(md_folder)
+    sg.generate_site(html_folder)
+    ```
+
+    ## Example of folder structure
+
+    Folder with the Markdown files:
+
+    ```text
+    data
+    ├─ test_01
+    │  ├─ featured-image.png
+    │  ├─ img
+    │  │  └─ test-image.png
+    │  └─ test_01.md
+    └─ test_02
+    ├─ featured-image.png
+    ├─ img
+    │  └─ test-image.png
+    └─ test_02.md
+    ```
+
+    Output HTML folder:
+
+    ```text
+    build_site
+    ├─ test_01
+    │  ├─ featured-image.png
+    │  ├─ img
+    │  │  └─ test-image.png
+    │  └─ index.html
+    └─ test_02
+    ├─ featured-image.png
+    ├─ img
+    │  └─ test-image.png
+    └─ index.html
+    ```
     """
 
     def __init__(self, md_folder: str | Path):
