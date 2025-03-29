@@ -30,21 +30,31 @@ def run_test():
         sg.generate_generalized_md()
 
 
+def run_test_add_image_captions():
+    # md_folder = "D:/Dropbox/Notes"
+    # md_folder = "D:/Dropbox/Diaries"
+    # md_folder = "C:/GitHub/_content__harrix-dev"
+    md_folder = "./tests/data"
+    sg = hsg.StaticSiteGenerator(md_folder)
+    sg.add_image_captions()
+
+
+def run_test_add_yaml_tag_to_all_md():
+    md_folder = "./tests/data"
+    sg = hsg.StaticSiteGenerator(md_folder)
+    sg.add_yaml_tag_to_all_md(("author", "Anton Sergienko"))
+
+
 def run_test_article():
     md_filename = "./tests/data/test_01/test_01.md"
     html_folder = "./build_site"
     hsg.Article(md_filename).generate_html(html_folder)
 
 
-def run_test_article_test_03():
-    md_filename = "./tests/data/test_03/test_03.md"
-    html_folder = "./build_site"
-    hsg.Article(md_filename).generate_html(html_folder)
-
-
-def run_test_article_md_content():
+def run_test_article_add_image_captions():
     md_filename = "./tests/data/test_01/test_01.md"
     a = hsg.Article(md_filename)
+    a.add_image_captions()
     print(a.md_content)
 
 
@@ -55,10 +65,9 @@ def run_test_article_get_nocode_code_parts():
     print("\n".join(x[0] for x in a._get_nocode_code_parts()))
 
 
-def run_test_article_md_yaml():
+def run_test_article_md_content():
     md_filename = "./tests/data/test_01/test_01.md"
     a = hsg.Article(md_filename)
-    a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
     print(a.md_content)
 
 
@@ -72,18 +81,17 @@ def run_test_article_md_save():
     print(new_content)
 
 
-def run_test_article_add_image_captions():
+def run_test_article_md_yaml():
     md_filename = "./tests/data/test_01/test_01.md"
     a = hsg.Article(md_filename)
-    a.add_image_captions()
+    a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
     print(a.md_content)
 
 
-def run_test_static_site_generator():
-    md_folder = "./tests/data"
+def run_test_article_test_03():
+    md_filename = "./tests/data/test_03/test_03.md"
     html_folder = "./build_site"
-    sg = hsg.StaticSiteGenerator(md_folder)
-    sg.generate_site(html_folder)
+    hsg.Article(md_filename).generate_html(html_folder)
 
 
 def run_test_get_set_variables_from_yaml():
@@ -93,19 +101,11 @@ def run_test_get_set_variables_from_yaml():
     print(sg.get_set_variables_from_yaml())
 
 
-def run_test_add_yaml_tag_to_all_md():
+def run_test_static_site_generator():
     md_folder = "./tests/data"
+    html_folder = "./build_site"
     sg = hsg.StaticSiteGenerator(md_folder)
-    sg.add_yaml_tag_to_all_md(("author", "Anton Sergienko"))
-
-
-def run_test_add_image_captions():
-    # md_folder = "D:/Dropbox/Notes"
-    # md_folder = "D:/Dropbox/Diaries"
-    # md_folder = "C:/GitHub/_content__harrix-dev"
-    md_folder = "./tests/data"
-    sg = hsg.StaticSiteGenerator(md_folder)
-    sg.add_image_captions()
+    sg.generate_site(html_folder)
 
 
 def run_test_static_site_generator_save():

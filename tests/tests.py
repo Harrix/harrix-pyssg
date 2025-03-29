@@ -30,9 +30,7 @@ class TestHarrixpyssg(unittest.TestCase):
     def test_article__02(self):
         md_filename = "./tests/data/test_01/test_01.md"
         a = hsg.Article(md_filename)
-        self.assertEqual(
-            len(a.md_content.splitlines()), len(TEST_MD_CONTENT.splitlines())
-        )
+        self.assertEqual(len(a.md_content.splitlines()), len(TEST_MD_CONTENT.splitlines()))
 
     def test_article__03(self):
         md_filename = "./tests/data/test_01/test_01.md"
@@ -63,12 +61,6 @@ class TestHarrixpyssg(unittest.TestCase):
         a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
         self.assertEqual(a.md_content.splitlines()[1], "date: 2022-11-04")
 
-    def test_article__get_nocode_code_parts(self):
-        md_filename = "./tests/data/test_03/test_03.md"
-        a = hsg.Article(md_filename)
-        from_parts = "\n".join([part[0] for part in a._get_nocode_code_parts()])
-        self.assertEqual(a.md_content_no_yaml.rstrip(), from_parts.rstrip())
-
     def test_article__08(self):
         md_filename = "./tests/data/test_01/test_01.md"
         a = hsg.Article(md_filename)
@@ -80,6 +72,12 @@ class TestHarrixpyssg(unittest.TestCase):
         a = hsg.Article(md_filename)
         a.add_image_captions()
         self.assertEqual(len(a.md_content.splitlines()), 15)
+
+    def test_article__get_nocode_code_parts(self):
+        md_filename = "./tests/data/test_03/test_03.md"
+        a = hsg.Article(md_filename)
+        from_parts = "\n".join([part[0] for part in a._get_nocode_code_parts()])
+        self.assertEqual(a.md_content_no_yaml.rstrip(), from_parts.rstrip())
 
     def test_article__save(self):
         md_filename = "./tests/data/test_01/test_01.md"

@@ -41,6 +41,7 @@ logger.error("This is an error-level message")
 logger.critical("This is a critical-level message")
 ```
 """
+
 import datetime
 import logging
 
@@ -80,13 +81,9 @@ def init_logger(name, is_file_handler=False):
     custom_logger.addHandler(stdout_handler)
 
     if is_file_handler:
-        fmt_file_handler = (
-            "%(asctime)s | %(levelname)-8s | %(message)s (%(filename)s:%(lineno)d)"
-        )
+        fmt_file_handler = "%(asctime)s | %(levelname)-8s | %(message)s (%(filename)s:%(lineno)d)"
         today = datetime.date.today()
-        file_handler = logging.FileHandler(
-            "{}_{}.log".format(name, today.strftime("%Y_%m_%d"))
-        )
+        file_handler = logging.FileHandler("{}_{}.log".format(name, today.strftime("%Y_%m_%d")))
         file_handler.setLevel(logging.DEBUG)
         file_handler.setFormatter(logging.Formatter(fmt_file_handler))
         custom_logger.addHandler(file_handler)
