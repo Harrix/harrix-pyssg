@@ -1,5 +1,4 @@
-"""
-Setting up a standard logger with colored text.
+"""Setting up a standard logger with colored text.
 
 ## Usage examples
 
@@ -55,7 +54,7 @@ def init_logger(name, is_file_handler=False):
         red_background = "\x1b[41m"
         reset = "\x1b[0m"
 
-        def __init__(self, fmt):
+        def __init__(self, fmt) -> None:
             super().__init__()
             self.fmt = fmt
             self.FORMATS = {

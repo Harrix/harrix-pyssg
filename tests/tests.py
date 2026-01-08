@@ -96,7 +96,7 @@ class TestHarrixpyssg(unittest.TestCase):
         sg.generate_site(html_folder)
         count_files = 0
         for item in filter(
-            lambda path: not any((part for part in path.parts if part.startswith("."))),
+            lambda path: not any(part for part in path.parts if part.startswith(".")),
             Path(html_folder).rglob("*"),
         ):
             if item.is_file():

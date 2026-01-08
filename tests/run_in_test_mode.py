@@ -5,7 +5,6 @@ import harrixpyssg as hsg
 
 
 def main():
-    ...
     run_test()
     # run_test_article()
     # run_test_article_test_03()
@@ -23,7 +22,6 @@ def main():
 
 def run_test():
     if True:
-        ...
         md_folder = "./tests/data"
         # md_folder = "D:/Dropbox/Notes"
         sg = hsg.StaticSiteGenerator(md_folder)

@@ -16,8 +16,7 @@ from .custom_logger import logger
 
 
 class Article:
-    """
-    All information about one article from the site.
+    """All information about one article from the site.
 
     ## Usage examples
 
@@ -151,11 +150,11 @@ class Article:
     lang: ru
     ---
     ```
+
     """
 
-    def __init__(self, md_filename: str | Path):
-        """
-        Get all info of the Markdown file with folders.
+    def __init__(self, md_filename: str | Path) -> None:
+        """Get all info of the Markdown file with folders.
         Constructor `__init__` does not generate new files and folders.
 
         Args:
@@ -169,15 +168,14 @@ class Article:
 
         article = hsg.Article("C:/GitHub/harrix-pyssg/tests/data/test_01/test_01.md")
         ```
+
         """
         self._html_folder = None
-        self._md_yaml_dict = dict()
+        self._md_yaml_dict = {}
         self.load(md_filename)
 
     def _clear_html_folder_directory(self) -> None:
-        """
-        This method clears `self.html_folder` with sub-directories.
-        """
+        """This method clears `self.html_folder` with sub-directories."""
         if self.html_folder is None:
             return
         if self.html_folder.exists() and self.html_folder.is_dir():
@@ -185,9 +183,7 @@ class Article:
         self.html_folder.mkdir(parents=True, exist_ok=True)
 
     def _copy_dirs(self) -> None:
-        """
-        This method copies all folders from the directory with the Markdown file.
-        """
+        """This method copies all folders from the directory with the Markdown file."""
         if self.html_folder is None:
             return
         for file in Path(self.md_filename).parent.iterdir():
@@ -195,8 +191,7 @@ class Article:
                 shutil.copytree(file, self.html_folder / file.name, dirs_exist_ok=True)
 
     def _copy_featured_images(self) -> None:
-        """
-        This method copies all featured images from the directory with
+        """This method copies all featured images from the directory with
         the Markdown file.
         """
         if self.html_folder is None:
@@ -207,8 +202,7 @@ class Article:
             shutil.copy(file, output_file)
 
     def _get_nocode_code_parts(self) -> list:
-        """
-        The method returns an array of tuples: part of the markdown file,
+        r"""The method returns an array of tuples: part of the markdown file,
         True if part of the file is a piece of code.
 
         Example:
@@ -236,12 +230,13 @@ class Article:
         # ('```python\nx = input()\n```', True)
         # ('\nText 2.', False)
         ```
+
         """
-        res = list()
+        res = []
         lines = self.md_content_no_yaml.splitlines()
         starts = ["`" * 6, "`" * 5, "`" * 4, "`" * 3]
         start_space = " " * 4
-        part = list()
+        part = []
         is_code = False
         start_code_now = None
         for i in range(len(lines)):
@@ -253,13 +248,13 @@ class Article:
                     is_code = True
                     start_code_now = start_code
                     break
-                elif lines[i].lstrip().startswith(start_code) and start_code_now == start_code:
+                if lines[i].lstrip().startswith(start_code) and start_code_now == start_code:
                     part.append(lines[i])
                     if part:
                         res.append(("\n".join(part), is_code))
                     is_code = False
                     start_code_now = None
-                    part = list()
+                    part = []
                     break
             else:
                 if not is_code and lines[i].startswith(start_space):
@@ -277,7 +272,7 @@ class Article:
                             res.append(("\n".join(part), is_code))
                         is_code = False
                         start_code_now = None
-                        part = list()
+                        part = []
                     else:
                         part.append(lines[i])
                 else:
@@ -287,8 +282,7 @@ class Article:
         return res
 
     def _process_no_code_content(self, func) -> str:
-        """
-        This method handles all parts of the markdown without the code
+        r"""This method handles all parts of the markdown without the code
         using the function `func`.
 
         Example:
@@ -301,6 +295,7 @@ class Article:
 
         self._md_content_no_yaml = self._process_no_code_content(fix_part)
         ```
+
         """
         content_parts = self._get_nocode_code_parts()
         for i in range(len(content_parts)):
@@ -311,8 +306,7 @@ class Article:
         return "\n".join([x[0] for x in content_parts])
 
     def add_image_captions(self) -> Article:
-        """
-        Add captions to images. The method ignores a featured image
+        """Add captions to images. The method ignores a featured image
         (for example, `![Featured image](featured-image.svg)`). The method does not
         save changes to the file. This should be done using the `save()` method.
         The method automatically numbers the images.
@@ -369,6 +363,7 @@ class Article:
 
         _Figure 1: Alt text_
         ```
+
         """
         index_images = 1
         content_parts = self._get_nocode_code_parts()
@@ -383,9 +378,9 @@ class Article:
                     continue
                 regexp = r"^\!\[(.*?)\]\((.*?)\)"
                 regexp_html = r"^\<img alt=\"(.*?)\" src=\"(.*?)\" (.*?)\>"
-                find = re.search(regexp, lines[j], re.S)
+                find = re.search(regexp, lines[j], re.DOTALL)
                 if not find:
-                    find = re.search(regexp_html, lines[j], re.S)
+                    find = re.search(regexp_html, lines[j], re.DOTALL)
                 if find:
                     if "lang" in self.md_yaml_dict and self.md_yaml_dict["lang"] == "ru":
                         caption = f"_Рисунок {index_images} — {find.group(1)}_"
@@ -404,8 +399,7 @@ class Article:
 
     @property
     def featured_image_filenames(self) -> list[str]:
-        """
-        `list[str]`: Array of featured images. The files must be in the same folder
+        """`list[str]`: Array of featured images. The files must be in the same folder
         as the Markdown file. Example: `["featured-image.png", "featured-image.svg"]`.
 
         Example:
@@ -418,6 +412,7 @@ class Article:
         print(article.featured_image_filenames)
         # ['featured-image.png']
         ```
+
         """
         res = []
         for file in self.md_filename.parent.iterdir():
@@ -426,8 +421,7 @@ class Article:
         return res
 
     def generate_html(self, html_folder=None) -> Article:
-        """
-        Generate HTML file with folders from the Markdown file with folders.
+        """Generate HTML file with folders from the Markdown file with folders.
 
         Args:
 
@@ -447,6 +441,7 @@ class Article:
         article = hsg.Article(md_filename)
         article.generate_html(html_folder)
         ```
+
         """
         if html_folder is not None:
             self.html_folder = html_folder
@@ -461,8 +456,7 @@ class Article:
 
     @property
     def html_code(self) -> str:
-        """
-        `str`: HTML clean code from the Markdown code (only getter).
+        """`str`: HTML clean code from the Markdown code (only getter).
 
         Example:
 
@@ -481,6 +475,7 @@ class Article:
         <p>Hello, world!</p>
         <p><img src="img/test-image.png" alt="Alt text" /></p>
         ```
+
         """
         md = (
             MarkdownIt("gfm-like", {"typographer": True, "linkify": False})
@@ -496,8 +491,7 @@ class Article:
 
     @property
     def html_filename(self) -> Path | None:
-        """
-        `Path | None`: Output filename of HTML file (only getter).
+        r"""`Path | None`: Output filename of HTML file (only getter).
 
         ```python
         import harrixpyssg as hsg
@@ -505,7 +499,7 @@ class Article:
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.html_folder = "./build_site"
         print(article.html_filename)
-        # C:\GitHub\harrix-pyssg\build_site\index.html
+        # C:\\GitHub\\harrix-pyssg\build_site\\index.html
         ```
         """
         if self._html_folder is not None:
@@ -514,8 +508,7 @@ class Article:
 
     @property
     def html_folder(self) -> Path | None:
-        """
-        `Path | None`: Output folder of HTML file.
+        r"""`Path | None`: Output folder of HTML file.
 
         Example for the getter:
 
@@ -525,7 +518,7 @@ class Article:
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.generate_html("./build_site")
         print(article.html_folder)
-        # C:\GitHub\harrix-pyssg\build_site
+        # C:\\GitHub\\harrix-pyssg\build_site
         ```
 
         Example for the setter:
@@ -547,8 +540,7 @@ class Article:
         self._html_folder = Path(new_value)
 
     def load(self, md_filename: str | Path) -> None:
-        """
-        Loads a new Markdown file.
+        r"""Loads a new Markdown file.
 
         Args:
 
@@ -562,8 +554,9 @@ class Article:
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.load("./tests/data/test_02/test_02.md")
         print(article.md_filename)
-        # tests\data\test_02\test_02.md
+        # tests\\data\test_02\test_02.md
         ```
+
         """
         self._md_filename = Path(md_filename)
         try:
@@ -575,13 +568,12 @@ class Article:
             if find:
                 yaml_text = find.group().rstrip()[:-4].rstrip()
                 self._md_yaml_dict = yaml.safe_load(yaml_text)
-        except:
+        except Exception:
             logger.error(f'The file "{md_filename}" does not open')
 
     @property
     def md_content(self) -> str:
-        """
-        `str`: The contents of the Markdown file (only getter). A block with YAML may
+        """`str`: The contents of the Markdown file (only getter). A block with YAML may
         differ from how it looks in the Markdown file.
 
         Example:
@@ -610,13 +602,13 @@ class Article:
 
         ![Alt text](img/test-image.png)
         ```
+
         """
         return f"{self.md_yaml}\n\n{self.md_content_no_yaml.rstrip()}\n".lstrip()
 
     @property
     def md_content_no_yaml(self) -> str:
-        """
-        `str`: Text of the article in the form of Markdown without YAML text.
+        """`str`: Text of the article in the form of Markdown without YAML text.
 
         Example for the getter:
 
@@ -658,8 +650,7 @@ class Article:
 
     @property
     def md_filename(self) -> Path:
-        """
-        `Path`: Full filename of the Markdown file (only getter).
+        r"""`Path`: Full filename of the Markdown file (only getter).
         Example: `"./tests/data/test_01/test_01.md"`.
 
         ```python
@@ -667,7 +658,7 @@ class Article:
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         print(article.md_filename)
-        # C:\GitHub\harrix-pyssg\tests\data\test_01\test_01.md
+        # C:\\GitHub\\harrix-pyssg\tests\\data\test_01\test_01.md
         ```
 
         You can upload a new file and change the value of this variable via
@@ -677,8 +668,7 @@ class Article:
 
     @property
     def md_yaml(self) -> str:
-        """
-        `str`: YAML from the Markdown file (only getter).
+        """`str`: YAML from the Markdown file (only getter).
 
         Example:
 
@@ -698,6 +688,7 @@ class Article:
         tags: [CSS]
         ---
         ```
+
         """
         if len(self.md_yaml_dict) == 0:
             return ""
@@ -720,8 +711,7 @@ class Article:
 
     @property
     def md_yaml_dict(self) -> dict:
-        """
-        `dict`: YAML from the Markdown file (only getter, but you can change
+        r"""`dict`: YAML from the Markdown file (only getter, but you can change
         the contents of the dictionary).
 
         Example:
@@ -748,12 +738,12 @@ class Article:
         tags: [CSS]
         ---
         ```
+
         """
         return self._md_yaml_dict
 
     def save(self) -> None:
-        """
-        Save the Markdown file.
+        r"""Save the Markdown file.
 
         Example:
 
@@ -765,18 +755,18 @@ class Article:
         a.md_content_no_yaml = "# New title\n\nNew content"
         a.save()
         ```
+
         """
         try:
             Path(self.md_filename).write_text(self.md_content, encoding="utf8")
-        except:
+        except Exception:
             logger.error(f'The file "{self.md_filename}" does not save')
 
     def to_sub_article(self) -> str:
-        """ """
+        """Convert article to sub-article format by increasing heading levels."""
 
         def fix_part(no_code_part):
-            """
-            Replace `# Title` to `## Title`.
+            """Replace `# Title` to `## Title`.
             Replace `![Alt text](img/test-image.png)`
             to `![Alt text](test_01/img/test-image.png)`.
             """
@@ -785,11 +775,11 @@ class Article:
                 is_title = False
                 for j in range(5):
                     # Replace headings.
-                    hash = "#" * (j + 1) + " "
+                    hash_prefix = "#" * (j + 1) + " "
                     hash_replace = "#" * (j + 2) + " "
-                    if not lines[i].startswith(hash):
+                    if not lines[i].startswith(hash_prefix):
                         continue
-                    lines[i] = lines[i].replace(hash, hash_replace, 1)
+                    lines[i] = lines[i].replace(hash_prefix, hash_replace, 1)
                     is_title = True
                     break
                 if not is_title:
@@ -798,7 +788,7 @@ class Article:
                     pattern = re.compile(regexp)
                     lines[i] = re.sub(
                         pattern,
-                        r"[\1]({}/\2)".format(self.md_filename.parts[-2]),
+                        rf"[\1]({self.md_filename.parts[-2]}/\2)",
                         lines[i],
                     )
 
