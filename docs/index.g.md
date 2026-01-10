@@ -1,3 +1,9 @@
+---
+author: Anton Sergienko
+author-email: anton.b.sergienko@gmail.com
+lang: en
+---
+
 # Harrix PySSG
 
 ![Featured image](https://raw.githubusercontent.com/Harrix/harrix-pyssg/refs/heads/main/img/featured-image.svg)

@@ -1,3 +1,9 @@
+---
+author: Anton Sergienko
+author-email: anton.b.sergienko@gmail.com
+lang: en
+---
+
 # 📄 File `custom_logger.py`
 
 ## 🔧 Function `init_logger`

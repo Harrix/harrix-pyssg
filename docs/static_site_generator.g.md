@@ -1,3 +1,9 @@
+---
+author: Anton Sergienko
+author-email: anton.b.sergienko@gmail.com
+lang: en
+---
+
 # 📄 File `static_site_generator.py`
 
 <details>

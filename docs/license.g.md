@@ -1,3 +1,9 @@
+---
+author: Anton Sergienko
+author-email: anton.b.sergienko@gmail.com
+lang: en
+---
+
 # The MIT License
 
 Copyright © 2020-present Sergienko Anton
