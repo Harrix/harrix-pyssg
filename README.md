@@ -1,6 +1,6 @@
 # Harrix PySSG
 
-![Featured image](https://raw.githubusercontent.com/Harrix/harrix-pylib/refs/heads/main/img/featured-image.svg)
+![Featured image](https://raw.githubusercontent.com/Harrix/harrix-pyssg/refs/heads/main/img/featured-image.svg)
 
 🔌 Simple static website generator in Python.
 
