@@ -1,10 +1,10 @@
-# Harrix-Static-Site-Generator (harrix-pyssg)
+# Harrix PySSG
 
-markdown-it-py = {extras = ["linkify", "plugins"], version = "*"}
+![Featured image](https://raw.githubusercontent.com/Harrix/harrix-pylib/refs/heads/main/img/featured-image.svg)
 
-**In development. 2023**
+🔌 Simple static website generator in Python.
 
-Simple static website generator in Python.
+**In development**
 
 Markdown processor: [markdown-it-py](https://pypi.org/project/markdown-it-py) <https://pypistats.org/packages/markdown-it-py>.
 
