@@ -174,137 +174,6 @@ class Article:
         self._md_yaml_dict = {}
         self.load(md_filename)
 
-    def _clear_html_folder_directory(self) -> None:
-        """This method clears `self.html_folder` with sub-directories."""
-        if self.html_folder is None:
-            return
-        if self.html_folder.exists() and self.html_folder.is_dir():
-            shutil.rmtree(self.html_folder)
-        self.html_folder.mkdir(parents=True, exist_ok=True)
-
-    def _copy_dirs(self) -> None:
-        """This method copies all folders from the directory with the Markdown file."""
-        if self.html_folder is None:
-            return
-        for file in Path(self.md_filename).parent.iterdir():
-            if file.is_dir():
-                shutil.copytree(file, self.html_folder / file.name, dirs_exist_ok=True)
-
-    def _copy_featured_images(self) -> None:
-        """This method copies all featured images from the directory with
-        the Markdown file.
-        """
-        if self.html_folder is None:
-            return
-        for filename in self.featured_image_filenames:
-            file = self.md_filename.parent / filename
-            output_file = self.html_folder / filename
-            shutil.copy(file, output_file)
-
-    def _get_nocode_code_parts(self) -> list:
-        r"""The method returns an array of tuples: part of the markdown file,
-        True if part of the file is a piece of code.
-
-        Example:
-
-        File `test.md`:
-
-        ```
-        # Heading
-
-        Text.
-
-        ```python
-        x = input()
-        ```
-
-        Text 2.
-
-        ```
-
-        ```python
-        md_filename = "test.md"
-        a = hsg.Article(md_filename)
-        print(*a._get_nocode_code_parts(), sep="\n")
-        # ('# Heading\n\nText.\n', False)
-        # ('```python\nx = input()\n```', True)
-        # ('\nText 2.', False)
-        ```
-
-        """
-        res = []
-        lines = self.md_content_no_yaml.splitlines()
-        starts = ["`" * 6, "`" * 5, "`" * 4, "`" * 3]
-        start_space = " " * 4
-        part = []
-        is_code = False
-        start_code_now = None
-        for i in range(len(lines)):
-            for start_code in starts:
-                if not is_code and lines[i].lstrip().startswith(start_code):
-                    if part:
-                        res.append(("\n".join(part), is_code))
-                    part = [lines[i]]
-                    is_code = True
-                    start_code_now = start_code
-                    break
-                if lines[i].lstrip().startswith(start_code) and start_code_now == start_code:
-                    part.append(lines[i])
-                    if part:
-                        res.append(("\n".join(part), is_code))
-                    is_code = False
-                    start_code_now = None
-                    part = []
-                    break
-            else:
-                if not is_code and lines[i].startswith(start_space):
-                    if i == 0 or lines[i - 1] == "":
-                        if part:
-                            res.append(("\n".join(part), is_code))
-                        part = [lines[i]]
-                        is_code = True
-                        start_code_now = start_space
-                elif is_code and start_code_now == start_space and i < len(lines) - 1:
-                    next_line = lines[i + 1].rstrip()
-                    if len(next_line) > 0 and next_line[0] != " ":
-                        part.append(lines[i])
-                        if part:
-                            res.append(("\n".join(part), is_code))
-                        is_code = False
-                        start_code_now = None
-                        part = []
-                    else:
-                        part.append(lines[i])
-                else:
-                    part.append(lines[i])
-        if part:
-            res.append(("\n".join(part), is_code))
-        return res
-
-    def _process_no_code_content(self, func) -> str:
-        r"""This method handles all parts of the markdown without the code
-        using the function `func`.
-
-        Example:
-
-        ```python
-        def fix_part(no_code_part):
-            lines = no_code_part.split("\n")
-            lines.append("Код:")
-            return "\n".join(lines)
-
-        self._md_content_no_yaml = self._process_no_code_content(fix_part)
-        ```
-
-        """
-        content_parts = self._get_nocode_code_parts()
-        for i in range(len(content_parts)):
-            if content_parts[i][1]:
-                continue
-            processed_part = func(content_parts[i][0])
-            content_parts[i] = (processed_part, content_parts[i][1])
-        return "\n".join([x[0] for x in content_parts])
-
     def add_image_captions(self) -> Article:
         """Add captions to images. The method ignores a featured image
         (for example, `![Featured image](featured-image.svg)`). The method does not
@@ -795,3 +664,134 @@ class Article:
             return "\n".join(lines)
 
         return self._process_no_code_content(fix_part)
+
+    def _clear_html_folder_directory(self) -> None:
+        """This method clears `self.html_folder` with sub-directories."""
+        if self.html_folder is None:
+            return
+        if self.html_folder.exists() and self.html_folder.is_dir():
+            shutil.rmtree(self.html_folder)
+        self.html_folder.mkdir(parents=True, exist_ok=True)
+
+    def _copy_dirs(self) -> None:
+        """This method copies all folders from the directory with the Markdown file."""
+        if self.html_folder is None:
+            return
+        for file in Path(self.md_filename).parent.iterdir():
+            if file.is_dir():
+                shutil.copytree(file, self.html_folder / file.name, dirs_exist_ok=True)
+
+    def _copy_featured_images(self) -> None:
+        """This method copies all featured images from the directory with
+        the Markdown file.
+        """
+        if self.html_folder is None:
+            return
+        for filename in self.featured_image_filenames:
+            file = self.md_filename.parent / filename
+            output_file = self.html_folder / filename
+            shutil.copy(file, output_file)
+
+    def _get_nocode_code_parts(self) -> list:
+        r"""The method returns an array of tuples: part of the markdown file,
+        True if part of the file is a piece of code.
+
+        Example:
+
+        File `test.md`:
+
+        ```
+        # Heading
+
+        Text.
+
+        ```python
+        x = input()
+        ```
+
+        Text 2.
+
+        ```
+
+        ```python
+        md_filename = "test.md"
+        a = hsg.Article(md_filename)
+        print(*a._get_nocode_code_parts(), sep="\n")
+        # ('# Heading\n\nText.\n', False)
+        # ('```python\nx = input()\n```', True)
+        # ('\nText 2.', False)
+        ```
+
+        """
+        res = []
+        lines = self.md_content_no_yaml.splitlines()
+        starts = ["`" * 6, "`" * 5, "`" * 4, "`" * 3]
+        start_space = " " * 4
+        part = []
+        is_code = False
+        start_code_now = None
+        for i in range(len(lines)):
+            for start_code in starts:
+                if not is_code and lines[i].lstrip().startswith(start_code):
+                    if part:
+                        res.append(("\n".join(part), is_code))
+                    part = [lines[i]]
+                    is_code = True
+                    start_code_now = start_code
+                    break
+                if lines[i].lstrip().startswith(start_code) and start_code_now == start_code:
+                    part.append(lines[i])
+                    if part:
+                        res.append(("\n".join(part), is_code))
+                    is_code = False
+                    start_code_now = None
+                    part = []
+                    break
+            else:
+                if not is_code and lines[i].startswith(start_space):
+                    if i == 0 or lines[i - 1] == "":
+                        if part:
+                            res.append(("\n".join(part), is_code))
+                        part = [lines[i]]
+                        is_code = True
+                        start_code_now = start_space
+                elif is_code and start_code_now == start_space and i < len(lines) - 1:
+                    next_line = lines[i + 1].rstrip()
+                    if len(next_line) > 0 and next_line[0] != " ":
+                        part.append(lines[i])
+                        if part:
+                            res.append(("\n".join(part), is_code))
+                        is_code = False
+                        start_code_now = None
+                        part = []
+                    else:
+                        part.append(lines[i])
+                else:
+                    part.append(lines[i])
+        if part:
+            res.append(("\n".join(part), is_code))
+        return res
+
+    def _process_no_code_content(self, func) -> str:
+        r"""This method handles all parts of the markdown without the code
+        using the function `func`.
+
+        Example:
+
+        ```python
+        def fix_part(no_code_part):
+            lines = no_code_part.split("\n")
+            lines.append("Код:")
+            return "\n".join(lines)
+
+        self._md_content_no_yaml = self._process_no_code_content(fix_part)
+        ```
+
+        """
+        content_parts = self._get_nocode_code_parts()
+        for i in range(len(content_parts)):
+            if content_parts[i][1]:
+                continue
+            processed_part = func(content_parts[i][0])
+            content_parts[i] = (processed_part, content_parts[i][1])
+        return "\n".join([x[0] for x in content_parts])

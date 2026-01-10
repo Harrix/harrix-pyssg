@@ -88,25 +88,6 @@ class StaticSiteGenerator:
 
         self._get_info_about_articles()
 
-    def _clear_html_folder_directory(self) -> None:
-        """This method clears `self.html_folder` with sub-directories."""
-        if self.html_folder is None:
-            return
-        if self.html_folder.exists() and self.html_folder.is_dir():
-            shutil.rmtree(self.html_folder)
-        self.html_folder.mkdir(parents=True, exist_ok=True)
-
-    def _get_info_about_articles(self) -> None:
-        """This method gets info from all Markdown files and fills
-        the list `self.articles`.
-        """
-        for item in filter(
-            lambda path: not any(part for part in path.parts if part.startswith(".")),
-            Path(self.md_folder).rglob("*"),
-        ):
-            if item.is_file() and item.suffix.lower() == ".md":
-                self.articles.append(Article(item))
-
     def add_image_captions(self) -> StaticSiteGenerator:
         """Add captions to all images in all markdown files. The method ignores
         a featured image (for example, `![Featured image](featured-image.svg)`).
@@ -354,3 +335,22 @@ class StaticSiteGenerator:
         ```
         """
         return self._md_folder.absolute()
+
+    def _clear_html_folder_directory(self) -> None:
+        """This method clears `self.html_folder` with sub-directories."""
+        if self.html_folder is None:
+            return
+        if self.html_folder.exists() and self.html_folder.is_dir():
+            shutil.rmtree(self.html_folder)
+        self.html_folder.mkdir(parents=True, exist_ok=True)
+
+    def _get_info_about_articles(self) -> None:
+        """This method gets info from all Markdown files and fills
+        the list `self.articles`.
+        """
+        for item in filter(
+            lambda path: not any(part for part in path.parts if part.startswith(".")),
+            Path(self.md_folder).rglob("*"),
+        ):
+            if item.is_file() and item.suffix.lower() == ".md":
+                self.articles.append(Article(item))
