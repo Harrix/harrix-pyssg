@@ -6,32 +6,16 @@ import harrix_pyssg as hsg
 
 def main() -> None:
     run_test()
-    # run_test_article()
-    # run_test_article_test_03()
-    # run_test_article_md_content()
-    # run_test_article_get_nocode_code_parts()
-    # run_test_article_md_yaml()
-    # run_test_article_md_save()
-    # run_test_static_site_generator()
-    # run_test_get_set_variables_from_yaml()
-    # run_test_add_yaml_tag_to_all_md()
-    # run_test_article_add_image_captions()
-    # run_test_add_image_captions()
-    # run_test_static_site_generator_save()
 
 
 def run_test() -> None:
     if True:
         md_folder = "./tests/data"
-        # md_folder = "D:/Dropbox/Notes"
         sg = hsg.StaticSiteGenerator(md_folder)
         sg.generate_generalized_md()
 
 
 def run_test_add_image_captions() -> None:
-    # md_folder = "D:/Dropbox/Notes"
-    # md_folder = "D:/Dropbox/Diaries"
-    # md_folder = "C:/GitHub/_content__harrix-dev"
     md_folder = "./tests/data"
     sg = hsg.StaticSiteGenerator(md_folder)
     sg.add_image_captions()
@@ -93,7 +77,6 @@ def run_test_article_test_03() -> None:
 
 
 def run_test_get_set_variables_from_yaml() -> None:
-    # md_folder = "C:/GitHub/_content__harrix-dev"
     md_folder = "./tests/data"
     sg = hsg.StaticSiteGenerator(md_folder)
     print(sg.get_set_variables_from_yaml())
@@ -108,7 +91,6 @@ def run_test_static_site_generator() -> None:
 
 def run_test_static_site_generator_save() -> None:
     md_folder = "C:/GitHub/_content__harrix-dev"
-    # md_folder = "./tests/data"
     sg = hsg.StaticSiteGenerator(md_folder)
     for a in sg.articles:
         a.save()
