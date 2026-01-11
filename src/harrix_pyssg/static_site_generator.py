@@ -66,12 +66,12 @@ class StaticSiteGenerator:
 
     def __init__(self, md_folder: str | Path) -> None:
         """The generator collects Markdown files from folder and sub-folders.
+
         Constructor `__init__` does not generate new files and folders.
 
-        Attributes:
+        Args:
 
-        - `md_folder` (str | Path): Folder with Markdown files.
-          Example: `"./tests/data"`.
+        - `md_folder` (`str | Path`): Folder with Markdown files. Example: `"./tests/data"`.
 
         Example:
 
@@ -89,10 +89,10 @@ class StaticSiteGenerator:
         self._get_info_about_articles()
 
     def add_image_captions(self) -> StaticSiteGenerator:
-        """Add captions to all images in all markdown files. The method ignores
-        a featured image (for example, `![Featured image](featured-image.svg)`).
-        The method saves changes to the file. The method automatically numbers
-        the images.
+        """Add captions to all images in all markdown files.
+
+        The method ignores a featured image (for example, `![Featured image](featured-image.svg)`).
+        The method saves changes to the file. The method automatically numbers the images.
 
         Returns:
 
@@ -153,16 +153,12 @@ class StaticSiteGenerator:
             article.save()
         return self
 
-    def add_yaml_tag_to_all_md(self, tuple_yaml_tag) -> None:
-        """This method adds a YAML tag to all markdown files and save them.
+    def add_yaml_tag_to_all_md(self, tuple_yaml_tag: tuple[str, str]) -> None:
+        """Add a YAML tag to all markdown files and save them.
 
         Args:
 
-        - `tuple_yaml_tag`: Tuple of YAML tag. Example: `("author", "Anton Sergienko")`
-
-        Returns:
-
-        - `None`.
+        - `tuple_yaml_tag` (`tuple[str, str]`): Tuple of YAML tag. Example: `("author", "Anton Sergienko")`.
 
         Example:
 
@@ -183,23 +179,35 @@ class StaticSiteGenerator:
             article.save()
 
     @property
-    def articles(self):
-        r"""`list[Article]`: list of all articles that is generated in the `__init__()`.
+    def articles(self) -> list[hsg.Article]:
+        r"""List of all articles that is generated in the `__init__()`.
+
+        Returns:
+
+        - `list[Article]`: List of all articles.
+
+        Example:
 
         ```python
         import harrix_pyssg as hsg
 
         md_folder = "./tests/data"
         sg = hsg.StaticSiteGenerator(md_folder)
-        articles = sg.articles # list of all articles
+        articles = sg.articles  # list of all articles
         print(sg.articles[0].md_filename)
         # C:\\GitHub\\harrix-pyssg\tests\\data\test_01\test_01.md
         ```
+
         """
         return self._articles
 
     def generate_generalized_md(self) -> None:
-        """Generate generalized markdown files from articles in folders."""
+        """Generate generalized markdown files from articles in folders.
+
+        This method collects articles from subfolders and creates a single generalized markdown file
+        in the parent folder with the name `{folder_name}.auto.md`.
+
+        """
         paths_generalized_md = set()
         # Get a list of paths that have MD files (without `.auto.md`)
         for article in self.articles:
@@ -222,11 +230,11 @@ class StaticSiteGenerator:
                 Path(path / f"{folder}.auto.md").write_text(content, encoding="utf8")
 
     def generate_site(self, html_folder=None) -> StaticSiteGenerator:
-        """This method generates HTML files with folders from Markdown files.
+        """Generate HTML files with folders from Markdown files.
 
         Args:
 
-        - `html_folder` (str | Path): Output folder of the HTML files. Default: `None`.
+        - `html_folder` (`str | Path | None`): Output folder of the HTML files. Defaults to `None`.
 
         Returns:
 
@@ -259,12 +267,12 @@ class StaticSiteGenerator:
 
         return self
 
-    def get_set_variables_from_yaml(self):
-        """This method generates a set of all variables from YAML from all articles.
+    def get_set_variables_from_yaml(self) -> list[str]:
+        """Generate a sorted list of all variables from YAML from all articles.
 
         Returns:
 
-        - `set[str]`: Sorted set of all variables from YAML from all articles.
+        - `list[str]`: Sorted list of all variables from YAML from all articles.
           Example: `['categories', 'date', 'tags']`.
 
         Example:
@@ -287,7 +295,11 @@ class StaticSiteGenerator:
 
     @property
     def html_folder(self) -> Path | None:
-        r"""`Path | None`: Output folder of HTML files.
+        r"""Output folder of HTML files.
+
+        Returns:
+
+        - `Path | None`: Output folder of HTML files.
 
         Example for the getter:
 
@@ -312,6 +324,7 @@ class StaticSiteGenerator:
         sg.html_folder = "./build_site"
         sg.generate_site()
         ```
+
         """
         if self._html_folder is not None:
             return self._html_folder.absolute()
@@ -322,8 +335,14 @@ class StaticSiteGenerator:
         self._html_folder = Path(new_value)
 
     @property
-    def md_folder(self):
-        r"""`Path`: Folder with Markdown files (only getter).
+    def md_folder(self) -> Path:
+        r"""Folder with Markdown files (only getter).
+
+        Returns:
+
+        - `Path`: Folder with Markdown files.
+
+        Example:
 
         ```python
         import harrix_pyssg as hsg
@@ -333,11 +352,12 @@ class StaticSiteGenerator:
         print(sg.md_folder)
         # C:\\GitHub\\harrix-pyssg\tests\\data
         ```
+
         """
         return self._md_folder.absolute()
 
     def _clear_html_folder_directory(self) -> None:
-        """This method clears `self.html_folder` with sub-directories."""
+        """Clear `self.html_folder` with sub-directories."""
         if self.html_folder is None:
             return
         if self.html_folder.exists() and self.html_folder.is_dir():
@@ -345,12 +365,10 @@ class StaticSiteGenerator:
         self.html_folder.mkdir(parents=True, exist_ok=True)
 
     def _get_info_about_articles(self) -> None:
-        """This method gets info from all Markdown files and fills
-        the list `self.articles`.
-        """
+        """Get info from all Markdown files and fill the list `self.articles`."""
         for item in filter(
             lambda path: not any(part for part in path.parts if part.startswith(".")),
             Path(self.md_folder).rglob("*"),
         ):
             if item.is_file() and item.suffix.lower() == ".md":
-                self.articles.append(Article(item))
+                self.articles.append(hsg.Article(item))
