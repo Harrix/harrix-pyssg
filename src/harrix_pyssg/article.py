@@ -12,8 +12,6 @@ from mdit_py_plugins.footnote import footnote_plugin
 from mdit_py_plugins.front_matter import front_matter_plugin
 from mdit_py_plugins.tasklists import tasklists_plugin
 
-import harrix_pyssg as hsg
-
 
 class Article:
     """All information about one article from the site.
@@ -542,6 +540,7 @@ class Article:
         print(article.md_content_no_yaml)
         # # New content
         ```
+
         """
         return self._md_content_no_yaml
 
