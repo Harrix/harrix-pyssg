@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import re
 import shutil
-from collections.abc import Callable
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 import yaml
 from markdown_it import MarkdownIt
@@ -12,6 +12,9 @@ from mdit_py_plugins.dollarmath import dollarmath_plugin
 from mdit_py_plugins.footnote import footnote_plugin
 from mdit_py_plugins.front_matter import front_matter_plugin
 from mdit_py_plugins.tasklists import tasklists_plugin
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
 
 
 class Article:
