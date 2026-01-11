@@ -81,7 +81,6 @@ def test_article() -> None:
 
     # Test: add_image_captions method
     a = hsg.Article(md_filename)
-    initial_lines = len(a.md_content.splitlines())
     a.add_image_captions()
     assert len(a.md_content.splitlines()) == 15
 
