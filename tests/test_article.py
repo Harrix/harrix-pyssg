@@ -82,7 +82,8 @@ def test_article() -> None:
     # Test: add_image_captions method
     a = hsg.Article(md_filename)
     a.add_image_captions()
-    assert len(a.md_content.splitlines()) == 15
+    expected_line_count_after_captions = 15
+    assert len(a.md_content.splitlines()) == expected_line_count_after_captions
 
     # Test: _get_nocode_code_parts method
     md_filename_code = "./tests/data/test_03/test_03.md"
@@ -96,7 +97,8 @@ def test_article() -> None:
     a.md_content_no_yaml = "# New title\n\nNew content"
     a.save()
     new_content = Path(md_filename).read_text(encoding="utf8").lstrip()
-    assert len(new_content.splitlines()) == 9
+    expected_line_count_after_save = 9
+    assert len(new_content.splitlines()) == expected_line_count_after_save
     Path(a.md_filename).write_text(TEST_MD_CONTENT, encoding="utf8")
 
     # Test: generate_html method creates index.html

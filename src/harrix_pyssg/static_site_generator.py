@@ -171,7 +171,8 @@ class StaticSiteGenerator:
         ```
 
         """
-        if not isinstance(tuple_yaml_tag, tuple) and len(tuple_yaml_tag) != 2:
+        expected_tuple_length = 2
+        if not isinstance(tuple_yaml_tag, tuple) and len(tuple_yaml_tag) != expected_tuple_length:
             return
 
         for article in self.articles:

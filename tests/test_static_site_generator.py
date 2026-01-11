@@ -13,7 +13,8 @@ def test_static_site_generator() -> None:
 
     # Test: StaticSiteGenerator initialization
     sg = hsg.StaticSiteGenerator(md_folder)
-    assert len(sg.articles) == 3
+    expected_article_count = 3
+    assert len(sg.articles) == expected_article_count
 
     # Test: generate_site method creates files
     sg = hsg.StaticSiteGenerator(md_folder)
@@ -25,7 +26,8 @@ def test_static_site_generator() -> None:
     ):
         if item.is_file():
             count_files += 1
-    assert count_files == 7
+    expected_file_count = 7
+    assert count_files == expected_file_count
 
     # Test: generate_site method with html_folder setter
     sg = hsg.StaticSiteGenerator(md_folder)
@@ -37,7 +39,8 @@ def test_static_site_generator() -> None:
     # Test: get_set_variables_from_yaml method
     sg = hsg.StaticSiteGenerator(md_folder)
     variables = sg.get_set_variables_from_yaml()
-    assert len(variables) == 3
+    expected_variable_count = 3
+    assert len(variables) == expected_variable_count
     assert "categories" in variables
     assert "date" in variables
     assert "tags" in variables
@@ -46,7 +49,8 @@ def test_static_site_generator() -> None:
     sg = hsg.StaticSiteGenerator(md_folder)
     articles = sg.articles
     assert isinstance(articles, list)
-    assert len(articles) == 3
+    expected_article_count = 3
+    assert len(articles) == expected_article_count
     assert all(isinstance(article, hsg.Article) for article in articles)
 
     # Test: html_folder property getter and setter
