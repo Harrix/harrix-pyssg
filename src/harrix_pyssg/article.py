@@ -12,6 +12,7 @@ from mdit_py_plugins.footnote import footnote_plugin
 from mdit_py_plugins.front_matter import front_matter_plugin
 from mdit_py_plugins.tasklists import tasklists_plugin
 
+import harrix_pyssg as hsg
 
 
 class Article:
@@ -22,7 +23,7 @@ class Article:
     Generate an HTML file (and other related files) from Markdown with the full filename:
 
     ```python
-    import harrixpyssg as hsg
+    import harrix_pyssg as hsg
 
     md_filename = "C:/GitHub/harrix.dev/content/en/blog/2013/kbd-style/kbd-style.md"
     html_folder = "C:/GitHub/harrix.dev/content/build_site"
@@ -33,7 +34,7 @@ class Article:
     to the file:
 
     ```python
-    import harrixpyssg as hsg
+    import harrix_pyssg as hsg
 
     md_filename = "./tests/data/test_01/test_01.md"
     html_folder = "./build_site"
@@ -44,7 +45,7 @@ class Article:
     Generate HTML code from Markdown without creating files:
 
     ```python
-    import harrixpyssg as hsg
+    import harrix_pyssg as hsg
 
     md_filename = "./tests/data/test_01/test_01.md"
     article = hsg.Article(md_filename)
@@ -163,7 +164,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("C:/GitHub/harrix-pyssg/tests/data/test_01/test_01.md")
         ```
@@ -186,7 +187,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_filename = "./tests/data/test_01/test_01.md"
         a = hsg.Article(md_filename)
@@ -273,7 +274,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.html_folder = "./build_site"
@@ -302,7 +303,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_filename = "./tests/data/test_01/test_01.md"
         html_folder = "./build_site"
@@ -329,7 +330,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         print(article.html_code())
@@ -362,7 +363,7 @@ class Article:
         r"""`Path | None`: Output filename of HTML file (only getter).
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.html_folder = "./build_site"
@@ -381,7 +382,7 @@ class Article:
         Example for the getter:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.generate_html("./build_site")
@@ -392,7 +393,7 @@ class Article:
         Example for the setter:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.html_folder = "./build_site"
@@ -417,7 +418,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.load("./tests/data/test_02/test_02.md")
@@ -447,7 +448,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         print(article.md_content)
@@ -481,7 +482,7 @@ class Article:
         Example for the getter:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         print(article.md_content_no_yaml)
@@ -502,7 +503,7 @@ class Article:
         Example for the setter:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.md_content_no_yaml = "# New content"
@@ -522,7 +523,7 @@ class Article:
         Example: `"./tests/data/test_01/test_01.md"`.
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         print(article.md_filename)
@@ -541,7 +542,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         print(article.md_yaml)
@@ -586,7 +587,7 @@ class Article:
 
         ```python
         import datetime
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         print(*article.md_yaml_dict.items(), sep="\n")
@@ -616,7 +617,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
@@ -780,7 +781,7 @@ class Article:
         ```python
         def fix_part(no_code_part):
             lines = no_code_part.split("\n")
-            lines.append("Код:")
+            lines.append("Code:")
             return "\n".join(lines)
 
         self._md_content_no_yaml = self._process_no_code_content(fix_part)

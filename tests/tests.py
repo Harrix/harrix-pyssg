@@ -2,7 +2,7 @@ import datetime
 import unittest
 from pathlib import Path
 
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 TEST_MD_CONTENT = """---
 date: 2022-09-18
@@ -20,7 +20,7 @@ Hello, world!
 """
 
 
-class TestHarrixpyssg(unittest.TestCase):
+class Testharrix_pyssg(unittest.TestCase):
     def test_article__01(self):
         md_filename = "./tests/data/test_01/test_01.md"
         html_folder = "./build_site"

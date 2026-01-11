@@ -1,6 +1,6 @@
 """Harrix PySSG - Simple static site generator in Python."""
 
-from . import article
-from . import static_site_generator as generator
+from .article import Article
+from .static_site_generator import StaticSiteGenerator
 
-__all__ = ["article", "generator"]
+__all__ = ["Article", "StaticSiteGenerator"]

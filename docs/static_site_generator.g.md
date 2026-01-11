@@ -40,7 +40,7 @@ Static site generator. It collects Markdown files from folder and sub-folders.
 ## Usage examples
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 md_folder = "C:/GitHub/harrix.dev/content"
 html_folder = "C:/GitHub/harrix.dev/build_site"
@@ -49,7 +49,7 @@ sg.generate_site(html_folder)
 ```
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 md_folder = "./tests/data"
 html_folder = "./build_site"
@@ -109,7 +109,7 @@ class StaticSiteGenerator:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         sg = hsg.StaticSiteGenerator("C:/GitHub/harrix.dev/content")
         ```
@@ -134,7 +134,7 @@ class StaticSiteGenerator:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_filename = "./tests/data/test_01/test_01.md"
         a = hsg.Article(md_filename)
@@ -200,7 +200,7 @@ class StaticSiteGenerator:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_folder = "./tests/data"
         sg = hsg.StaticSiteGenerator(md_folder)
@@ -220,7 +220,7 @@ class StaticSiteGenerator:
         r"""`list[Article]`: list of all articles that is generated in the `__init__()`.
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_folder = "./tests/data"
         sg = hsg.StaticSiteGenerator(md_folder)
@@ -268,7 +268,7 @@ class StaticSiteGenerator:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_folder = "./tests/data"
         html_folder = "./build_site"
@@ -303,7 +303,7 @@ class StaticSiteGenerator:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_folder = "./tests/data"
         sg = hsg.StaticSiteGenerator(md_folder)
@@ -325,7 +325,7 @@ class StaticSiteGenerator:
         Example for the getter:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_folder = "./tests/data"
         html_folder = "./build_site"
@@ -338,7 +338,7 @@ class StaticSiteGenerator:
         Example for the setter:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_folder = "./tests/data"
         sg = hsg.StaticSiteGenerator(md_folder)
@@ -359,7 +359,7 @@ class StaticSiteGenerator:
         r"""`Path`: Folder with Markdown files (only getter).
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_folder = "./tests/data"
         sg = hsg.StaticSiteGenerator(md_folder)
@@ -408,7 +408,7 @@ Attributes:
 Example:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 sg = hsg.StaticSiteGenerator("C:/GitHub/harrix.dev/content")
 ```
@@ -445,7 +445,7 @@ Returns:
 Example:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 md_filename = "./tests/data/test_01/test_01.md"
 a = hsg.Article(md_filename)
@@ -523,7 +523,7 @@ Returns:
 Example:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 md_folder = "./tests/data"
 sg = hsg.StaticSiteGenerator(md_folder)
@@ -554,7 +554,7 @@ def articles(self)
 `list[Article]`: list of all articles that is generated in the `__init__()`.
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 md_folder = "./tests/data"
 sg = hsg.StaticSiteGenerator(md_folder)
@@ -629,7 +629,7 @@ Returns:
 Example:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 md_folder = "./tests/data"
 html_folder = "./build_site"
@@ -676,7 +676,7 @@ Returns:
 Example:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 md_folder = "./tests/data"
 sg = hsg.StaticSiteGenerator(md_folder)
@@ -709,7 +709,7 @@ def html_folder(self) -> Path | None
 Example for the getter:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 md_folder = "./tests/data"
 html_folder = "./build_site"
@@ -722,7 +722,7 @@ print(sg.html_folder)
 Example for the setter:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 md_folder = "./tests/data"
 sg = hsg.StaticSiteGenerator(md_folder)
@@ -769,7 +769,7 @@ def md_folder(self)
 `Path`: Folder with Markdown files (only getter).
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 md_folder = "./tests/data"
 sg = hsg.StaticSiteGenerator(md_folder)

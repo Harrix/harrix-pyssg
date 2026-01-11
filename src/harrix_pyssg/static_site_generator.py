@@ -3,7 +3,7 @@ from __future__ import annotations
 import shutil
 from pathlib import Path
 
-from .article import Article
+import harrix_pyssg as hsg
 
 
 class StaticSiteGenerator:
@@ -12,7 +12,7 @@ class StaticSiteGenerator:
     ## Usage examples
 
     ```python
-    import harrixpyssg as hsg
+    import harrix_pyssg as hsg
 
     md_folder = "C:/GitHub/harrix.dev/content"
     html_folder = "C:/GitHub/harrix.dev/build_site"
@@ -21,7 +21,7 @@ class StaticSiteGenerator:
     ```
 
     ```python
-    import harrixpyssg as hsg
+    import harrix_pyssg as hsg
 
     md_folder = "./tests/data"
     html_folder = "./build_site"
@@ -76,14 +76,14 @@ class StaticSiteGenerator:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         sg = hsg.StaticSiteGenerator("C:/GitHub/harrix.dev/content")
         ```
 
         """
         self._md_folder = Path(md_folder)
-        self._articles: list[Article] = []
+        self._articles: list[hsg.Article] = []
         self._html_folder = None
 
         self._get_info_about_articles()
@@ -96,17 +96,17 @@ class StaticSiteGenerator:
 
         Returns:
 
-        - `Article`: Returns itself.
+        - `StaticSiteGenerator`: Returns itself.
 
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_filename = "./tests/data/test_01/test_01.md"
-        a = hsg.Article(md_filename)
-        a.add_image_captions()
-        print(a.md_content)
+        sg = hsg.StaticSiteGenerator(md_filename)
+        sg.add_image_captions()
+        print(sg.articles[0].md_content)
         ```
 
         Before:
@@ -167,7 +167,7 @@ class StaticSiteGenerator:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_folder = "./tests/data"
         sg = hsg.StaticSiteGenerator(md_folder)
@@ -187,7 +187,7 @@ class StaticSiteGenerator:
         r"""`list[Article]`: list of all articles that is generated in the `__init__()`.
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_folder = "./tests/data"
         sg = hsg.StaticSiteGenerator(md_folder)
@@ -235,7 +235,7 @@ class StaticSiteGenerator:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_folder = "./tests/data"
         html_folder = "./build_site"
@@ -270,7 +270,7 @@ class StaticSiteGenerator:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_folder = "./tests/data"
         sg = hsg.StaticSiteGenerator(md_folder)
@@ -292,7 +292,7 @@ class StaticSiteGenerator:
         Example for the getter:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_folder = "./tests/data"
         html_folder = "./build_site"
@@ -305,7 +305,7 @@ class StaticSiteGenerator:
         Example for the setter:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_folder = "./tests/data"
         sg = hsg.StaticSiteGenerator(md_folder)
@@ -326,7 +326,7 @@ class StaticSiteGenerator:
         r"""`Path`: Folder with Markdown files (only getter).
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_folder = "./tests/data"
         sg = hsg.StaticSiteGenerator(md_folder)

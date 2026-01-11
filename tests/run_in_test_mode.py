@@ -1,7 +1,7 @@
 import datetime
 from pathlib import Path
 
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 
 def main():

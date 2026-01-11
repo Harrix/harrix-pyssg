@@ -52,7 +52,7 @@ All information about one article from the site.
 Generate an HTML file (and other related files) from Markdown with the full filename:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 md_filename = "C:/GitHub/harrix.dev/content/en/blog/2013/kbd-style/kbd-style.md"
 html_folder = "C:/GitHub/harrix.dev/content/build_site"
@@ -63,7 +63,7 @@ Generate an HTML file (and other related files) from Markdown with a relative pa
 to the file:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 md_filename = "./tests/data/test_01/test_01.md"
 html_folder = "./build_site"
@@ -74,7 +74,7 @@ article.generate_html(html_folder)
 Generate HTML code from Markdown without creating files:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 md_filename = "./tests/data/test_01/test_01.md"
 article = hsg.Article(md_filename)
@@ -197,7 +197,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("C:/GitHub/harrix-pyssg/tests/data/test_01/test_01.md")
         ```
@@ -220,7 +220,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_filename = "./tests/data/test_01/test_01.md"
         a = hsg.Article(md_filename)
@@ -307,7 +307,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.html_folder = "./build_site"
@@ -336,7 +336,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         md_filename = "./tests/data/test_01/test_01.md"
         html_folder = "./build_site"
@@ -363,7 +363,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         print(article.html_code())
@@ -396,7 +396,7 @@ class Article:
         r"""`Path | None`: Output filename of HTML file (only getter).
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.html_folder = "./build_site"
@@ -415,7 +415,7 @@ class Article:
         Example for the getter:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.generate_html("./build_site")
@@ -426,7 +426,7 @@ class Article:
         Example for the setter:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.html_folder = "./build_site"
@@ -451,7 +451,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.load("./tests/data/test_02/test_02.md")
@@ -481,7 +481,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         print(article.md_content)
@@ -515,7 +515,7 @@ class Article:
         Example for the getter:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         print(article.md_content_no_yaml)
@@ -536,7 +536,7 @@ class Article:
         Example for the setter:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.md_content_no_yaml = "# New content"
@@ -556,7 +556,7 @@ class Article:
         Example: `"./tests/data/test_01/test_01.md"`.
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         print(article.md_filename)
@@ -575,7 +575,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         print(article.md_yaml)
@@ -620,7 +620,7 @@ class Article:
 
         ```python
         import datetime
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         print(*article.md_yaml_dict.items(), sep="\n")
@@ -650,7 +650,7 @@ class Article:
         Example:
 
         ```python
-        import harrixpyssg as hsg
+        import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
@@ -848,7 +848,7 @@ Args:
 Example:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 article = hsg.Article("C:/GitHub/harrix-pyssg/tests/data/test_01/test_01.md")
 ```
@@ -883,7 +883,7 @@ Returns:
 Example:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 md_filename = "./tests/data/test_01/test_01.md"
 a = hsg.Article(md_filename)
@@ -981,7 +981,7 @@ as the Markdown file. Example: `["featured-image.png", "featured-image.svg"]`.
 Example:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 article = hsg.Article("./tests/data/test_01/test_01.md")
 article.html_folder = "./build_site"
@@ -1022,7 +1022,7 @@ Returns:
 Example:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 md_filename = "./tests/data/test_01/test_01.md"
 html_folder = "./build_site"
@@ -1060,7 +1060,7 @@ def html_code(self) -> str
 Example:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 article = hsg.Article("./tests/data/test_01/test_01.md")
 print(article.html_code())
@@ -1104,7 +1104,7 @@ def html_filename(self) -> Path | None
 `Path | None`: Output filename of HTML file (only getter).
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 article = hsg.Article("./tests/data/test_01/test_01.md")
 article.html_folder = "./build_site"
@@ -1135,7 +1135,7 @@ def html_folder(self) -> Path | None
 Example for the getter:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 article = hsg.Article("./tests/data/test_01/test_01.md")
 article.generate_html("./build_site")
@@ -1146,7 +1146,7 @@ print(article.html_folder)
 Example for the setter:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 article = hsg.Article("./tests/data/test_01/test_01.md")
 article.html_folder = "./build_site"
@@ -1198,7 +1198,7 @@ Args:
 Example:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 article = hsg.Article("./tests/data/test_01/test_01.md")
 article.load("./tests/data/test_02/test_02.md")
@@ -1239,7 +1239,7 @@ differ from how it looks in the Markdown file.
 Example:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 article = hsg.Article("./tests/data/test_01/test_01.md")
 print(article.md_content)
@@ -1284,7 +1284,7 @@ def md_content_no_yaml(self) -> str
 Example for the getter:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 article = hsg.Article("./tests/data/test_01/test_01.md")
 print(article.md_content_no_yaml)
@@ -1305,7 +1305,7 @@ Hello, world!
 Example for the setter:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 article = hsg.Article("./tests/data/test_01/test_01.md")
 article.md_content_no_yaml = "# New content"
@@ -1351,7 +1351,7 @@ def md_filename(self) -> Path
 Example: `"./tests/data/test_01/test_01.md"`.
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 article = hsg.Article("./tests/data/test_01/test_01.md")
 print(article.md_filename)
@@ -1382,7 +1382,7 @@ def md_yaml(self) -> str
 Example:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 article = hsg.Article("./tests/data/test_01/test_01.md")
 print(article.md_yaml)
@@ -1438,7 +1438,7 @@ Example:
 
 ```python
 import datetime
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 article = hsg.Article("./tests/data/test_01/test_01.md")
 print(*article.md_yaml_dict.items(), sep="\n")
@@ -1480,7 +1480,7 @@ Save the Markdown file.
 Example:
 
 ```python
-import harrixpyssg as hsg
+import harrix_pyssg as hsg
 
 article = hsg.Article("./tests/data/test_01/test_01.md")
 a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
