@@ -287,10 +287,12 @@ class Article:
                     find = re.search(regexp_html, lines[j], re.DOTALL)
                 if find:
                     if "lang" in self.md_yaml_dict and self.md_yaml_dict["lang"] == "ru":
-                        caption = f"_Рисунок {index_images} — {find.group(1)}_"
+                        caption = f"_Рисунок {index_images} — {find.group(1)}_"  # ignore: HP001
                     else:
                         caption = f"_Figure {index_images}: {find.group(1)}_"
-                    if j < len(lines) - 2 and (lines[j + 2].startswith("_Рис") or lines[j + 2].startswith("_Fig")):
+                    is_ris = lines[j + 2].startswith("_Рис")  # ignore: HP001
+                    is_fig = lines[j + 2].startswith("_Fig")
+                    if j < len(lines) - 2 and (is_ris or is_fig):
                         lines[j + 2] = caption
                     else:
                         lines[j] += "\n\n" + caption
@@ -1018,10 +1020,12 @@ def add_image_captions(self) -> Article:
                     find = re.search(regexp_html, lines[j], re.DOTALL)
                 if find:
                     if "lang" in self.md_yaml_dict and self.md_yaml_dict["lang"] == "ru":
-                        caption = f"_Рисунок {index_images} — {find.group(1)}_"
+                        caption = f"_Рисунок {index_images} — {find.group(1)}_"  # ignore: HP001
                     else:
                         caption = f"_Figure {index_images}: {find.group(1)}_"
-                    if j < len(lines) - 2 and (lines[j + 2].startswith("_Рис") or lines[j + 2].startswith("_Fig")):
+                    is_ris = lines[j + 2].startswith("_Рис")  # ignore: HP001
+                    is_fig = lines[j + 2].startswith("_Fig")
+                    if j < len(lines) - 2 and (is_ris or is_fig):
                         lines[j + 2] = caption
                     else:
                         lines[j] += "\n\n" + caption
