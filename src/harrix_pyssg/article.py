@@ -298,7 +298,7 @@ class Article:
                 res.append(file.name)
         return res
 
-    def generate_html(self, html_folder=None) -> Article:
+    def generate_html(self, html_folder: str | Path | None = None) -> Article:
         """Generate HTML file with folders from the Markdown file with folders.
 
         Args:
@@ -684,7 +684,7 @@ class Article:
 
         """
 
-        def fix_part(no_code_part):
+        def fix_part(no_code_part: str) -> str:
             """Replace `# Title` to `## Title`.
 
             Replace `![Alt text](img/test-image.png)` to `![Alt text](test_01/img/test-image.png)`.
@@ -725,7 +725,7 @@ class Article:
         return self._process_no_code_content(fix_part)
 
     def _clear_html_folder_directory(self) -> None:
-        """This method clears `self.html_folder` with sub-directories."""
+        """Clear `self.html_folder` with sub-directories."""
         if self.html_folder is None:
             return
         if self.html_folder.exists() and self.html_folder.is_dir():
