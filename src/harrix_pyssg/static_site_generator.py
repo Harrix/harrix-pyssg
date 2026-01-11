@@ -1,3 +1,5 @@
+"""Static site generator module for converting Markdown files to HTML."""
+
 from __future__ import annotations
 
 import shutil
@@ -65,7 +67,7 @@ class StaticSiteGenerator:
     """
 
     def __init__(self, md_folder: str | Path) -> None:
-        """The generator collects Markdown files from folder and sub-folders.
+        """Collect Markdown files from folder and sub-folders.
 
         Constructor `__init__` does not generate new files and folders.
 
@@ -230,7 +232,7 @@ class StaticSiteGenerator:
                 content = title + "\n\n".join(content_of_articles) + "\n"
                 Path(path / f"{folder}.auto.md").write_text(content, encoding="utf8")
 
-    def generate_site(self, html_folder=None) -> StaticSiteGenerator:
+    def generate_site(self, html_folder: str | Path | None = None) -> StaticSiteGenerator:
         """Generate HTML files with folders from Markdown files.
 
         Args:

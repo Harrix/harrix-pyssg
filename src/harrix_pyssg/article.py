@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 import shutil
+from collections.abc import Callable
 from pathlib import Path
 
 import yaml
@@ -827,7 +828,7 @@ class Article:
             res.append(("\n".join(part), is_code))
         return res
 
-    def _process_no_code_content(self, func) -> str:
+    def _process_no_code_content(self, func: Callable[[str], str]) -> str:
         r"""Handle all parts of the markdown without the code using the function `func`.
 
         Args:
