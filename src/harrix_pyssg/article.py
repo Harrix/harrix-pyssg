@@ -1,3 +1,5 @@
+"""Article module for processing Markdown files and generating HTML."""
+
 from __future__ import annotations
 
 import re
@@ -292,11 +294,11 @@ class Article:
         ```
 
         """
-        res = []
-        for file in self.md_filename.parent.iterdir():
-            if file.is_file() and file.name.startswith("featured-image"):
-                res.append(file.name)
-        return res
+        return [
+            file.name
+            for file in self.md_filename.parent.iterdir()
+            if file.is_file() and file.name.startswith("featured-image")
+        ]
 
     def generate_html(self, html_folder: str | Path | None = None) -> Article:
         """Generate HTML file with folders from the Markdown file with folders.
