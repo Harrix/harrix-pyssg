@@ -1,3 +1,5 @@
+"""Test runner script for manual testing of harrix_pyssg functionality."""
+
 import datetime
 from pathlib import Path
 
