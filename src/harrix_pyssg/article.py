@@ -12,7 +12,6 @@ from mdit_py_plugins.footnote import footnote_plugin
 from mdit_py_plugins.front_matter import front_matter_plugin
 from mdit_py_plugins.tasklists import tasklists_plugin
 
-from .custom_logger import logger
 
 
 class Article:
@@ -438,7 +437,7 @@ class Article:
                 yaml_text = find.group().rstrip()[:-4].rstrip()
                 self._md_yaml_dict = yaml.safe_load(yaml_text)
         except Exception:
-            logger.error(f'The file "{md_filename}" does not open')
+            print(f'The file "{md_filename}" does not open')
 
     @property
     def md_content(self) -> str:
@@ -629,7 +628,7 @@ class Article:
         try:
             Path(self.md_filename).write_text(self.md_content, encoding="utf8")
         except Exception:
-            logger.error(f'The file "{self.md_filename}" does not save')
+            print(f'The file "{self.md_filename}" does not save')
 
     def to_sub_article(self) -> str:
         """Convert article to sub-article format by increasing heading levels."""
