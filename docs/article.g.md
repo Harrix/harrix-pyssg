@@ -323,13 +323,13 @@ class Article:
         ```
 
         """
-        res = []
-        for file in self.md_filename.parent.iterdir():
-            if file.is_file() and file.name.startswith("featured-image"):
-                res.append(file.name)
-        return res
+        return [
+            file.name
+            for file in self.md_filename.parent.iterdir()
+            if file.is_file() and file.name.startswith("featured-image")
+        ]
 
-    def generate_html(self, html_folder=None) -> Article:
+    def generate_html(self, html_folder: str | Path | None = None) -> Article:
         """Generate HTML file with folders from the Markdown file with folders.
 
         Args:
@@ -715,7 +715,7 @@ class Article:
 
         """
 
-        def fix_part(no_code_part):
+        def fix_part(no_code_part: str) -> str:
             """Replace `# Title` to `## Title`.
 
             Replace `![Alt text](img/test-image.png)` to `![Alt text](test_01/img/test-image.png)`.
@@ -756,7 +756,7 @@ class Article:
         return self._process_no_code_content(fix_part)
 
     def _clear_html_folder_directory(self) -> None:
-        """This method clears `self.html_folder` with sub-directories."""
+        """Clear `self.html_folder` with sub-directories."""
         if self.html_folder is None:
             return
         if self.html_folder.exists() and self.html_folder.is_dir():
@@ -862,7 +862,7 @@ class Article:
             res.append(("\n".join(part), is_code))
         return res
 
-    def _process_no_code_content(self, func) -> str:
+    def _process_no_code_content(self, func: Callable[[str], str]) -> str:
         r"""Handle all parts of the markdown without the code using the function `func`.
 
         Args:
@@ -1065,11 +1065,11 @@ print(article.featured_image_filenames)
 
 ```python
 def featured_image_filenames(self) -> list[str]:
-        res = []
-        for file in self.md_filename.parent.iterdir():
-            if file.is_file() and file.name.startswith("featured-image"):
-                res.append(file.name)
-        return res
+        return [
+            file.name
+            for file in self.md_filename.parent.iterdir()
+            if file.is_file() and file.name.startswith("featured-image")
+        ]
 ```
 
 </details>
@@ -1077,7 +1077,7 @@ def featured_image_filenames(self) -> list[str]:
 ### ⚙️ Method `generate_html`
 
 ```python
-def generate_html(self, html_folder = None) -> Article
+def generate_html(self, html_folder: str | Path | None = None) -> Article
 ```
 
 Generate HTML file with folders from the Markdown file with folders.
@@ -1105,7 +1105,7 @@ article.generate_html(html_folder)
 <summary>Code:</summary>
 
 ```python
-def generate_html(self, html_folder=None) -> Article:
+def generate_html(self, html_folder: str | Path | None = None) -> Article:
         if html_folder is not None:
             self.html_folder = html_folder
 
@@ -1622,7 +1622,7 @@ Returns:
 ```python
 def to_sub_article(self) -> str:
 
-        def fix_part(no_code_part):
+        def fix_part(no_code_part: str) -> str:
             """Replace `# Title` to `## Title`.
 
             Replace `![Alt text](img/test-image.png)` to `![Alt text](test_01/img/test-image.png)`.
@@ -1671,7 +1671,7 @@ def to_sub_article(self) -> str:
 def _clear_html_folder_directory(self) -> None
 ```
 
-This method clears `self.html_folder` with sub-directories.
+Clear `self.html_folder` with sub-directories.
 
 <details>
 <summary>Code:</summary>
@@ -1830,7 +1830,7 @@ def _get_nocode_code_parts(self) -> list:
 ### ⚙️ Method `_process_no_code_content`
 
 ```python
-def _process_no_code_content(self, func) -> str
+def _process_no_code_content(self, func: Callable[[str], str]) -> str
 ```
 
 Handle all parts of the markdown without the code using the function `func`.
@@ -1858,7 +1858,7 @@ self._md_content_no_yaml = self._process_no_code_content(fix_part)
 <summary>Code:</summary>
 
 ```python
-def _process_no_code_content(self, func) -> str:
+def _process_no_code_content(self, func: Callable[[str], str]) -> str:
         content_parts = self._get_nocode_code_parts()
         for i in range(len(content_parts)):
             if content_parts[i][1]:

@@ -98,7 +98,7 @@ build_site
 class StaticSiteGenerator:
 
     def __init__(self, md_folder: str | Path) -> None:
-        """The generator collects Markdown files from folder and sub-folders.
+        """Collect Markdown files from folder and sub-folders.
 
         Constructor `__init__` does not generate new files and folders.
 
@@ -263,7 +263,7 @@ class StaticSiteGenerator:
                 content = title + "\n\n".join(content_of_articles) + "\n"
                 Path(path / f"{folder}.auto.md").write_text(content, encoding="utf8")
 
-    def generate_site(self, html_folder=None) -> StaticSiteGenerator:
+    def generate_site(self, html_folder: str | Path | None = None) -> StaticSiteGenerator:
         """Generate HTML files with folders from Markdown files.
 
         Args:
@@ -416,7 +416,7 @@ class StaticSiteGenerator:
 def __init__(self, md_folder: str | Path) -> None
 ```
 
-The generator collects Markdown files from folder and sub-folders.
+Collect Markdown files from folder and sub-folders.
 
 Constructor `__init__` does not generate new files and folders.
 
@@ -638,7 +638,7 @@ def generate_generalized_md(self) -> None:
 ### ⚙️ Method `generate_site`
 
 ```python
-def generate_site(self, html_folder = None) -> StaticSiteGenerator
+def generate_site(self, html_folder: str | Path | None = None) -> StaticSiteGenerator
 ```
 
 Generate HTML files with folders from Markdown files.
@@ -666,7 +666,7 @@ sg.generate_site(html_folder)
 <summary>Code:</summary>
 
 ```python
-def generate_site(self, html_folder=None) -> StaticSiteGenerator:
+def generate_site(self, html_folder: str | Path | None = None) -> StaticSiteGenerator:
         if html_folder is not None:
             self.html_folder = html_folder
         if self.html_folder is None:
