@@ -15,10 +15,8 @@ lang: en
 - [Usage examples](#usage-examples)
 - [Example of folder structure](#example-of-folder-structure)
   - [⚙️ Method `__init__`](#%EF%B8%8F-method-__init__)
-  - [⚙️ Method `add_image_captions`](#%EF%B8%8F-method-add_image_captions)
   - [⚙️ Method `add_yaml_tag_to_all_md`](#%EF%B8%8F-method-add_yaml_tag_to_all_md)
   - [⚙️ Method `articles`](#%EF%B8%8F-method-articles)
-  - [⚙️ Method `generate_generalized_md`](#%EF%B8%8F-method-generate_generalized_md)
   - [⚙️ Method `generate_site`](#%EF%B8%8F-method-generate_site)
   - [⚙️ Method `get_set_variables_from_yaml`](#%EF%B8%8F-method-get_set_variables_from_yaml)
   - [⚙️ Method `html_folder`](#%EF%B8%8F-method-html_folder)
@@ -121,71 +119,6 @@ class StaticSiteGenerator:
 
         self._get_info_about_articles()
 
-    def add_image_captions(self) -> StaticSiteGenerator:
-        """Add captions to all images in all markdown files.
-
-        The method ignores a featured image (for example, `![Featured image](featured-image.svg)`).
-        The method saves changes to the file. The method automatically numbers the images.
-
-        Returns:
-
-        - `StaticSiteGenerator`: Returns itself.
-
-        Example:
-
-        ```python
-        import harrix_pyssg as hsg
-
-        md_filename = "./tests/data/test_01/test_01.md"
-        sg = hsg.StaticSiteGenerator(md_filename)
-        sg.add_image_captions()
-        print(sg.articles[0].md_content)
-        ```
-
-        Before:
-
-        ```
-        ---
-        date: 2022-09-18
-        categories: [it, web]
-        tags: [CSS]
-        ---
-
-        # Title
-
-        ![Featured image](featured-image.png)
-
-        Hello, world!
-
-        ![Alt text](img/test-image.png)
-        ```
-
-        After:
-
-        ```
-        ---
-        date: 2022-09-18
-        categories: [it, web]
-        tags: [CSS]
-        ---
-
-        # Title
-
-        ![Featured image](featured-image.png)
-
-        Hello, world!
-
-        ![Alt text](img/test-image.png)
-
-        _Figure 1: Alt text_
-        ```
-
-        """
-        for article in self.articles:
-            article.add_image_captions()
-            article.save()
-        return self
-
     def add_yaml_tag_to_all_md(self, tuple_yaml_tag: tuple[str, str]) -> None:
         """Add a YAML tag to all markdown files and save them.
 
@@ -234,34 +167,6 @@ class StaticSiteGenerator:
 
         """
         return self._articles
-
-    def generate_generalized_md(self) -> None:
-        """Generate generalized markdown files from articles in folders.
-
-        This method collects articles from subfolders and creates a single generalized markdown file
-        in the parent folder with the name `{folder_name}.g.md`.
-
-        """
-        paths_generalized_md = set()
-        # Get a list of paths that have MD files (without `.g.md`)
-        for article in self.articles:
-            if ".g.md" not in article.md_filename.name.lower():
-                paths_generalized_md.add(article.md_filename.parent.parent)
-        for path in paths_generalized_md:
-            content_of_articles = []
-            # Collect all articles from one folder
-            for article in self.articles:
-                if article.md_filename.parent.parent != path:
-                    continue
-                content = article.to_sub_article().strip()
-
-                content_of_articles.append(content)
-            # Save a new article in a directory level higher
-            if content_of_articles:
-                folder = path.parts[-1]
-                title = f"# {folder} (auto-generated)\n\n"
-                content = title + "\n\n".join(content_of_articles) + "\n"
-                Path(path / f"{folder}.g.md").write_text(content, encoding="utf8")
 
     def generate_site(self, html_folder: str | Path | None = None) -> StaticSiteGenerator:
         """Generate HTML files with folders from Markdown files.
@@ -446,83 +351,6 @@ def __init__(self, md_folder: str | Path) -> None:
 
 </details>
 
-### ⚙️ Method `add_image_captions`
-
-```python
-def add_image_captions(self) -> StaticSiteGenerator
-```
-
-Add captions to all images in all markdown files.
-
-The method ignores a featured image (for example, `![Featured image](featured-image.svg)`).
-The method saves changes to the file. The method automatically numbers the images.
-
-Returns:
-
-- `StaticSiteGenerator`: Returns itself.
-
-Example:
-
-```python
-import harrix_pyssg as hsg
-
-md_filename = "./tests/data/test_01/test_01.md"
-sg = hsg.StaticSiteGenerator(md_filename)
-sg.add_image_captions()
-print(sg.articles[0].md_content)
-```
-
-Before:
-
-```
----
-date: 2022-09-18
-categories: [it, web]
-tags: [CSS]
----
-
-# Title
-
-![Featured image](featured-image.png)
-
-Hello, world!
-
-![Alt text](img/test-image.png)
-```
-
-After:
-
-```
----
-date: 2022-09-18
-categories: [it, web]
-tags: [CSS]
----
-
-# Title
-
-![Featured image](featured-image.png)
-
-Hello, world!
-
-![Alt text](img/test-image.png)
-
-_Figure 1: Alt text_
-```
-
-<details>
-<summary>Code:</summary>
-
-```python
-def add_image_captions(self) -> StaticSiteGenerator:
-        for article in self.articles:
-            article.add_image_captions()
-            article.save()
-        return self
-```
-
-</details>
-
 ### ⚙️ Method `add_yaml_tag_to_all_md`
 
 ```python
@@ -591,46 +419,6 @@ print(sg.articles[0].md_filename)
 ```python
 def articles(self) -> list[hsg.Article]:
         return self._articles
-```
-
-</details>
-
-### ⚙️ Method `generate_generalized_md`
-
-```python
-def generate_generalized_md(self) -> None
-```
-
-Generate generalized markdown files from articles in folders.
-
-This method collects articles from subfolders and creates a single generalized markdown file
-in the parent folder with the name `{folder_name}.g.md`.
-
-<details>
-<summary>Code:</summary>
-
-```python
-def generate_generalized_md(self) -> None:
-        paths_generalized_md = set()
-        # Get a list of paths that have MD files (without `.g.md`)
-        for article in self.articles:
-            if ".g.md" not in article.md_filename.name.lower():
-                paths_generalized_md.add(article.md_filename.parent.parent)
-        for path in paths_generalized_md:
-            content_of_articles = []
-            # Collect all articles from one folder
-            for article in self.articles:
-                if article.md_filename.parent.parent != path:
-                    continue
-                content = article.to_sub_article().strip()
-
-                content_of_articles.append(content)
-            # Save a new article in a directory level higher
-            if content_of_articles:
-                folder = path.parts[-1]
-                title = f"# {folder} (auto-generated)\n\n"
-                content = title + "\n\n".join(content_of_articles) + "\n"
-                Path(path / f"{folder}.g.md").write_text(content, encoding="utf8")
 ```
 
 </details>

@@ -10,8 +10,7 @@ def main() -> None:
     run_test()
 
 
-def run_test() -> None:
-    ...
+def run_test() -> None: ...
 
 
 def run_test_add_yaml_tag_to_all_md() -> None:
