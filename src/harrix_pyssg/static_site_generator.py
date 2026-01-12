@@ -91,69 +91,6 @@ class StaticSiteGenerator:
 
         self._get_info_about_articles()
 
-    def add_image_captions(self) -> StaticSiteGenerator:
-        """Add captions to all images in all markdown files.
-
-        The method ignores a featured image (for example, `![Featured image](featured-image.svg)`).
-        The method saves changes to the file. The method automatically numbers the images.
-
-        Returns:
-
-        - `StaticSiteGenerator`: Returns itself.
-
-        Example:
-
-        ```python
-        import harrix_pyssg as hsg
-
-        md_filename = "./tests/data/test_01/test_01.md"
-        sg = hsg.StaticSiteGenerator(md_filename)
-        sg.add_image_captions()
-        print(sg.articles[0].md_content)
-        ```
-
-        Before:
-
-        ```
-        ---
-        date: 2022-09-18
-        categories: [it, web]
-        tags: [CSS]
-        ---
-
-        # Title
-
-        ![Featured image](featured-image.png)
-
-        Hello, world!
-
-        ![Alt text](img/test-image.png)
-        ```
-
-        After:
-
-        ```
-        ---
-        date: 2022-09-18
-        categories: [it, web]
-        tags: [CSS]
-        ---
-
-        # Title
-
-        ![Featured image](featured-image.png)
-
-        Hello, world!
-
-        ![Alt text](img/test-image.png)
-
-        _Figure 1: Alt text_
-        ```
-
-        """
-        h.file.apply_func(self.md_folder, ".md", h.md.generate_image_captions)
-        return self
-
     def add_yaml_tag_to_all_md(self, tuple_yaml_tag: tuple[str, str]) -> None:
         """Add a YAML tag to all markdown files and save them.
 
