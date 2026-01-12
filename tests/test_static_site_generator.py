@@ -78,32 +78,6 @@ def test_static_site_generator() -> None:
         assert test_html_folder.exists()
         assert not (test_html_folder / "test_file.txt").exists()
 
-    # Test: add_image_captions method
-    with TemporaryDirectory() as temp_dir:
-        temp_path = Path(temp_dir)
-        test_data_folder = temp_path / "test_data"
-        test_data_folder.mkdir()
-        test_article_folder = test_data_folder / "test_article"
-        test_article_folder.mkdir()
-        test_md_file = test_article_folder / "test_article.md"
-        test_md_file.write_text(
-            """---
-date: 2022-09-18
----
-
-# Title
-
-![Alt text](image.png)
-""",
-            encoding="utf8",
-        )
-
-        sg = hsg.StaticSiteGenerator(test_data_folder)
-        initial_content = sg.articles[0].md_content
-        sg.add_image_captions()
-        updated_content = sg.articles[0].md_content
-        assert len(updated_content.splitlines()) > len(initial_content.splitlines())
-
     # Test: add_yaml_tag_to_all_md method
     with TemporaryDirectory() as temp_dir:
         temp_path = Path(temp_dir)

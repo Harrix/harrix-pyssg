@@ -17,12 +17,6 @@ def run_test() -> None:
         sg.generate_generalized_md()
 
 
-def run_test_add_image_captions() -> None:
-    md_folder = "./tests/data"
-    sg = hsg.StaticSiteGenerator(md_folder)
-    sg.add_image_captions()
-
-
 def run_test_add_yaml_tag_to_all_md() -> None:
     md_folder = "./tests/data"
     sg = hsg.StaticSiteGenerator(md_folder)
@@ -33,13 +27,6 @@ def run_test_article() -> None:
     md_filename = "./tests/data/test_01/test_01.md"
     html_folder = "./build_site"
     hsg.Article(md_filename).generate_html(html_folder)
-
-
-def run_test_article_add_image_captions() -> None:
-    md_filename = "./tests/data/test_01/test_01.md"
-    a = hsg.Article(md_filename)
-    a.add_image_captions()
-    print(a.md_content)
 
 
 def run_test_article_get_nocode_code_parts() -> None:

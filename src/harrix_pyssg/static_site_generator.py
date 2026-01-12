@@ -5,6 +5,7 @@ from __future__ import annotations
 import shutil
 from pathlib import Path
 
+import harrix_pylib as h
 import harrix_pyssg as hsg
 
 
@@ -150,9 +151,7 @@ class StaticSiteGenerator:
         ```
 
         """
-        for article in self.articles:
-            article.add_image_captions()
-            article.save()
+        h.file.apply_func(self.md_folder, ".md", h.md.generate_image_captions)
         return self
 
     def add_yaml_tag_to_all_md(self, tuple_yaml_tag: tuple[str, str]) -> None:

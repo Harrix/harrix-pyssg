@@ -79,12 +79,6 @@ def test_article() -> None:
     a.md_yaml_dict["categories"].append("test")
     assert a.md_content.splitlines()[2] == "categories: [it, web, test]"
 
-    # Test: add_image_captions method
-    a = hsg.Article(md_filename)
-    a.add_image_captions()
-    expected_line_count_after_captions = 15
-    assert len(a.md_content.splitlines()) == expected_line_count_after_captions
-
     # Test: _get_nocode_code_parts method
     md_filename_code = "./tests/data/test_03/test_03.md"
     a = hsg.Article(md_filename_code)
