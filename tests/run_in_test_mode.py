@@ -11,10 +11,7 @@ def main() -> None:
 
 
 def run_test() -> None:
-    if True:
-        md_folder = "./tests/data"
-        sg = hsg.StaticSiteGenerator(md_folder)
-        sg.generate_generalized_md()
+    ...
 
 
 def run_test_add_yaml_tag_to_all_md() -> None:

@@ -140,34 +140,6 @@ class StaticSiteGenerator:
         """
         return self._articles
 
-    def generate_generalized_md(self) -> None:
-        """Generate generalized markdown files from articles in folders.
-
-        This method collects articles from subfolders and creates a single generalized markdown file
-        in the parent folder with the name `{folder_name}.g.md`.
-
-        """
-        paths_generalized_md = set()
-        # Get a list of paths that have MD files (without `.g.md`)
-        for article in self.articles:
-            if ".g.md" not in article.md_filename.name.lower():
-                paths_generalized_md.add(article.md_filename.parent.parent)
-        for path in paths_generalized_md:
-            content_of_articles = []
-            # Collect all articles from one folder
-            for article in self.articles:
-                if article.md_filename.parent.parent != path:
-                    continue
-                content = article.to_sub_article().strip()
-
-                content_of_articles.append(content)
-            # Save a new article in a directory level higher
-            if content_of_articles:
-                folder = path.parts[-1]
-                title = f"# {folder} (auto-generated)\n\n"
-                content = title + "\n\n".join(content_of_articles) + "\n"
-                Path(path / f"{folder}.g.md").write_text(content, encoding="utf8")
-
     def generate_site(self, html_folder: str | Path | None = None) -> StaticSiteGenerator:
         """Generate HTML files with folders from Markdown files.
 
