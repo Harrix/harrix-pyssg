@@ -5,8 +5,6 @@ from __future__ import annotations
 import shutil
 from pathlib import Path
 
-import harrix_pylib as h
-
 import harrix_pyssg as hsg
 
 
