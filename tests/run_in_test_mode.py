@@ -13,12 +13,6 @@ def main() -> None:
 def run_test() -> None: ...
 
 
-def run_test_add_yaml_tag_to_all_md() -> None:
-    md_folder = "./tests/data"
-    sg = hsg.StaticSiteGenerator(md_folder)
-    sg.add_yaml_tag_to_all_md(("author", "Anton Sergienko"))
-
-
 def run_test_article() -> None:
     md_filename = "./tests/data/test_01/test_01.md"
     html_folder = "./build_site"
