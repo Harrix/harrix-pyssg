@@ -36,15 +36,6 @@ def test_static_site_generator() -> None:
     sg.generate_site()
     assert (Path(html_folder) / "test_01/index.html").exists()
 
-    # Test: get_set_variables_from_yaml method
-    sg = hsg.StaticSiteGenerator(md_folder)
-    variables = sg.get_set_variables_from_yaml()
-    expected_variable_count = 3
-    assert len(variables) == expected_variable_count
-    assert "categories" in variables
-    assert "date" in variables
-    assert "tags" in variables
-
     # Test: articles property
     sg = hsg.StaticSiteGenerator(md_folder)
     articles = sg.articles

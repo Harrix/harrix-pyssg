@@ -151,32 +151,6 @@ class StaticSiteGenerator:
 
         return self
 
-    def get_set_variables_from_yaml(self) -> list[str]:
-        """Generate a sorted list of all variables from YAML from all articles.
-
-        Returns:
-
-        - `list[str]`: Sorted list of all variables from YAML from all articles.
-          Example: `['categories', 'date', 'tags']`.
-
-        Example:
-
-        ```python
-        import harrix_pyssg as hsg
-
-        md_folder = "./tests/data"
-        sg = hsg.StaticSiteGenerator(md_folder)
-        print(sg.get_set_variables_from_yaml())
-        # ['categories', 'date', 'tags']
-        ```
-
-        """
-        res = set()
-        for article in self.articles:
-            for key in article.md_yaml_dict:
-                res.add(key)
-        return sorted(res)
-
     @property
     def html_folder(self) -> Path | None:
         r"""Output folder of HTML files.

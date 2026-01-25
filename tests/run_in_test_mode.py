@@ -55,12 +55,6 @@ def run_test_article_test_03() -> None:
     hsg.Article(md_filename).generate_html(html_folder)
 
 
-def run_test_get_set_variables_from_yaml() -> None:
-    md_folder = "./tests/data"
-    sg = hsg.StaticSiteGenerator(md_folder)
-    print(sg.get_set_variables_from_yaml())
-
-
 def run_test_static_site_generator() -> None:
     md_folder = "./tests/data"
     html_folder = "./build_site"
