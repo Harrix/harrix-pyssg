@@ -587,55 +587,6 @@ class Article:
         except Exception:
             print(f'The file "{self.md_filename}" does not save')
 
-    def to_sub_article(self) -> str:
-        """Convert article to sub-article format by increasing heading levels.
-
-        Returns:
-
-        - `str`: Article content converted to sub-article format.
-
-        """
-
-        def fix_part(no_code_part: str) -> str:
-            """Replace `# Title` to `## Title`.
-
-            Replace `![Alt text](img/test-image.png)` to `![Alt text](test_01/img/test-image.png)`.
-
-            Args:
-
-            - `no_code_part` (`str`): Part of markdown content without code blocks.
-
-            Returns:
-
-            - `str`: Processed markdown content.
-
-            """
-            lines = no_code_part.split("\n")
-            for i in range(len(lines)):
-                is_title = False
-                for j in range(5):
-                    # Replace headings.
-                    hash_prefix = "#" * (j + 1) + " "
-                    hash_replace = "#" * (j + 2) + " "
-                    if not lines[i].startswith(hash_prefix):
-                        continue
-                    lines[i] = lines[i].replace(hash_prefix, hash_replace, 1)
-                    is_title = True
-                    break
-                if not is_title:
-                    # Replace headings.
-                    regexp = r"(?:(?!`|`!))\[(.*?)\]\(((?!http).*?)\)"
-                    pattern = re.compile(regexp)
-                    lines[i] = re.sub(
-                        pattern,
-                        rf"[\1]({self.md_filename.parts[-2]}/\2)",
-                        lines[i],
-                    )
-
-            return "\n".join(lines)
-
-        return self._process_no_code_content(fix_part)
-
     def _clear_html_folder_directory(self) -> None:
         """Clear `self.html_folder` with sub-directories."""
         if self.html_folder is None:
