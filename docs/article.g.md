@@ -32,7 +32,6 @@ lang: en
   - [⚙️ Method `_clear_html_folder_directory`](#%EF%B8%8F-method-_clear_html_folder_directory)
   - [⚙️ Method `_copy_dirs`](#%EF%B8%8F-method-_copy_dirs)
   - [⚙️ Method `_copy_featured_images`](#%EF%B8%8F-method-_copy_featured_images)
-  - [⚙️ Method `_get_nocode_code_parts`](#%EF%B8%8F-method-_get_nocode_code_parts)
 
 </details>
 
@@ -636,58 +635,6 @@ class Article:
             file = self.md_filename.parent / filename
             output_file = self.html_folder / filename
             shutil.copy(file, output_file)
-
-    def _get_nocode_code_parts(self) -> list:
-        r"""Return an array of tuples: part of the markdown file, True if part of the file is a piece of code.
-
-        Returns:
-
-        - `list`: Array of tuples: part of the markdown file, True if part of the file is a piece of code.
-
-        Example:
-
-        File `test.md`:
-
-        ```
-        # Heading
-
-        Text.
-
-        ```python
-        x = input()
-        ```
-
-        Text 2.
-        ```
-
-        ```python
-        md_filename = "test.md"
-        a = hsg.Article(md_filename)
-        print(*a._get_nocode_code_parts(), sep="\n")
-        # ('# Heading\n\nText.\n', False)
-        # ('```python\nx = input()\n```', True)
-        # ('\nText 2.', False)
-        ```
-
-        """
-        res = []
-        lines = self.md_content_no_yaml.splitlines()
-        part = []
-        is_code = False
-
-        for line, line_is_code in h.md.identify_code_blocks(lines):
-            if line_is_code != is_code:
-                if part:
-                    res.append(("\n".join(part), is_code))
-                part = [line]
-                is_code = line_is_code
-            else:
-                part.append(line)
-
-        if part:
-            res.append(("\n".join(part), is_code))
-
-        return res
 ````
 
 </details>
@@ -1360,71 +1307,6 @@ def _copy_featured_images(self) -> None:
             file = self.md_filename.parent / filename
             output_file = self.html_folder / filename
             shutil.copy(file, output_file)
-```
-
-</details>
-
-### ⚙️ Method `_get_nocode_code_parts`
-
-```python
-def _get_nocode_code_parts(self) -> list
-```
-
-Return an array of tuples: part of the markdown file, True if part of the file is a piece of code.
-
-Returns:
-
-- `list`: Array of tuples: part of the markdown file, True if part of the file is a piece of code.
-
-Example:
-
-File `test.md`:
-
-````
-# Heading
-
-Text.
-
-```python
-x = input()
-````
-
-Text 2.
-
-````
-
-```python
-md_filename = "test.md"
-a = hsg.Article(md_filename)
-print(*a._get_nocode_code_parts(), sep="\n")
-# ('# Heading\n\nText.\n', False)
-# ('```python\nx = input()\n```', True)
-# ('\nText 2.', False)
-````
-
-<details>
-<summary>Code:</summary>
-
-```python
-def _get_nocode_code_parts(self) -> list:
-        res = []
-        lines = self.md_content_no_yaml.splitlines()
-        part = []
-        is_code = False
-
-        for line, line_is_code in h.md.identify_code_blocks(lines):
-            if line_is_code != is_code:
-                if part:
-                    res.append(("\n".join(part), is_code))
-                part = [line]
-                is_code = line_is_code
-            else:
-                part.append(line)
-
-        if part:
-            res.append(("\n".join(part), is_code))
-
-        return res
 ```
 
 </details>

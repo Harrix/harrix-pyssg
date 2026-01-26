@@ -19,13 +19,6 @@ def run_test_article() -> None:
     hsg.Article(md_filename).generate_html(html_folder)
 
 
-def run_test_article_get_nocode_code_parts() -> None:
-    md_filename = "./tests/data/test_03/test_03.md"
-    a = hsg.Article(md_filename)
-    print(*a._get_nocode_code_parts(), sep="\n")
-    print("\n".join(x[0] for x in a._get_nocode_code_parts()))
-
-
 def run_test_article_md_content() -> None:
     md_filename = "./tests/data/test_01/test_01.md"
     a = hsg.Article(md_filename)

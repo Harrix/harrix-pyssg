@@ -79,12 +79,6 @@ def test_article() -> None:
     a.md_yaml_dict["categories"].append("test")
     assert a.md_content.splitlines()[2] == "categories: [it, web, test]"
 
-    # Test: _get_nocode_code_parts method
-    md_filename_code = "./tests/data/test_03/test_03.md"
-    a = hsg.Article(md_filename_code)
-    from_parts = "\n".join([part[0] for part in a._get_nocode_code_parts()])
-    assert a.md_content_no_yaml.rstrip() == from_parts.rstrip()
-
     # Test: save method
     a = hsg.Article(md_filename)
     a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
