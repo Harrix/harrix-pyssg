@@ -95,9 +95,9 @@ def test_article() -> None:
         hsg.Article(md_filename).generate_html(html_folder)
         assert (html_folder / "index.html").is_file()
 
-    # Test: html_code property returns HTML
+    # Test: get_html_code method returns HTML
     a = hsg.Article(md_filename)
-    html_code = a.html_code
+    html_code = a.get_html_code()
     assert html_code is not None
     assert len(html_code) > 0
     assert "<h1" in html_code or "<p>" in html_code

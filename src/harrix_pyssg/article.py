@@ -54,7 +54,7 @@ class Article:
 
     md_filename = "./tests/data/test_01/test_01.md"
     article = hsg.Article(md_filename)
-    print(article.html_code)
+    print(article.get_html_code())
     ```
 
     ## Example of folder structure
@@ -239,12 +239,11 @@ class Article:
         self._copy_featured_images()
 
         if self.html_filename is not None:
-            self.html_filename.write_text(self.html_code, encoding="utf8")
+            self.html_filename.write_text(self.get_html_code(), encoding="utf8")
         return self
 
-    @property
-    def html_code(self) -> str:
-        """HTML clean code from the Markdown code (only getter).
+    def get_html_code(self) -> str:
+        """Generate HTML clean code from the Markdown code.
 
         Returns:
 
@@ -256,7 +255,7 @@ class Article:
         import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
-        print(article.html_code)
+        print(article.get_html_code())
         ```
 
         Example output:
