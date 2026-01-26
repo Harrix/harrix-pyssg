@@ -393,12 +393,14 @@ class Article:
         try:
             md = Path(self.md_filename).read_text(encoding="utf8").lstrip()
 
-            self._md_content_no_yaml = re.sub(r"^---(.|\n)*?---\n", "", md).lstrip()
+            yaml_content, self._md_content_no_yaml = h.md.split_yaml_content(md)
 
-            find = re.search(r"^---(.|\n)*?---\n", md, re.DOTALL)
-            if find:
-                yaml_text = find.group().rstrip()[:-4].rstrip()
-                self._md_yaml_dict = yaml.safe_load(yaml_text)
+            if yaml_content:
+                # Remove "---" from start and end
+                yaml_text = yaml_content[4:-4].strip()
+                self._md_yaml_dict = yaml.safe_load(yaml_text) if yaml_text else {}
+            else:
+                self._md_yaml_dict = {}
         except Exception:
             print(f'The file "{md_filename}" does not open')
 
@@ -721,51 +723,21 @@ class Article:
         """
         res = []
         lines = self.md_content_no_yaml.splitlines()
-        starts = ["`" * 6, "`" * 5, "`" * 4, "`" * 3]
-        start_space = " " * 4
         part = []
         is_code = False
-        start_code_now = None
-        for i in range(len(lines)):
-            for start_code in starts:
-                if not is_code and lines[i].lstrip().startswith(start_code):
-                    if part:
-                        res.append(("\n".join(part), is_code))
-                    part = [lines[i]]
-                    is_code = True
-                    start_code_now = start_code
-                    break
-                if lines[i].lstrip().startswith(start_code) and start_code_now == start_code:
-                    part.append(lines[i])
-                    if part:
-                        res.append(("\n".join(part), is_code))
-                    is_code = False
-                    start_code_now = None
-                    part = []
-                    break
+
+        for line, line_is_code in h.md.identify_code_blocks(lines):
+            if line_is_code != is_code:
+                if part:
+                    res.append(("\n".join(part), is_code))
+                part = [line]
+                is_code = line_is_code
             else:
-                if not is_code and lines[i].startswith(start_space):
-                    if i == 0 or lines[i - 1] == "":
-                        if part:
-                            res.append(("\n".join(part), is_code))
-                        part = [lines[i]]
-                        is_code = True
-                        start_code_now = start_space
-                elif is_code and start_code_now == start_space and i < len(lines) - 1:
-                    next_line = lines[i + 1].rstrip()
-                    if len(next_line) > 0 and next_line[0] != " ":
-                        part.append(lines[i])
-                        if part:
-                            res.append(("\n".join(part), is_code))
-                        is_code = False
-                        start_code_now = None
-                        part = []
-                    else:
-                        part.append(lines[i])
-                else:
-                    part.append(lines[i])
+                part.append(line)
+
         if part:
             res.append(("\n".join(part), is_code))
+
         return res
 
     def _process_no_code_content(self, func: Callable[[str], str]) -> str:
@@ -1101,12 +1073,14 @@ def load(self, md_filename: str | Path) -> None:
         try:
             md = Path(self.md_filename).read_text(encoding="utf8").lstrip()
 
-            self._md_content_no_yaml = re.sub(r"^---(.|\n)*?---\n", "", md).lstrip()
+            yaml_content, self._md_content_no_yaml = h.md.split_yaml_content(md)
 
-            find = re.search(r"^---(.|\n)*?---\n", md, re.DOTALL)
-            if find:
-                yaml_text = find.group().rstrip()[:-4].rstrip()
-                self._md_yaml_dict = yaml.safe_load(yaml_text)
+            if yaml_content:
+                # Remove "---" from start and end
+                yaml_text = yaml_content[4:-4].strip()
+                self._md_yaml_dict = yaml.safe_load(yaml_text) if yaml_text else {}
+            else:
+                self._md_yaml_dict = {}
         except Exception:
             print(f'The file "{md_filename}" does not open')
 ```
@@ -1578,51 +1552,21 @@ print(*a._get_nocode_code_parts(), sep="\n")
 def _get_nocode_code_parts(self) -> list:
         res = []
         lines = self.md_content_no_yaml.splitlines()
-        starts = ["`" * 6, "`" * 5, "`" * 4, "`" * 3]
-        start_space = " " * 4
         part = []
         is_code = False
-        start_code_now = None
-        for i in range(len(lines)):
-            for start_code in starts:
-                if not is_code and lines[i].lstrip().startswith(start_code):
-                    if part:
-                        res.append(("\n".join(part), is_code))
-                    part = [lines[i]]
-                    is_code = True
-                    start_code_now = start_code
-                    break
-                if lines[i].lstrip().startswith(start_code) and start_code_now == start_code:
-                    part.append(lines[i])
-                    if part:
-                        res.append(("\n".join(part), is_code))
-                    is_code = False
-                    start_code_now = None
-                    part = []
-                    break
+
+        for line, line_is_code in h.md.identify_code_blocks(lines):
+            if line_is_code != is_code:
+                if part:
+                    res.append(("\n".join(part), is_code))
+                part = [line]
+                is_code = line_is_code
             else:
-                if not is_code and lines[i].startswith(start_space):
-                    if i == 0 or lines[i - 1] == "":
-                        if part:
-                            res.append(("\n".join(part), is_code))
-                        part = [lines[i]]
-                        is_code = True
-                        start_code_now = start_space
-                elif is_code and start_code_now == start_space and i < len(lines) - 1:
-                    next_line = lines[i + 1].rstrip()
-                    if len(next_line) > 0 and next_line[0] != " ":
-                        part.append(lines[i])
-                        if part:
-                            res.append(("\n".join(part), is_code))
-                        is_code = False
-                        start_code_now = None
-                        part = []
-                    else:
-                        part.append(lines[i])
-                else:
-                    part.append(lines[i])
+                part.append(line)
+
         if part:
             res.append(("\n".join(part), is_code))
+
         return res
 ```
 
