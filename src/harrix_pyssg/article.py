@@ -663,34 +663,3 @@ class Article:
             res.append(("\n".join(part), is_code))
 
         return res
-
-    def _process_no_code_content(self, func: Callable[[str], str]) -> str:
-        r"""Handle all parts of the markdown without the code using the function `func`.
-
-        Args:
-
-        - `func` (`Callable`): Function to process non-code parts of markdown.
-
-        Returns:
-
-        - `str`: Processed markdown content.
-
-        Example:
-
-        ```python
-        def fix_part(no_code_part):
-            lines = no_code_part.split("\n")
-            lines.append("Code:")
-            return "\n".join(lines)
-
-        self._md_content_no_yaml = self._process_no_code_content(fix_part)
-        ```
-
-        """
-        content_parts = self._get_nocode_code_parts()
-        for i in range(len(content_parts)):
-            if content_parts[i][1]:
-                continue
-            processed_part = func(content_parts[i][0])
-            content_parts[i] = (processed_part, content_parts[i][1])
-        return "\n".join([x[0] for x in content_parts])
