@@ -17,7 +17,7 @@ lang: en
   - [⚙️ Method `__init__`](#%EF%B8%8F-method-__init__)
   - [⚙️ Method `featured_image_filenames`](#%EF%B8%8F-method-featured_image_filenames)
   - [⚙️ Method `generate_html`](#%EF%B8%8F-method-generate_html)
-  - [⚙️ Method `html_code`](#%EF%B8%8F-method-html_code)
+  - [⚙️ Method `get_html_code`](#%EF%B8%8F-method-get_html_code)
   - [⚙️ Method `html_filename`](#%EF%B8%8F-method-html_filename)
   - [⚙️ Method `html_folder`](#%EF%B8%8F-method-html_folder)
   - [⚙️ Method `html_folder`](#%EF%B8%8F-method-html_folder-1)
@@ -74,7 +74,7 @@ import harrix_pyssg as hsg
 
 md_filename = "./tests/data/test_01/test_01.md"
 article = hsg.Article(md_filename)
-print(article.html_code)
+print(article.get_html_code())
 ```
 
 ## Example of folder structure
@@ -263,12 +263,11 @@ class Article:
         self._copy_featured_images()
 
         if self.html_filename is not None:
-            self.html_filename.write_text(self.html_code, encoding="utf8")
+            self.html_filename.write_text(self.get_html_code(), encoding="utf8")
         return self
 
-    @property
-    def html_code(self) -> str:
-        """HTML clean code from the Markdown code (only getter).
+    def get_html_code(self) -> str:
+        """Generate HTML clean code from the Markdown code.
 
         Returns:
 
@@ -280,7 +279,7 @@ class Article:
         import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
-        print(article.html_code)
+        print(article.get_html_code())
         ```
 
         Example output:
@@ -752,19 +751,19 @@ def generate_html(self, html_folder: str | Path | None = None) -> Article:
         self._copy_featured_images()
 
         if self.html_filename is not None:
-            self.html_filename.write_text(self.html_code, encoding="utf8")
+            self.html_filename.write_text(self.get_html_code(), encoding="utf8")
         return self
 ```
 
 </details>
 
-### ⚙️ Method `html_code`
+### ⚙️ Method `get_html_code`
 
 ```python
-def html_code(self) -> str
+def get_html_code(self) -> str
 ```
 
-HTML clean code from the Markdown code (only getter).
+Generate HTML clean code from the Markdown code.
 
 Returns:
 
@@ -776,7 +775,7 @@ Example:
 import harrix_pyssg as hsg
 
 article = hsg.Article("./tests/data/test_01/test_01.md")
-print(article.html_code)
+print(article.get_html_code())
 ```
 
 Example output:
@@ -792,7 +791,7 @@ Example output:
 <summary>Code:</summary>
 
 ```python
-def html_code(self) -> str:
+def get_html_code(self) -> str:
         md = (
             MarkdownIt("gfm-like", {"typographer": True, "linkify": False})
             .use(front_matter_plugin)
