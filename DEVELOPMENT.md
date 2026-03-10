@@ -10,6 +10,7 @@
   - [📥 Installation steps](#-installation-steps)
 - [💻 CLI commands](#-cli-commands)
 - [➕ Adding a new function](#-adding-a-new-function)
+- [👤 Author](#-author)
 
 </details>
 
@@ -69,3 +70,7 @@ CLI commands after installation:
 - From `harrix-swiss-knife`, call the command `Python` → `Check PY in ...` and select folder `harrix-pyssg`.
 - Create a commit `➕ Add function <function>()`.
 - From `harrix-swiss-knife`, call the command `Python` → `Publish Python library to PyPI` and select folder `harrix-pyssg`.
+
+## 👤 Author
+
+Author: [Anton Sergienko](https://github.com/Harrix).
