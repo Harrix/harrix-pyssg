@@ -58,6 +58,7 @@ CLI commands after installation:
 - `ty check` — check Python types in the project's Python files.
 - `uv python install 3.13` + `uv python pin 3.13` + `uv sync` — switch to a different Python version.
 - `uv self update` — update uv itself.
+- `uv python upgrade` — upgrade python to the latest patch release.
 - `uv sync --upgrade` — update all project libraries (sometimes you need to call twice).
 - `vermin src` — determines the minimum version of Python. However, if the version is below 3.10, we stick with 3.10 because Python 3.10 annotations are used.
 
