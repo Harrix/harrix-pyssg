@@ -10,9 +10,14 @@
   - [📥 Installation steps](#-installation-steps)
 - [💻 CLI commands](#-cli-commands)
 - [➕ Adding a new function](#-adding-a-new-function)
+- [📄 License](#-license)
 - [👤 Author](#-author)
 
 </details>
+
+GitHub: <https://github.com/Harrix/harrix-pyssg>
+
+Documentation: [docs](https://github.com/Harrix/harrix-pyssg/blob/main/docs/index.g.md)
 
 ## 🚀 Deploy on an empty machine
 
@@ -71,6 +76,10 @@ CLI commands after installation:
 - From `harrix-swiss-knife`, call the command `Python` → `Check PY in ...` and select folder `harrix-pyssg`.
 - Create a commit `➕ Add function <function>()`.
 - From `harrix-swiss-knife`, call the command `Python` → `Publish Python library to PyPI` and select folder `harrix-pyssg`.
+
+## 📄 License
+
+This project is licensed under the [MIT License](https://github.com/Harrix/harrix-pyssg/blob/main/LICENSE.md).
 
 ## 👤 Author
 
