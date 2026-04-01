@@ -15,6 +15,7 @@
   - [📄 File `article.py`](#-file-articlepy)
   - [📄 File `static_site_generator.py`](#-file-static_site_generatorpy)
 - [📄 License](#-license)
+- [👤 Author](#-author)
 
 </details>
 
@@ -63,3 +64,7 @@ Doc: [static_site_generator.g.md](https://github.com/Harrix/harrix-pyssg/blob/ma
 ## 📄 License
 
 This project is licensed under the [MIT License](https://github.com/Harrix/harrix-pyssg/blob/main/LICENSE.md).
+
+## 👤 Author
+
+Author: [Anton Sergienko](https://github.com/Harrix).
