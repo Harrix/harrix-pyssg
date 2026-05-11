@@ -51,7 +51,7 @@ Install the following software:
 CLI commands after installation:
 
 - `.venv\Scripts\Activate.ps1` — activate virtual environment
-- `isort .` — sort imports.
+- `ruff check --select I --fix` — sort imports.
 - `ruff check --fix` — lint and fix the project's Python files.
 - `ruff check` — lint the project's Python files.
 - `ruff format` — format the project's Python files.
@@ -61,7 +61,7 @@ CLI commands after installation:
 - `uv python upgrade` — upgrade python to the latest patch release.
 - `uv sync --upgrade` — update all project libraries (sometimes you need to call twice).
 - `vermin src` — determines the minimum version of Python. However, if the version is below 3.10, we stick with 3.10 because Python 3.10 annotations are used.
-- `harrix-swiss-knife-cli python isort-ruff-sort-docs "D:/GitHub/harrix-pyssg"` — isort, ruff format, sort, make docs in PY files.
+- `harrix-swiss-knife-cli python ruff-sort-docs "D:/GitHub/harrix-pyssg"` — ruff sort, ruff format, sort, make docs in PY files.
 
 ## ➕ Adding a new function
 
@@ -74,7 +74,7 @@ CLI commands after installation:
 - Run `ty check`.
 - Run `ruff check`.
 - Check error messages in Cursor.
-- From `harrix-swiss-knife`, call the command `Python` → `isort, ruff format, sort, make docs in PY files` and select folder `harrix-pyssg`.
+- From `harrix-swiss-knife`, call the command `Python` → `ruff sort, ruff format, sort, make docs in PY files` and select folder `harrix-pyssg`.
 - From `harrix-swiss-knife`, call the command `Python` → `Check PY in ...` and select folder `harrix-pyssg`.
 - Create a commit `➕ Add function <function>()`.
 - From `harrix-swiss-knife`, call the command `Python` → `Publish Python library to PyPI` and select folder `harrix-pyssg`.
