@@ -86,7 +86,7 @@ test_01
 ├─ test_01.md
 ├─ featured-image.png
 └─ img
-└─ test-image.png
+   └─ test-image.png
 ```
 
 Output HTML folder:
@@ -130,14 +130,12 @@ HTML file `index.html`:
 
 - `date`: Date of creation of the article.
 - `update`: Date of the article update.
-- `categories`: The list of categories to which the article belongs. Spaces in category
-  names are not allowed.
-- `tags`: The list of tags to which the article belongs. Spaces in tags names are
-  not allowed.
+- `categories`: The list of categories to which the article belongs. Spaces in category names are not allowed.
+- `tags`: The list of tags to which the article belongs. Spaces in tag names are not allowed.
 - `published`: `false` if the article is in drafts and should not be published.
-  If the tag is not in YAML, the default value is `true`.
+  If the key is not in YAML, the default value is `true`.
 - `latex`: `true` if $LaTeX$ is used in the article. Example: `$y = x^{2}$`.
-  If the tag is not in YAML, the default value is `false`.
+  If the key is not in YAML, the default value is `false`.
 - `related-id`: The key for linking several articles into a series of articles.
   If this parameter is present, then at the bottom of the article there will be
   a list of all articles with the same parameter value.
@@ -183,7 +181,7 @@ lang: ru
 class Article:
 
     def __init__(self, md_filename: str | Path) -> None:
-        """Get all info of the Markdown file with folders.
+        """Get all information about the Markdown file with folders.
 
         Constructor `__init__` does not generate new files and folders.
 
@@ -206,13 +204,13 @@ class Article:
 
     @property
     def featured_image_filenames(self) -> list[str]:
-        """Array of featured images.
+        """List of featured images.
 
         The files must be in the same folder as the Markdown file.
 
         Returns:
 
-        - `list[str]`: Array of featured images. Example: `["featured-image.png", "featured-image.svg"]`.
+        - `list[str]`: List of featured images. Example: `["featured-image.png", "featured-image.svg"]`.
 
         Example:
 
@@ -233,7 +231,7 @@ class Article:
         ]
 
     def generate_html(self, html_folder: str | Path | None = None) -> Article:
-        """Generate HTML file with folders from the Markdown file with folders.
+        """Generate HTML file and folders from the Markdown file.
 
         Args:
 
@@ -267,11 +265,11 @@ class Article:
         return self
 
     def get_html_code(self) -> str:
-        """Generate HTML clean code from the Markdown code.
+        """Generate clean HTML code from the Markdown code.
 
         Returns:
 
-        - `str`: HTML clean code from the Markdown code.
+        - `str`: Clean HTML code from the Markdown code.
 
         Example:
 
@@ -320,7 +318,7 @@ class Article:
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.html_folder = "./build_site"
         print(article.html_filename)
-        # C:\\GitHub\\harrix-pyssg\build_site\\index.html
+        # C:\\GitHub\\harrix-pyssg\\build_site\\index.html
         ```
 
         """
@@ -344,7 +342,7 @@ class Article:
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.generate_html("./build_site")
         print(article.html_folder)
-        # C:\\GitHub\\harrix-pyssg\build_site
+        # C:\\GitHub\\harrix-pyssg\\build_site
         ```
 
         Example for the setter:
@@ -381,7 +379,7 @@ class Article:
         article = hsg.Article("./tests/data/test_01/test_01.md")
         article.load("./tests/data/test_02/test_02.md")
         print(article.md_filename)
-        # tests\\data\test_02\test_02.md
+        # tests\\data\\test_02\\test_02.md
         ```
 
         """
@@ -489,19 +487,25 @@ class Article:
 
     @property
     def md_filename(self) -> Path:
-        r"""`Path`: Full filename of the Markdown file (only getter).
-        Example: `"./tests/data/test_01/test_01.md"`.
+        r"""Full filename of the Markdown file (only getter).
+
+        You can load a new file and change the value of this variable via
+        method `load(path_new_md_file)`.
+
+        Returns:
+
+        - `Path`: Full filename of the Markdown file. Example: `"./tests/data/test_01/test_01.md"`.
+
+        Example:
 
         ```python
         import harrix_pyssg as hsg
 
         article = hsg.Article("./tests/data/test_01/test_01.md")
         print(article.md_filename)
-        # C:\\GitHub\\harrix-pyssg\tests\\data\test_01\test_01.md
+        # C:\\GitHub\\harrix-pyssg\\tests\\data\\test_01\\test_01.md
         ```
 
-        You can upload a new file and change the value of this variable via
-        method `load(path_new_md_file)`.
         """
         return self._md_filename.absolute()
 
@@ -644,7 +648,7 @@ class Article:
 def __init__(self, md_filename: str | Path) -> None
 ```
 
-Get all info of the Markdown file with folders.
+Get all information about the Markdown file with folders.
 
 Constructor `__init__` does not generate new files and folders.
 
@@ -678,13 +682,13 @@ def __init__(self, md_filename: str | Path) -> None:
 def featured_image_filenames(self) -> list[str]
 ```
 
-Array of featured images.
+List of featured images.
 
 The files must be in the same folder as the Markdown file.
 
 Returns:
 
-- `list[str]`: Array of featured images. Example: `["featured-image.png", "featured-image.svg"]`.
+- `list[str]`: List of featured images. Example: `["featured-image.png", "featured-image.svg"]`.
 
 Example:
 
@@ -717,7 +721,7 @@ def featured_image_filenames(self) -> list[str]:
 def generate_html(self, html_folder: str | Path | None = None) -> Article
 ```
 
-Generate HTML file with folders from the Markdown file with folders.
+Generate HTML file and folders from the Markdown file.
 
 Args:
 
@@ -763,11 +767,11 @@ def generate_html(self, html_folder: str | Path | None = None) -> Article:
 def get_html_code(self) -> str
 ```
 
-Generate HTML clean code from the Markdown code.
+Generate clean HTML code from the Markdown code.
 
 Returns:
 
-- `str`: HTML clean code from the Markdown code.
+- `str`: Clean HTML code from the Markdown code.
 
 Example:
 
@@ -827,7 +831,7 @@ import harrix_pyssg as hsg
 article = hsg.Article("./tests/data/test_01/test_01.md")
 article.html_folder = "./build_site"
 print(article.html_filename)
-# C:\\GitHub\\harrix-pyssg\build_site\\index.html
+# C:\\GitHub\\harrix-pyssg\\build_site\\index.html
 ```
 
 <details>
@@ -862,7 +866,7 @@ import harrix_pyssg as hsg
 article = hsg.Article("./tests/data/test_01/test_01.md")
 article.generate_html("./build_site")
 print(article.html_folder)
-# C:\\GitHub\\harrix-pyssg\build_site
+# C:\\GitHub\\harrix-pyssg\\build_site
 ```
 
 Example for the setter:
@@ -925,7 +929,7 @@ import harrix_pyssg as hsg
 article = hsg.Article("./tests/data/test_01/test_01.md")
 article.load("./tests/data/test_02/test_02.md")
 print(article.md_filename)
-# tests\\data\test_02\test_02.md
+# tests\\data\\test_02\\test_02.md
 ```
 
 <details>
@@ -1080,19 +1084,24 @@ def md_content_no_yaml(self, new_value: str) -> None:
 def md_filename(self) -> Path
 ```
 
-`Path`: Full filename of the Markdown file (only getter).
-Example: `"./tests/data/test_01/test_01.md"`.
+Full filename of the Markdown file (only getter).
+
+You can load a new file and change the value of this variable via
+method `load(path_new_md_file)`.
+
+Returns:
+
+- `Path`: Full filename of the Markdown file. Example: `"./tests/data/test_01/test_01.md"`.
+
+Example:
 
 ```python
 import harrix_pyssg as hsg
 
 article = hsg.Article("./tests/data/test_01/test_01.md")
 print(article.md_filename)
-# C:\\GitHub\\harrix-pyssg\tests\\data\test_01\test_01.md
+# C:\\GitHub\\harrix-pyssg\\tests\\data\\test_01\\test_01.md
 ```
-
-You can upload a new file and change the value of this variable via
-method `load(path_new_md_file)`.
 
 <details>
 <summary>Code:</summary>

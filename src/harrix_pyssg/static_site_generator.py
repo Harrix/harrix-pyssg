@@ -43,10 +43,10 @@ class StaticSiteGenerator:
     │  │  └─ test-image.png
     │  └─ test_01.md
     └─ test_02
-    ├─ featured-image.png
-    ├─ img
-    │  └─ test-image.png
-    └─ test_02.md
+       ├─ featured-image.png
+       ├─ img
+       │  └─ test-image.png
+       └─ test_02.md
     ```
 
     Output HTML folder:
@@ -59,10 +59,10 @@ class StaticSiteGenerator:
     │  │  └─ test-image.png
     │  └─ index.html
     └─ test_02
-    ├─ featured-image.png
-    ├─ img
-    │  └─ test-image.png
-    └─ index.html
+       ├─ featured-image.png
+       ├─ img
+       │  └─ test-image.png
+       └─ index.html
     ```
     """
 
@@ -92,11 +92,11 @@ class StaticSiteGenerator:
 
     @property
     def articles(self) -> list[hsg.Article]:
-        r"""List of all articles that is generated in the `__init__()`.
+        r"""List of all articles that are generated in the `__init__()`.
 
         Returns:
 
-        - `list[Article]`: List of all articles.
+        - `list[hsg.Article]`: List of all articles.
 
         Example:
 
@@ -107,7 +107,7 @@ class StaticSiteGenerator:
         sg = hsg.StaticSiteGenerator(md_folder)
         articles = sg.articles  # list of all articles
         print(sg.articles[0].md_filename)
-        # C:\\GitHub\\harrix-pyssg\tests\\data\test_01\test_01.md
+        # C:\\GitHub\\harrix-pyssg\\tests\\data\\test_01\\test_01.md
         ```
 
         """
@@ -169,7 +169,7 @@ class StaticSiteGenerator:
         sg = hsg.StaticSiteGenerator(md_folder)
         sg.generate_site(html_folder)
         print(sg.html_folder)
-        # C:\\GitHub\\harrix-pyssg\build_site
+        # C:\\GitHub\\harrix-pyssg\\build_site
         ```
 
         Example for the setter:
@@ -208,7 +208,7 @@ class StaticSiteGenerator:
         md_folder = "./tests/data"
         sg = hsg.StaticSiteGenerator(md_folder)
         print(sg.md_folder)
-        # C:\\GitHub\\harrix-pyssg\tests\\data
+        # C:\\GitHub\\harrix-pyssg\\tests\\data
         ```
 
         """
