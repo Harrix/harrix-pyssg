@@ -11,27 +11,24 @@ lang: en
 
 ## Contents
 
-- [🏛️ Class `Article`](#%EF%B8%8F-class-article)
+- [🏛️ Class `Article`](#️-class-article)
 - [Usage examples](#usage-examples)
 - [Example of folder structure](#example-of-folder-structure)
-  - [⚙️ Method `__init__`](#%EF%B8%8F-method-__init__)
-  - [⚙️ Method `featured_image_filenames`](#%EF%B8%8F-method-featured_image_filenames)
-  - [⚙️ Method `generate_html`](#%EF%B8%8F-method-generate_html)
-  - [⚙️ Method `get_html_code`](#%EF%B8%8F-method-get_html_code)
-  - [⚙️ Method `html_filename`](#%EF%B8%8F-method-html_filename)
-  - [⚙️ Method `html_folder`](#%EF%B8%8F-method-html_folder)
-  - [⚙️ Method `html_folder`](#%EF%B8%8F-method-html_folder-1)
-  - [⚙️ Method `load`](#%EF%B8%8F-method-load)
-  - [⚙️ Method `md_content`](#%EF%B8%8F-method-md_content)
-  - [⚙️ Method `md_content_no_yaml`](#%EF%B8%8F-method-md_content_no_yaml)
-  - [⚙️ Method `md_content_no_yaml`](#%EF%B8%8F-method-md_content_no_yaml-1)
-  - [⚙️ Method `md_filename`](#%EF%B8%8F-method-md_filename)
-  - [⚙️ Method `md_yaml`](#%EF%B8%8F-method-md_yaml)
-  - [⚙️ Method `md_yaml_dict`](#%EF%B8%8F-method-md_yaml_dict)
-  - [⚙️ Method `save`](#%EF%B8%8F-method-save)
-  - [⚙️ Method `_clear_html_folder_directory`](#%EF%B8%8F-method-_clear_html_folder_directory)
-  - [⚙️ Method `_copy_dirs`](#%EF%B8%8F-method-_copy_dirs)
-  - [⚙️ Method `_copy_featured_images`](#%EF%B8%8F-method-_copy_featured_images)
+  - [⚙️ Method `__init__`](#️-method-__init__)
+  - [⚙️ Method `featured_image_filenames`](#️-method-featured_image_filenames)
+  - [⚙️ Method `generate_html`](#️-method-generate_html)
+  - [⚙️ Method `get_html_code`](#️-method-get_html_code)
+  - [⚙️ Method `html_filename`](#️-method-html_filename)
+  - [⚙️ Method `html_folder`](#️-method-html_folder)
+  - [⚙️ Method `html_folder`](#️-method-html_folder-1)
+  - [⚙️ Method `load`](#️-method-load)
+  - [⚙️ Method `md_content`](#️-method-md_content)
+  - [⚙️ Method `md_content_no_yaml`](#️-method-md_content_no_yaml)
+  - [⚙️ Method `md_content_no_yaml`](#️-method-md_content_no_yaml-1)
+  - [⚙️ Method `md_filename`](#️-method-md_filename)
+  - [⚙️ Method `md_yaml`](#️-method-md_yaml)
+  - [⚙️ Method `md_yaml_dict`](#️-method-md_yaml_dict)
+  - [⚙️ Method `save`](#️-method-save)
 
 </details>
 
@@ -138,7 +135,9 @@ HTML file `index.html`:
   If the key is not in YAML, the default value is `false`.
 - `related-id`: The key for linking several articles into a series of articles.
   If this parameter is present, then at the bottom of the article there will be
-  a list of all articles with the same parameter value.
+
+a list of all articles with the same parameter value.
+
 - `demo`: The link to the demo page.
 - `download`: The link to the download file.
 - `author`: Name of the author of the article.
@@ -1248,73 +1247,6 @@ def save(self) -> None:
             Path(self.md_filename).write_text(self.md_content, encoding="utf8")
         except Exception:
             print(f'The file "{self.md_filename}" does not save')
-```
-
-</details>
-
-### ⚙️ Method `_clear_html_folder_directory`
-
-```python
-def _clear_html_folder_directory(self) -> None
-```
-
-Clear `self.html_folder` with sub-directories.
-
-<details>
-<summary>Code:</summary>
-
-```python
-def _clear_html_folder_directory(self) -> None:
-        if self.html_folder is None:
-            return
-        if self.html_folder.exists() and self.html_folder.is_dir():
-            shutil.rmtree(self.html_folder)
-        self.html_folder.mkdir(parents=True, exist_ok=True)
-```
-
-</details>
-
-### ⚙️ Method `_copy_dirs`
-
-```python
-def _copy_dirs(self) -> None
-```
-
-Copy all folders from the directory with the Markdown file.
-
-<details>
-<summary>Code:</summary>
-
-```python
-def _copy_dirs(self) -> None:
-        if self.html_folder is None:
-            return
-        for file in Path(self.md_filename).parent.iterdir():
-            if file.is_dir():
-                shutil.copytree(file, self.html_folder / file.name, dirs_exist_ok=True)
-```
-
-</details>
-
-### ⚙️ Method `_copy_featured_images`
-
-```python
-def _copy_featured_images(self) -> None
-```
-
-Copy all featured images from the directory with the Markdown file.
-
-<details>
-<summary>Code:</summary>
-
-```python
-def _copy_featured_images(self) -> None:
-        if self.html_folder is None:
-            return
-        for filename in self.featured_image_filenames:
-            file = self.md_filename.parent / filename
-            output_file = self.html_folder / filename
-            shutil.copy(file, output_file)
 ```
 
 </details>

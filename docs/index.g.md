@@ -15,7 +15,7 @@ lang: en
 
 ## Contents
 
-- [🛠️ Technologies](#%EF%B8%8F-technologies)
+- [🛠️ Technologies](#️-technologies)
 - [📦 Installation](#-installation)
 - [📚 List of functions](#-list-of-functions)
   - [📄 File `article.py`](#-file-articlepy)
@@ -55,17 +55,17 @@ uv add harrix-pyssg
 
 Doc: [article.g.md](https://github.com/Harrix/harrix-pyssg/blob/main/docs/article.g.md)
 
-| Function/Class                                                                                                   | Description                                      |
-| ---------------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
-| 🏛️ Class [`Article`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/article.g.md#%EF%B8%8F-class-article) | All information about one article from the site. |
+| Function/Class                                                                                          | Description                                      |
+| ------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
+| 🏛️ Class [`Article`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/article.g.md#️-class-article) | All information about one article from the site. |
 
 ### 📄 File `static_site_generator.py`
 
 Doc: [static_site_generator.g.md](https://github.com/Harrix/harrix-pyssg/blob/main/docs/static_site_generator.g.md)
 
-| Function/Class                                                                                                                                         | Description                                                                    |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| 🏛️ Class [`StaticSiteGenerator`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/static_site_generator.g.md#%EF%B8%8F-class-staticsitegenerator) | Static site generator. It collects Markdown files from folder and sub-folders. |
+| Function/Class                                                                                                                                | Description                                                                    |
+| --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
+| 🏛️ Class [`StaticSiteGenerator`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/static_site_generator.g.md#️-class-staticsitegenerator) | Static site generator. It collects Markdown files from folder and sub-folders. |
 
 ## 📄 License
 

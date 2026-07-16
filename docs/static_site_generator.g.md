@@ -11,17 +11,15 @@ lang: en
 
 ## Contents
 
-- [🏛️ Class `StaticSiteGenerator`](#%EF%B8%8F-class-staticsitegenerator)
+- [🏛️ Class `StaticSiteGenerator`](#️-class-staticsitegenerator)
 - [Usage examples](#usage-examples)
 - [Example of folder structure](#example-of-folder-structure)
-  - [⚙️ Method `__init__`](#%EF%B8%8F-method-__init__)
-  - [⚙️ Method `articles`](#%EF%B8%8F-method-articles)
-  - [⚙️ Method `generate_site`](#%EF%B8%8F-method-generate_site)
-  - [⚙️ Method `html_folder`](#%EF%B8%8F-method-html_folder)
-  - [⚙️ Method `html_folder`](#%EF%B8%8F-method-html_folder-1)
-  - [⚙️ Method `md_folder`](#%EF%B8%8F-method-md_folder)
-  - [⚙️ Method `_clear_html_folder_directory`](#%EF%B8%8F-method-_clear_html_folder_directory)
-  - [⚙️ Method `_get_info_about_articles`](#%EF%B8%8F-method-_get_info_about_articles)
+  - [⚙️ Method `__init__`](#️-method-__init__)
+  - [⚙️ Method `articles`](#️-method-articles)
+  - [⚙️ Method `generate_site`](#️-method-generate_site)
+  - [⚙️ Method `html_folder`](#️-method-html_folder)
+  - [⚙️ Method `html_folder`](#️-method-html_folder-1)
+  - [⚙️ Method `md_folder`](#️-method-md_folder)
 
 </details>
 
@@ -476,51 +474,6 @@ print(sg.md_folder)
 ```python
 def md_folder(self) -> Path:
         return self._md_folder.absolute()
-```
-
-</details>
-
-### ⚙️ Method `_clear_html_folder_directory`
-
-```python
-def _clear_html_folder_directory(self) -> None
-```
-
-Clear `self.html_folder` with sub-directories.
-
-<details>
-<summary>Code:</summary>
-
-```python
-def _clear_html_folder_directory(self) -> None:
-        if self.html_folder is None:
-            return
-        if self.html_folder.exists() and self.html_folder.is_dir():
-            shutil.rmtree(self.html_folder)
-        self.html_folder.mkdir(parents=True, exist_ok=True)
-```
-
-</details>
-
-### ⚙️ Method `_get_info_about_articles`
-
-```python
-def _get_info_about_articles(self) -> None
-```
-
-Get info from all Markdown files and fill the list `self.articles`.
-
-<details>
-<summary>Code:</summary>
-
-```python
-def _get_info_about_articles(self) -> None:
-        for item in filter(
-            lambda path: not any(part for part in path.parts if part.startswith(".")),
-            Path(self.md_folder).rglob("*"),
-        ):
-            if item.is_file() and item.suffix.lower() == ".md":
-                self.articles.append(hsg.Article(item))
 ```
 
 </details>
