@@ -101,7 +101,7 @@ class Article:
     <p><img src="img/test-image.png" alt="Alt text" /></p>
     ```
 
-    # List of processed YAML variables
+    ## List of processed YAML variables
 
     - `date`: Date of creation of the article.
     - `update`: Date of the article update.
@@ -121,7 +121,7 @@ class Article:
     - `author`: Name of the author of the article.
     - `author-email`: Email of the author of the article.
     - `permalink`: The URL address of the article on the website.
-    - `permalink-source`: The URL address of the markdown file on GitHub (for example).
+    - `permalink-source`: The URL address of the Markdown file on GitHub (for example).
     - `license`: The license name of this article.
     - `license-url`: The URL address of the license file.
     - `attribution`: The link (or array of links) to the source of the material.

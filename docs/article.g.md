@@ -14,6 +14,7 @@ lang: en
 - [🏛️ Class `Article`](#️-class-article)
 - [Usage examples](#usage-examples)
 - [Example of folder structure](#example-of-folder-structure)
+- [List of processed YAML variables](#list-of-processed-yaml-variables)
   - [⚙️ Method `__init__`](#️-method-__init__)
   - [⚙️ Method `featured_image_filenames`](#️-method-featured_image_filenames)
   - [⚙️ Method `generate_html`](#️-method-generate_html)
@@ -123,7 +124,7 @@ HTML file `index.html`:
 <p><img src="img/test-image.png" alt="Alt text" /></p>
 ```
 
-# List of processed YAML variables
+## List of processed YAML variables
 
 - `date`: Date of creation of the article.
 - `update`: Date of the article update.
@@ -143,7 +144,7 @@ a list of all articles with the same parameter value.
 - `author`: Name of the author of the article.
 - `author-email`: Email of the author of the article.
 - `permalink`: The URL address of the article on the website.
-- `permalink-source`: The URL address of the markdown file on GitHub (for example).
+- `permalink-source`: The URL address of the Markdown file on GitHub (for example).
 - `license`: The license name of this article.
 - `license-url`: The URL address of the license file.
 - `attribution`: The link (or array of links) to the source of the material.
