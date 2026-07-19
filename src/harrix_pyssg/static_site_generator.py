@@ -73,7 +73,7 @@ class StaticSiteGenerator:
 
         Args:
 
-        - `md_folder` (`str | Path`): Folder with Markdown files. Example: `"./tests/data"`.
+        - `md_folder` (`str | Path`): Folder with Markdown files. Example: `./tests/data`.
 
         Example:
 

@@ -465,7 +465,7 @@ class Article:
 
         Returns:
 
-        - `Path`: Full filename of the Markdown file. Example: `"./tests/data/test_01/test_01.md"`.
+        - `Path`: Full filename of the Markdown file. Example: `./tests/data/test_01/test_01.md`.
 
         Example:
 
