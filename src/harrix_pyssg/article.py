@@ -108,12 +108,14 @@ class Article:
     - `categories`: The list of categories to which the article belongs. Spaces in category names are not allowed.
     - `tags`: The list of tags to which the article belongs. Spaces in tag names are not allowed.
     - `published`: `false` if the article is in drafts and should not be published.
-    If the key is not in YAML, the default value is `true`.
+      If the key is not in YAML, the default value is `true`.
     - `latex`: `true` if $LaTeX$ is used in the article. Example: `$y = x^{2}$`.
-    If the key is not in YAML, the default value is `false`.
+      If the key is not in YAML, the default value is `false`.
     - `related-id`: The key for linking several articles into a series of articles.
-    If this parameter is present, then at the bottom of the article there will be
+      If this parameter is present, then at the bottom of the article there will be
+
     a list of all articles with the same parameter value.
+
     - `demo`: The link to the demo page.
     - `download`: The link to the download file.
     - `author`: Name of the author of the article.

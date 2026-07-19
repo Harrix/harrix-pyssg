@@ -98,7 +98,7 @@ class StaticSiteGenerator:
 
         Args:
 
-        - `md_folder` (`str | Path`): Folder with Markdown files. Example: `"./tests/data"`.
+        - `md_folder` (`str | Path`): Folder with Markdown files. Example: `./tests/data`.
 
         Example:
 
@@ -271,7 +271,7 @@ Constructor `__init__` does not generate new files and folders.
 
 Args:
 
-- `md_folder` (`str | Path`): Folder with Markdown files. Example: `"./tests/data"`.
+- `md_folder` (`str | Path`): Folder with Markdown files. Example: `./tests/data`.
 
 Example:
 

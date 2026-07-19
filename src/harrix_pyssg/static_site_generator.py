@@ -64,6 +64,7 @@ class StaticSiteGenerator:
        │  └─ test-image.png
        └─ index.html
     ```
+
     """
 
     def __init__(self, md_folder: str | Path) -> None:
