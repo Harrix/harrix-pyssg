@@ -11,15 +11,15 @@ lang: en
 
 ## Contents
 
-- [🏛️ Class `StaticSiteGenerator`](#️-class-staticsitegenerator)
+- [🏛️ Class `StaticSiteGenerator`](#%EF%B8%8F-class-staticsitegenerator)
 - [Usage examples](#usage-examples)
 - [Example of folder structure](#example-of-folder-structure)
-  - [⚙️ Method `__init__`](#️-method-__init__)
-  - [⚙️ Method `articles`](#️-method-articles)
-  - [⚙️ Method `generate_site`](#️-method-generate_site)
-  - [⚙️ Method `html_folder`](#️-method-html_folder)
-  - [⚙️ Method `html_folder`](#️-method-html_folder-1)
-  - [⚙️ Method `md_folder`](#️-method-md_folder)
+  - [⚙️ Method `__init__`](#%EF%B8%8F-method-__init__)
+  - [⚙️ Method `articles`](#%EF%B8%8F-method-articles)
+  - [⚙️ Method `generate_site`](#%EF%B8%8F-method-generate_site)
+  - [⚙️ Method `html_folder`](#%EF%B8%8F-method-html_folder)
+  - [⚙️ Method `html_folder`](#%EF%B8%8F-method-html_folder-1)
+  - [⚙️ Method `md_folder`](#%EF%B8%8F-method-md_folder)
 
 </details>
 

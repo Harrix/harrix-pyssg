@@ -47,7 +47,7 @@ uv add harrix-pyssg
 
 ### 📄 File `article.py`
 
-Doc: [article.g.md](https://github.com/Harrix/harrix-pyssg/blob/main/docs/article.g.md)
+Doc: [`article.g.md`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/article.g.md)
 
 | Function/Class                                                                                          | Description                                      |
 | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
@@ -55,7 +55,7 @@ Doc: [article.g.md](https://github.com/Harrix/harrix-pyssg/blob/main/docs/articl
 
 ### 📄 File `static_site_generator.py`
 
-Doc: [static_site_generator.g.md](https://github.com/Harrix/harrix-pyssg/blob/main/docs/static_site_generator.g.md)
+Doc: [`static_site_generator.g.md`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/static_site_generator.g.md)
 
 | Function/Class                                                                                                                                | Description                                                                    |
 | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------ |
