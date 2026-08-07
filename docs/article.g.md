@@ -16,19 +16,19 @@ lang: en
 - [Example of folder structure](#example-of-folder-structure)
 - [List of processed YAML variables](#list-of-processed-yaml-variables)
   - [⚙️ Method `__init__`](#%EF%B8%8F-method-__init__)
-  - [⚙️ Method `featured_image_filenames`](#%EF%B8%8F-method-featured_image_filenames)
+  - [⚙️ Method `featured_image_filenames (property)`](#%EF%B8%8F-method-featured_image_filenames-property)
   - [⚙️ Method `generate_html`](#%EF%B8%8F-method-generate_html)
   - [⚙️ Method `get_html_code`](#%EF%B8%8F-method-get_html_code)
-  - [⚙️ Method `html_filename`](#%EF%B8%8F-method-html_filename)
-  - [⚙️ Method `html_folder`](#%EF%B8%8F-method-html_folder)
+  - [⚙️ Method `html_filename (property)`](#%EF%B8%8F-method-html_filename-property)
+  - [⚙️ Method `html_folder (property)`](#%EF%B8%8F-method-html_folder-property)
   - [⚙️ Method `html_folder (setter)`](#%EF%B8%8F-method-html_folder-setter)
   - [⚙️ Method `load`](#%EF%B8%8F-method-load)
-  - [⚙️ Method `md_content`](#%EF%B8%8F-method-md_content)
-  - [⚙️ Method `md_content_no_yaml`](#%EF%B8%8F-method-md_content_no_yaml)
+  - [⚙️ Method `md_content (property)`](#%EF%B8%8F-method-md_content-property)
+  - [⚙️ Method `md_content_no_yaml (property)`](#%EF%B8%8F-method-md_content_no_yaml-property)
   - [⚙️ Method `md_content_no_yaml (setter)`](#%EF%B8%8F-method-md_content_no_yaml-setter)
-  - [⚙️ Method `md_filename`](#%EF%B8%8F-method-md_filename)
-  - [⚙️ Method `md_yaml`](#%EF%B8%8F-method-md_yaml)
-  - [⚙️ Method `md_yaml_dict`](#%EF%B8%8F-method-md_yaml_dict)
+  - [⚙️ Method `md_filename (property)`](#%EF%B8%8F-method-md_filename-property)
+  - [⚙️ Method `md_yaml (property)`](#%EF%B8%8F-method-md_yaml-property)
+  - [⚙️ Method `md_yaml_dict (property)`](#%EF%B8%8F-method-md_yaml_dict-property)
   - [⚙️ Method `save`](#%EF%B8%8F-method-save)
 
 </details>
@@ -676,7 +676,7 @@ def __init__(self, md_filename: str | Path) -> None:
 
 </details>
 
-### ⚙️ Method `featured_image_filenames`
+### ⚙️ Method `featured_image_filenames (property)`
 
 ```python
 def featured_image_filenames(self) -> list[str]
@@ -811,7 +811,7 @@ def get_html_code(self) -> str:
 
 </details>
 
-### ⚙️ Method `html_filename`
+### ⚙️ Method `html_filename (property)`
 
 ```python
 def html_filename(self) -> Path | None
@@ -846,7 +846,7 @@ def html_filename(self) -> Path | None:
 
 </details>
 
-### ⚙️ Method `html_folder`
+### ⚙️ Method `html_folder (property)`
 
 ```python
 def html_folder(self) -> Path | None
@@ -955,7 +955,7 @@ def load(self, md_filename: str | Path) -> None:
 
 </details>
 
-### ⚙️ Method `md_content`
+### ⚙️ Method `md_content (property)`
 
 ```python
 def md_content(self) -> str
@@ -1006,7 +1006,7 @@ def md_content(self) -> str:
 
 </details>
 
-### ⚙️ Method `md_content_no_yaml`
+### ⚙️ Method `md_content_no_yaml (property)`
 
 ```python
 def md_content_no_yaml(self) -> str
@@ -1078,7 +1078,7 @@ def md_content_no_yaml(self, new_value: str) -> None:
 
 </details>
 
-### ⚙️ Method `md_filename`
+### ⚙️ Method `md_filename (property)`
 
 ```python
 def md_filename(self) -> Path
@@ -1113,7 +1113,7 @@ def md_filename(self) -> Path:
 
 </details>
 
-### ⚙️ Method `md_yaml`
+### ⚙️ Method `md_yaml (property)`
 
 ```python
 def md_yaml(self) -> str
@@ -1171,7 +1171,7 @@ def md_yaml(self) -> str:
 
 </details>
 
-### ⚙️ Method `md_yaml_dict`
+### ⚙️ Method `md_yaml_dict (property)`
 
 ```python
 def md_yaml_dict(self) -> dict

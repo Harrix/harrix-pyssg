@@ -15,11 +15,11 @@ lang: en
 - [Usage examples](#usage-examples)
 - [Example of folder structure](#example-of-folder-structure)
   - [⚙️ Method `__init__`](#%EF%B8%8F-method-__init__)
-  - [⚙️ Method `articles`](#%EF%B8%8F-method-articles)
+  - [⚙️ Method `articles (property)`](#%EF%B8%8F-method-articles-property)
   - [⚙️ Method `generate_site`](#%EF%B8%8F-method-generate_site)
-  - [⚙️ Method `html_folder`](#%EF%B8%8F-method-html_folder)
+  - [⚙️ Method `html_folder (property)`](#%EF%B8%8F-method-html_folder-property)
   - [⚙️ Method `html_folder (setter)`](#%EF%B8%8F-method-html_folder-setter)
-  - [⚙️ Method `md_folder`](#%EF%B8%8F-method-md_folder)
+  - [⚙️ Method `md_folder (property)`](#%EF%B8%8F-method-md_folder-property)
 
 </details>
 
@@ -295,7 +295,7 @@ def __init__(self, md_folder: str | Path) -> None:
 
 </details>
 
-### ⚙️ Method `articles`
+### ⚙️ Method `articles (property)`
 
 ```python
 def articles(self) -> list[hsg.Article]
@@ -379,7 +379,7 @@ def generate_site(self, html_folder: str | Path | None = None) -> StaticSiteGene
 
 </details>
 
-### ⚙️ Method `html_folder`
+### ⚙️ Method `html_folder (property)`
 
 ```python
 def html_folder(self) -> Path | None
@@ -445,7 +445,7 @@ def html_folder(self, new_value: str | Path) -> None:
 
 </details>
 
-### ⚙️ Method `md_folder`
+### ⚙️ Method `md_folder (property)`
 
 ```python
 def md_folder(self) -> Path
