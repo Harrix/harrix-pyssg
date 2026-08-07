@@ -21,11 +21,11 @@ lang: en
   - [⚙️ Method `get_html_code`](#%EF%B8%8F-method-get_html_code)
   - [⚙️ Method `html_filename`](#%EF%B8%8F-method-html_filename)
   - [⚙️ Method `html_folder`](#%EF%B8%8F-method-html_folder)
-  - [⚙️ Method `html_folder`](#%EF%B8%8F-method-html_folder-1)
+  - [⚙️ Method `html_folder (setter)`](#%EF%B8%8F-method-html_folder-setter)
   - [⚙️ Method `load`](#%EF%B8%8F-method-load)
   - [⚙️ Method `md_content`](#%EF%B8%8F-method-md_content)
   - [⚙️ Method `md_content_no_yaml`](#%EF%B8%8F-method-md_content_no_yaml)
-  - [⚙️ Method `md_content_no_yaml`](#%EF%B8%8F-method-md_content_no_yaml-1)
+  - [⚙️ Method `md_content_no_yaml (setter)`](#%EF%B8%8F-method-md_content_no_yaml-setter)
   - [⚙️ Method `md_filename`](#%EF%B8%8F-method-md_filename)
   - [⚙️ Method `md_yaml`](#%EF%B8%8F-method-md_yaml)
   - [⚙️ Method `md_yaml_dict`](#%EF%B8%8F-method-md_yaml_dict)
@@ -891,7 +891,7 @@ def html_folder(self) -> Path | None:
 
 </details>
 
-### ⚙️ Method `html_folder`
+### ⚙️ Method `html_folder (setter)`
 
 ```python
 def html_folder(self, new_value: str | Path) -> None
@@ -1060,7 +1060,7 @@ def md_content_no_yaml(self) -> str:
 
 </details>
 
-### ⚙️ Method `md_content_no_yaml`
+### ⚙️ Method `md_content_no_yaml (setter)`
 
 ```python
 def md_content_no_yaml(self, new_value: str) -> None

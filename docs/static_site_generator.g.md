@@ -18,7 +18,7 @@ lang: en
   - [⚙️ Method `articles`](#%EF%B8%8F-method-articles)
   - [⚙️ Method `generate_site`](#%EF%B8%8F-method-generate_site)
   - [⚙️ Method `html_folder`](#%EF%B8%8F-method-html_folder)
-  - [⚙️ Method `html_folder`](#%EF%B8%8F-method-html_folder-1)
+  - [⚙️ Method `html_folder (setter)`](#%EF%B8%8F-method-html_folder-setter)
   - [⚙️ Method `md_folder`](#%EF%B8%8F-method-md_folder)
 
 </details>
@@ -427,7 +427,7 @@ def html_folder(self) -> Path | None:
 
 </details>
 
-### ⚙️ Method `html_folder`
+### ⚙️ Method `html_folder (setter)`
 
 ```python
 def html_folder(self, new_value: str | Path) -> None
