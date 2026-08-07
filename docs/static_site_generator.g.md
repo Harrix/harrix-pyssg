@@ -271,7 +271,7 @@ Constructor `__init__` does not generate new files and folders.
 
 Args:
 
-- `md_folder` (`str | Path`): Folder with Markdown files. Example: `./tests/data`.
+- [`md_folder`](#%EF%B8%8F-method-md_folder-property) (`str | Path`): Folder with Markdown files. Example: `./tests/data`.
 
 Example:
 
@@ -343,7 +343,7 @@ Args:
 
 Returns:
 
-- `StaticSiteGenerator`: Returns itself.
+- [`StaticSiteGenerator`](#%EF%B8%8F-class-staticsitegenerator): Returns itself.
 
 Example:
 

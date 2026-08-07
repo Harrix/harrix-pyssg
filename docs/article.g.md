@@ -654,7 +654,7 @@ Constructor `__init__` does not generate new files and folders.
 
 Args:
 
-- `md_filename` (`str | Path`): Full filename of the Markdown file.
+- [`md_filename`](#%EF%B8%8F-method-md_filename-property) (`str | Path`): Full filename of the Markdown file.
 
 Example:
 
@@ -729,7 +729,7 @@ Args:
 
 Returns:
 
-- `Article`: Returns itself, that is, the article with calculated data.
+- [`Article`](#%EF%B8%8F-class-article): Returns itself, that is, the article with calculated data.
 
 Example:
 
@@ -919,7 +919,7 @@ Load a new Markdown file.
 
 Args:
 
-- `md_filename` (`str | Path`): Full filename of the Markdown file.
+- [`md_filename`](#%EF%B8%8F-method-md_filename-property) (`str | Path`): Full filename of the Markdown file.
 
 Example:
 
