@@ -14,6 +14,13 @@ from mdit_py_plugins.footnote import footnote_plugin
 from mdit_py_plugins.front_matter import front_matter_plugin
 from mdit_py_plugins.tasklists import tasklists_plugin
 
+from harrix_pyssg.page_assembler import (
+    PageAssembler,
+    asset_prefix_for,
+    detect_page_features,
+    extract_title,
+)
+
 
 class Article:
     """All information about one article from the site.
@@ -203,12 +210,25 @@ class Article:
             if file.is_file() and file.name.startswith("featured-image")
         ]
 
-    def generate_html(self, html_folder: str | Path | None = None) -> Article:
+    def generate_html(
+        self,
+        html_folder: str | Path | None = None,
+        *,
+        theme_dir: str | Path | None = None,
+        site_root: str | Path | None = None,
+        page_assembler: PageAssembler | None = None,
+    ) -> Article:
         """Generate HTML file and folders from the Markdown file.
 
         Args:
 
         - `html_folder` (`str | Path | None`): Output folder of the HTML file. Defaults to `None`.
+        - `theme_dir` (`str | Path | None`): Sliced theme directory. When set (or when
+          `page_assembler` is passed), writes a full HTML page instead of a body fragment.
+        - `site_root` (`str | Path | None`): Site output root used for relative theme asset
+          paths. Defaults to `html_folder`.
+        - `page_assembler` (`PageAssembler | None`): Preloaded theme assembler. Takes
+          precedence over `theme_dir`.
 
         Returns:
 
@@ -234,7 +254,32 @@ class Article:
         self._copy_featured_images()
 
         if self.html_filename is not None:
-            self.html_filename.write_text(self.get_html_code(), encoding="utf8")
+            content_html = self.get_html_code()
+            assembler = page_assembler
+            if assembler is None and theme_dir is not None:
+                assembler = PageAssembler(theme_dir)
+                root = Path(site_root) if site_root is not None else self.html_folder
+                if root is not None:
+                    assembler.copy_assets_to(root)
+
+            if assembler is not None and self.html_folder is not None:
+                root = Path(site_root) if site_root is not None else self.html_folder
+                prefix = asset_prefix_for(self.html_folder, root)
+                features = detect_page_features(
+                    content_html,
+                    md_content=self.md_content_no_yaml,
+                    yaml_dict=self.md_yaml_dict,
+                )
+                title = extract_title(content_html)
+                html = assembler.assemble(
+                    content_html=content_html,
+                    title=title,
+                    features=features,
+                    asset_prefix=prefix,
+                )
+                self.html_filename.write_text(html, encoding="utf8")
+            else:
+                self.html_filename.write_text(content_html, encoding="utf8")
         return self
 
     def get_html_code(self) -> str:

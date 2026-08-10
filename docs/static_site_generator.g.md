@@ -20,6 +20,7 @@ lang: en
   - [⚙️ Method `html_folder (property)`](#%EF%B8%8F-method-html_folder-property)
   - [⚙️ Method `html_folder (setter)`](#%EF%B8%8F-method-html_folder-setter)
   - [⚙️ Method `md_folder (property)`](#%EF%B8%8F-method-md_folder-property)
+  - [⚙️ Method `theme_dir (property)`](#%EF%B8%8F-method-theme_dir-property)
 
 </details>
 
@@ -91,7 +92,7 @@ build_site
 ````python
 class StaticSiteGenerator:
 
-    def __init__(self, md_folder: str | Path) -> None:
+    def __init__(self, md_folder: str | Path, theme_dir: str | Path | None = None) -> None:
         """Collect Markdown files from folder and sub-folders.
 
         Constructor `__init__` does not generate new files and folders.
@@ -99,6 +100,8 @@ class StaticSiteGenerator:
         Args:
 
         - `md_folder` (`str | Path`): Folder with Markdown files. Example: `./tests/data`.
+        - `theme_dir` (`str | Path | None`): Optional sliced theme directory. When set,
+          generated pages are full HTML documents using theme chrome and assets.
 
         Example:
 
@@ -112,6 +115,7 @@ class StaticSiteGenerator:
         self._md_folder = Path(md_folder)
         self._articles: list[hsg.Article] = []
         self._html_folder = None
+        self._theme_dir = Path(theme_dir) if theme_dir is not None else None
 
         self._get_info_about_articles()
 
@@ -138,12 +142,18 @@ class StaticSiteGenerator:
         """
         return self._articles
 
-    def generate_site(self, html_folder: str | Path | None = None) -> StaticSiteGenerator:
+    def generate_site(
+        self,
+        html_folder: str | Path | None = None,
+        theme_dir: str | Path | None = None,
+    ) -> StaticSiteGenerator:
         """Generate HTML files with folders from Markdown files.
 
         Args:
 
         - `html_folder` (`str | Path | None`): Output folder of the HTML files. Defaults to `None`.
+        - `theme_dir` (`str | Path | None`): Optional sliced theme directory. Overrides the
+          theme passed to the constructor when set.
 
         Returns:
 
@@ -163,16 +173,27 @@ class StaticSiteGenerator:
         """
         if html_folder is not None:
             self.html_folder = html_folder
+        if theme_dir is not None:
+            self._theme_dir = Path(theme_dir)
         if self.html_folder is None:
             return self
 
         self._clear_html_folder_directory()
 
+        assembler = None
+        if self._theme_dir is not None:
+            assembler = PageAssembler(self._theme_dir)
+            assembler.copy_assets_to(self.html_folder)
+
         for article in self.articles:
             parts = list(article.md_filename.parts[len(self.md_folder.parts) : -1])
             html_folder_article = self.html_folder / "/".join(parts)
             html_folder_article.mkdir(parents=True, exist_ok=True)
-            article.generate_html(html_folder_article)
+            article.generate_html(
+                html_folder_article,
+                page_assembler=assembler,
+                site_root=self.html_folder if assembler is not None else None,
+            )
 
         return self
 
@@ -239,6 +260,17 @@ class StaticSiteGenerator:
         """
         return self._md_folder.absolute()
 
+    @property
+    def theme_dir(self) -> Path | None:
+        """Sliced theme directory used for full-page generation.
+
+        Returns:
+
+        - `Path | None`: Theme directory, or `None` when generating HTML fragments only.
+
+        """
+        return self._theme_dir.resolve() if self._theme_dir is not None else None
+
     def _clear_html_folder_directory(self) -> None:
         """Clear `self.html_folder` with sub-directories."""
         if self.html_folder is None:
@@ -262,7 +294,7 @@ class StaticSiteGenerator:
 ### ⚙️ Method `__init__`
 
 ```python
-def __init__(self, md_folder: str | Path) -> None
+def __init__(self, md_folder: str | Path, theme_dir: str | Path | None = None) -> None
 ```
 
 Collect Markdown files from folder and sub-folders.
@@ -272,6 +304,8 @@ Constructor `__init__` does not generate new files and folders.
 Args:
 
 - [`md_folder`](#%EF%B8%8F-method-md_folder-property) (`str | Path`): Folder with Markdown files. Example: `./tests/data`.
+- [`theme_dir`](#%EF%B8%8F-method-theme_dir-property) (`str | Path | None`): Optional sliced theme directory. When set,
+  generated pages are full HTML documents using theme chrome and assets.
 
 Example:
 
@@ -285,10 +319,11 @@ sg = hsg.StaticSiteGenerator("C:/GitHub/harrix.dev/content")
 <summary>Code:</summary>
 
 ```python
-def __init__(self, md_folder: str | Path) -> None:
+def __init__(self, md_folder: str | Path, theme_dir: str | Path | None = None) -> None:
         self._md_folder = Path(md_folder)
         self._articles: list[hsg.Article] = []
         self._html_folder = None
+        self._theme_dir = Path(theme_dir) if theme_dir is not None else None
 
         self._get_info_about_articles()
 ```
@@ -332,7 +367,7 @@ def articles(self) -> list[hsg.Article]:
 ### ⚙️ Method `generate_site`
 
 ```python
-def generate_site(self, html_folder: str | Path | None = None) -> StaticSiteGenerator
+def generate_site(self, html_folder: str | Path | None = None, theme_dir: str | Path | None = None) -> StaticSiteGenerator
 ```
 
 Generate HTML files with folders from Markdown files.
@@ -340,6 +375,8 @@ Generate HTML files with folders from Markdown files.
 Args:
 
 - `html_folder` (`str | Path | None`): Output folder of the HTML files. Defaults to `None`.
+- [`theme_dir`](#%EF%B8%8F-method-theme_dir-property) (`str | Path | None`): Optional sliced theme directory. Overrides the
+  theme passed to the constructor when set.
 
 Returns:
 
@@ -360,19 +397,34 @@ sg.generate_site(html_folder)
 <summary>Code:</summary>
 
 ```python
-def generate_site(self, html_folder: str | Path | None = None) -> StaticSiteGenerator:
+def generate_site(
+        self,
+        html_folder: str | Path | None = None,
+        theme_dir: str | Path | None = None,
+    ) -> StaticSiteGenerator:
         if html_folder is not None:
             self.html_folder = html_folder
+        if theme_dir is not None:
+            self._theme_dir = Path(theme_dir)
         if self.html_folder is None:
             return self
 
         self._clear_html_folder_directory()
 
+        assembler = None
+        if self._theme_dir is not None:
+            assembler = PageAssembler(self._theme_dir)
+            assembler.copy_assets_to(self.html_folder)
+
         for article in self.articles:
             parts = list(article.md_filename.parts[len(self.md_folder.parts) : -1])
             html_folder_article = self.html_folder / "/".join(parts)
             html_folder_article.mkdir(parents=True, exist_ok=True)
-            article.generate_html(html_folder_article)
+            article.generate_html(
+                html_folder_article,
+                page_assembler=assembler,
+                site_root=self.html_folder if assembler is not None else None,
+            )
 
         return self
 ```
@@ -474,6 +526,28 @@ print(sg.md_folder)
 ```python
 def md_folder(self) -> Path:
         return self._md_folder.absolute()
+```
+
+</details>
+
+### ⚙️ Method `theme_dir (property)`
+
+```python
+def theme_dir(self) -> Path | None
+```
+
+Sliced theme directory used for full-page generation.
+
+Returns:
+
+- `Path | None`: Theme directory, or `None` when generating HTML fragments only.
+
+<details>
+<summary>Code:</summary>
+
+```python
+def theme_dir(self) -> Path | None:
+        return self._theme_dir.resolve() if self._theme_dir is not None else None
 ```
 
 </details>

@@ -19,7 +19,9 @@ lang: en
 - [📦 Installation](#-installation)
 - [📚 List of functions](#-list-of-functions)
   - [📄 File `article.py`](#-file-articlepy)
+  - [📄 File `page_assembler.py`](#-file-page_assemblerpy)
   - [📄 File `static_site_generator.py`](#-file-static_site_generatorpy)
+  - [📄 File `theme_slicer.py`](#-file-theme_slicerpy)
 - [📄 License](#-license)
 - [👤 Author](#-author)
 
@@ -59,6 +61,19 @@ Doc: [article.g.md](https://github.com/Harrix/harrix-pyssg/blob/main/docs/articl
 |----------------|-------------|
 | 🏛️ Class [`Article`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/article.g.md#%EF%B8%8F-class-article) | All information about one article from the site. |
 
+### 📄 File `page_assembler.py`
+
+Doc: [page_assembler.g.md](https://github.com/Harrix/harrix-pyssg/blob/main/docs/page_assembler.g.md)
+
+| Function/Class | Description |
+|----------------|-------------|
+| 🏛️ Class [`PageAssembler`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/page_assembler.g.md#%EF%B8%8F-class-pageassembler) | Build a full HTML page from theme parts and article body HTML. |
+| 🏛️ Class [`PageFeatures`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/page_assembler.g.md#%EF%B8%8F-class-pagefeatures) | Optional page features detected from Markdown/HTML/YAML. |
+| 🔧 [`asset_prefix_for`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/page_assembler.g.md#-function-asset_prefix_for) | Build a relative prefix from a page directory to the site root. |
+| 🔧 [`detect_page_features`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/page_assembler.g.md#-function-detect_page_features) | Detect optional features from rendered HTML, Markdown, and YAML. |
+| 🔧 [`extract_title`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/page_assembler.g.md#-function-extract_title) | Extract plain-text title from the first `<h1>` in HTML. |
+| 🔧 [`rewrite_asset_paths`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/page_assembler.g.md#-function-rewrite_asset_paths) | Prefix theme asset `href`/`src` values with `asset_prefix`. |
+
 ### 📄 File `static_site_generator.py`
 
 Doc: [static_site_generator.g.md](https://github.com/Harrix/harrix-pyssg/blob/main/docs/static_site_generator.g.md)
@@ -66,6 +81,14 @@ Doc: [static_site_generator.g.md](https://github.com/Harrix/harrix-pyssg/blob/ma
 | Function/Class | Description |
 |----------------|-------------|
 | 🏛️ Class [`StaticSiteGenerator`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/static_site_generator.g.md#%EF%B8%8F-class-staticsitegenerator) | Static site generator. It collects Markdown files from folder and sub-folders. |
+
+### 📄 File `theme_slicer.py`
+
+Doc: [theme_slicer.g.md](https://github.com/Harrix/harrix-pyssg/blob/main/docs/theme_slicer.g.md)
+
+| Function/Class | Description |
+|----------------|-------------|
+| 🏛️ Class [`ThemeSlicer`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/theme_slicer.g.md#%EF%B8%8F-class-themeslicer) | Cut a built HTML template page into reusable theme parts and assets. |
 
 ## 📄 License
 

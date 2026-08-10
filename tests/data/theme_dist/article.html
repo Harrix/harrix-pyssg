@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Demo Title</title>
+    <script src="js/early.js"></script>
+    <!-- h-ssg:optional-head -->
+    <link href="css/app.css" rel="stylesheet" />
+    <link href="css/katex/katex.css" rel="stylesheet" />
+    <link href="css/stl-viewer/stl-viewer.css" rel="stylesheet" />
+  </head>
+
+  <body id="top" class="has-navbar-fixed-top">
+    <!-- h-ssg:chrome-header-start -->
+    <nav id="h-navbar">Header</nav>
+    <!-- h-ssg:chrome-header-end -->
+
+    <main>
+      <article>
+        <div class="column">
+          <!-- h-ssg:content-start -->
+          <p>Demo content</p>
+          <!-- h-ssg:content-end -->
+        </div>
+      </article>
+      <nav id="h-page-toc" class="h-page-toc menu">
+        <ul class="menu-list" id="h-page-toc-list"></ul>
+      </nav>
+    </main>
+
+    <!-- h-ssg:chrome-footer-start -->
+    <footer class="footer">Footer</footer>
+    <!-- h-ssg:chrome-footer-end -->
+    <!-- h-ssg:optional-scripts -->
+    <script defer src="./js/app.js"></script>
+    <script defer src="./js/katex/katex.js"></script>
+    <script defer src="./js/stl-viewer/stl-viewer.js"></script>
+  </body>
+</html>
