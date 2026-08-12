@@ -14,11 +14,11 @@ from mdit_py_plugins.footnote import footnote_plugin
 from mdit_py_plugins.front_matter import front_matter_plugin
 from mdit_py_plugins.tasklists import tasklists_plugin
 
+from harrix_pyssg.note_meta import resolve_note_title
 from harrix_pyssg.page_assembler import (
     PageAssembler,
     asset_prefix_for,
     detect_page_features,
-    extract_title,
 )
 
 
@@ -270,7 +270,7 @@ class Article:
                     md_content=self.md_content_no_yaml,
                     yaml_dict=self.md_yaml_dict,
                 )
-                title = extract_title(content_html)
+                title = resolve_note_title(self.md_content, file_stem=self.md_filename.stem)
                 html = assembler.assemble(
                     content_html=content_html,
                     title=title,

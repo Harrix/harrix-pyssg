@@ -290,7 +290,7 @@ class Article:
                     md_content=self.md_content_no_yaml,
                     yaml_dict=self.md_yaml_dict,
                 )
-                title = extract_title(content_html)
+                title = resolve_note_title(self.md_content, file_stem=self.md_filename.stem)
                 html = assembler.assemble(
                     content_html=content_html,
                     title=title,
@@ -822,7 +822,7 @@ def generate_html(
                     md_content=self.md_content_no_yaml,
                     yaml_dict=self.md_yaml_dict,
                 )
-                title = extract_title(content_html)
+                title = resolve_note_title(self.md_content, file_stem=self.md_filename.stem)
                 html = assembler.assemble(
                     content_html=content_html,
                     title=title,

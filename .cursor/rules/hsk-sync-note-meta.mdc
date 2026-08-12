@@ -1,0 +1,36 @@
+---
+description: Keep @hsk-sync:note-meta title/date resolvers aligned with VS Code and Android
+globs: src/harrix_pyssg/note_meta.py,src/harrix_pyssg/article.py,tests/test_note_meta.py
+alwaysApply: false
+---
+
+# @hsk-sync:note-meta
+
+Token `@hsk-sync:note-meta` marks shared **note title / note date** resolution.
+
+If priority, parsing rules, or date formats change in `note_meta.py`, update the sibling implementations and consider how generated HTML titles and note UIs will look.
+
+## Sibling implementations
+
+| Block | Path |
+|-------|------|
+| Python (this repo) | `src/harrix_pyssg/note_meta.py` (+ `Article.generate_html` title) |
+| VS Code (JS) | `D:\GitHub\harrix-swiss-knife\vscode\harrix-notes-explorer-hsk\note-meta.js` |
+| Android (Kotlin) | `D:\GitHub\harrix-notes-android` — `NoteMetaResolver.kt`, `NoteTitleExtractor.kt` |
+
+## Shared contract
+
+### Title (`resolve_note_title`)
+
+1. YAML `title:`
+2. Else first `#` heading
+3. Else file stem
+
+### Date (`resolve_note_date`)
+
+1. Date fragment in file name
+2. Else YAML `date:`
+3. Else file ctime
+4. Else file mtime
+
+Keep `tests/test_note_meta.py` in sync with behavior changes.
