@@ -1,5 +1,5 @@
 ---
-description: Keep @hsk-sync:note-meta title/date resolvers aligned with VS Code and Android
+description: Keep @hsk-sync:note-meta title/date resolvers aligned with pylib, VS Code, and Android
 globs: src/harrix_pyssg/note_meta.py,src/harrix_pyssg/article.py,tests/test_note_meta.py
 alwaysApply: false
 ---
@@ -8,13 +8,16 @@ alwaysApply: false
 
 Token `@hsk-sync:note-meta` marks shared **note title / note date** resolution.
 
-If priority, parsing rules, or date formats change in `note_meta.py`, update the sibling implementations and consider how generated HTML titles and note UIs will look.
+Python source of truth is `harrix_pylib.note_meta`. This repo re-exports it from `harrix_pyssg.note_meta`.
+
+If priority, parsing rules, or date formats change, update the sibling implementations and consider how generated HTML titles and note UIs will look.
 
 ## Sibling implementations
 
 | Block | Path |
 |-------|------|
-| Python (this repo) | `src/harrix_pyssg/note_meta.py` (+ `Article.generate_html` title) |
+| Python (pylib, source of truth) | `D:\GitHub\harrix-pylib\src\harrix_pylib\note_meta.py` |
+| Python (this repo, re-export) | `src/harrix_pyssg/note_meta.py` (+ `Article.generate_html` title) |
 | VS Code (JS) | `D:\GitHub\harrix-swiss-knife\vscode\harrix-notes-explorer-hsk\note-meta.js` |
 | Android (Kotlin) | `D:\GitHub\harrix-notes-android` — `NoteMetaResolver.kt`, `NoteTitleExtractor.kt` |
 
@@ -24,7 +27,8 @@ If priority, parsing rules, or date formats change in `note_meta.py`, update the
 
 1. YAML `title:`
 2. Else first `#` heading
-3. Else file stem
+3. Else `title_from_id(file_stem)` (part after `__`, `-`/`_` → spaces, title case)
+4. Else `Untitled`
 
 ### Date (`resolve_note_date`)
 

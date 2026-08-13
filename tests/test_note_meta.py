@@ -1,4 +1,4 @@
-"""Tests for @hsk-sync:note-meta title/date resolution."""
+"""Tests for @hsk-sync:note-meta re-export from harrix-pylib."""
 
 from datetime import UTC, date, datetime
 
@@ -6,6 +6,7 @@ from harrix_pyssg.note_meta import (
     parse_date_from_file_name,
     resolve_note_date,
     resolve_note_title,
+    title_from_id,
 )
 
 
@@ -19,9 +20,14 @@ def test_resolve_note_title_falls_back_to_h1() -> None:
     assert resolve_note_title(md, file_stem="file-stem") == "From H1"
 
 
-def test_resolve_note_title_falls_back_to_stem() -> None:
+def test_resolve_note_title_falls_back_to_title_from_id() -> None:
     md = "---\ndate: 2022-09-18\n---\n\nNo heading here.\n"
-    assert resolve_note_title(md, file_stem="file-stem") == "file-stem"
+    assert resolve_note_title(md, file_stem="file-stem") == "File Stem"
+    assert resolve_note_title(md, file_stem="clothes__suit") == "Suit"
+
+
+def test_title_from_id() -> None:
+    assert title_from_id("clothes__suit") == "Suit"
 
 
 def test_parse_date_from_file_name_formats() -> None:

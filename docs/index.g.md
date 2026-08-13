@@ -19,7 +19,6 @@ lang: en
 - [📦 Installation](#-installation)
 - [📚 List of functions](#-list-of-functions)
   - [📄 File `article.py`](#-file-articlepy)
-  - [📄 File `note_meta.py`](#-file-note_metapy)
   - [📄 File `page_assembler.py`](#-file-page_assemblerpy)
   - [📄 File `static_site_generator.py`](#-file-static_site_generatorpy)
   - [📄 File `theme_slicer.py`](#-file-theme_slicerpy)
@@ -61,22 +60,6 @@ Doc: [article.g.md](https://github.com/Harrix/harrix-pyssg/blob/main/docs/articl
 | Function/Class | Description |
 |----------------|-------------|
 | 🏛️ Class [`Article`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/article.g.md#%EF%B8%8F-class-article) | All information about one article from the site. |
-
-### 📄 File `note_meta.py`
-
-Doc: [note_meta.g.md](https://github.com/Harrix/harrix-pyssg/blob/main/docs/note_meta.g.md)
-
-| Function/Class | Description |
-|----------------|-------------|
-| 🏛️ Class [`ResolvedNoteDate`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/note_meta.g.md#%EF%B8%8F-class-resolvednotedate) | Resolved calendar date for a note and where it came from. |
-| 🔧 [`extract_title_from_markdown`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/note_meta.g.md#-function-extract_title_from_markdown) | Return YAML `title` or first H1 from Markdown (empty when neither exists). |
-| 🔧 [`note_stem_from_name`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/note_meta.g.md#-function-note_stem_from_name) | Return file stem for `.md` / `.g.md` names. |
-| 🔧 [`parse_date_from_file_name`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/note_meta.g.md#-function-parse_date_from_file_name) | Extract the first calendar date fragment from a file name / stem. |
-| 🔧 [`parse_date_from_yaml`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/note_meta.g.md#-function-parse_date_from_yaml) | Parse YAML frontmatter `date:` when present. |
-| 🔧 [`parse_date_value`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/note_meta.g.md#-function-parse_date_value) | Parse a YAML/scalar date value into a `date`. |
-| 🔧 [`resolve_note_date`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/note_meta.g.md#-function-resolve_note_date) | Resolve note date: file name → YAML `date` → ctime → mtime. |
-| 🔧 [`resolve_note_date_for_path`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/note_meta.g.md#-function-resolve_note_date_for_path) | Resolve note date for a filesystem path (reads the file when `md_text` is omitted). |
-| 🔧 [`resolve_note_title`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/note_meta.g.md#-function-resolve_note_title) | Resolve display title: YAML `title` → H1 → `file_stem`. |
 
 ### 📄 File `page_assembler.py`
 
