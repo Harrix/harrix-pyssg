@@ -37,6 +37,10 @@ Documentation: [docs](https://github.com/Harrix/harrix-pyssg/blob/main/docs/inde
 
 Markdown processor: [markdown-it-py](https://pypi.org/project/markdown-it-py) <https://pypistats.org/packages/markdown-it-py>.
 
+Note title and date helpers (`resolve_note_title`, `resolve_note_date`, `title_from_id`) live in
+[`harrix-pylib` `note_meta`](https://github.com/Harrix/harrix-pylib/blob/main/docs/note_meta.g.md)
+and are re-exported from `harrix_pyssg.note_meta`.
+
 ## 📦 Installation
 
 Using `pip`:
