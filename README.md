@@ -13,6 +13,7 @@
 - [📦 Installation](#-installation)
 - [📚 List of functions](#-list-of-functions)
   - [📄 File `article.py`](#-file-articlepy)
+  - [📄 File `marp_render.py`](#-file-marp_renderpy)
   - [📄 File `page_assembler.py`](#-file-page_assemblerpy)
   - [📄 File `static_site_generator.py`](#-file-static_site_generatorpy)
   - [📄 File `theme_slicer.py`](#-file-theme_slicerpy)
@@ -58,6 +59,15 @@ Doc: [`article.g.md`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/arti
 | Function/Class                                                                                          | Description                                      |
 | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
 | 🏛️ Class [`Article`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/article.g.md#️-class-article) | All information about one article from the site. |
+
+### 📄 File `marp_render.py`
+
+Doc: [`marp_render.g.md`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/marp_render.g.md)
+
+| Function/Class                                                                                                             | Description                                               |
+| -------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| 🔧 [`is_marp_yaml`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/marp_render.g.md#-function-is_marp_yaml)         | Return `True` when YAML enables a Marp presentation note. |
+| 🔧 [`render_marp_html`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/marp_render.g.md#-function-render_marp_html) | Return a full HTML document for a Marp note.              |
 
 ### 📄 File `page_assembler.py`
 

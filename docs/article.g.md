@@ -274,6 +274,11 @@ class Article:
         self._copy_featured_images()
 
         if self.html_filename is not None:
+            if is_marp_yaml(self.md_yaml_dict):
+                html = render_marp_html(self.md_filename, self.md_content)
+                self.html_filename.write_text(html, encoding="utf8")
+                return self
+
             content_html = self.get_html_code()
             assembler = page_assembler
             if assembler is None and theme_dir is not None:
@@ -328,6 +333,9 @@ class Article:
         ```
 
         """
+        if is_marp_yaml(self.md_yaml_dict):
+            return render_marp_html(self.md_filename, self.md_content)
+
         md = (
             MarkdownIt("gfm-like", {"typographer": True, "linkify": False})
             .use(front_matter_plugin)
@@ -806,6 +814,11 @@ def generate_html(
         self._copy_featured_images()
 
         if self.html_filename is not None:
+            if is_marp_yaml(self.md_yaml_dict):
+                html = render_marp_html(self.md_filename, self.md_content)
+                self.html_filename.write_text(html, encoding="utf8")
+                return self
+
             content_html = self.get_html_code()
             assembler = page_assembler
             if assembler is None and theme_dir is not None:
@@ -872,6 +885,9 @@ Example output:
 
 ```python
 def get_html_code(self) -> str:
+        if is_marp_yaml(self.md_yaml_dict):
+            return render_marp_html(self.md_filename, self.md_content)
+
         md = (
             MarkdownIt("gfm-like", {"typographer": True, "linkify": False})
             .use(front_matter_plugin)

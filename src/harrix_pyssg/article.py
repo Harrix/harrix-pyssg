@@ -14,6 +14,7 @@ from mdit_py_plugins.footnote import footnote_plugin
 from mdit_py_plugins.front_matter import front_matter_plugin
 from mdit_py_plugins.tasklists import tasklists_plugin
 
+from harrix_pyssg.marp_render import is_marp_yaml, render_marp_html
 from harrix_pyssg.note_meta import resolve_note_title
 from harrix_pyssg.page_assembler import (
     PageAssembler,
@@ -254,6 +255,11 @@ class Article:
         self._copy_featured_images()
 
         if self.html_filename is not None:
+            if is_marp_yaml(self.md_yaml_dict):
+                html = render_marp_html(self.md_filename, self.md_content)
+                self.html_filename.write_text(html, encoding="utf8")
+                return self
+
             content_html = self.get_html_code()
             assembler = page_assembler
             if assembler is None and theme_dir is not None:
@@ -308,6 +314,9 @@ class Article:
         ```
 
         """
+        if is_marp_yaml(self.md_yaml_dict):
+            return render_marp_html(self.md_filename, self.md_content)
+
         md = (
             MarkdownIt("gfm-like", {"typographer": True, "linkify": False})
             .use(front_matter_plugin)
