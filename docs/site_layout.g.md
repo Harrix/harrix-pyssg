@@ -146,6 +146,8 @@ class SiteSettings:
     default_language: str = "ru"
     site_title: str = "Harrix"
     per_page: int = 20
+    icons_per_page: int = 96
+    icons_language: str = "en"
 ```
 
 </details>

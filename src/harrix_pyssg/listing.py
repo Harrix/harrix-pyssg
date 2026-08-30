@@ -33,7 +33,11 @@ class ListingPage:
     year_links: tuple[tuple[str, str], ...]
 
 
-def collect_listing_pages(catalog: list[CatalogEntry], settings: SiteSettings) -> list[ListingPage]:
+def collect_listing_pages(
+    catalog: list[CatalogEntry],
+    settings: SiteSettings,
+    extra_section_links: tuple[tuple[str, str], ...] = (),
+) -> list[ListingPage]:
     """Build homepage, language, section, year, category, and tag listing pages."""
     pages: list[ListingPage] = []
     languages = sorted({entry.placement.lang for entry in catalog}) or [settings.default_language]
@@ -48,7 +52,7 @@ def collect_listing_pages(catalog: list[CatalogEntry], settings: SiteSettings) -
                 heading=settings.site_title,
                 title=settings.site_title,
                 crumbs=((ui_string(settings.default_language, "home"), "/"),),
-                section_links=(),
+                section_links=extra_section_links,
                 year_links=(),
                 settings=settings,
             )
@@ -56,7 +60,7 @@ def collect_listing_pages(catalog: list[CatalogEntry], settings: SiteSettings) -
         return pages
 
     default_lang = settings.default_language if settings.default_language in languages else languages[0]
-    default_home = _language_home_pages(catalog, default_lang, settings)
+    default_home = _language_home_pages(catalog, default_lang, settings, extra_section_links)
     pages.extend(default_home)
     for copy_page in default_home:
         if copy_page.rel_dir == Path(default_lang) or copy_page.rel_dir.parts[:1] == (default_lang,):
@@ -79,7 +83,7 @@ def collect_listing_pages(catalog: list[CatalogEntry], settings: SiteSettings) -
 
     for lang in languages:
         if lang != default_lang:
-            pages.extend(_language_home_pages(catalog, lang, settings))
+            pages.extend(_language_home_pages(catalog, lang, settings, extra_section_links))
         pages.extend(_section_and_taxonomy_pages(catalog, lang, settings))
     return pages
 
@@ -133,7 +137,12 @@ def _breadcrumb(page: ListingPage) -> str:
     return '<nav class="breadcrumb" aria-label="breadcrumbs"><ul>\n' + "\n".join(items) + "\n</ul></nav>\n"
 
 
-def _language_home_pages(catalog: list[CatalogEntry], lang: str, settings: SiteSettings) -> list[ListingPage]:
+def _language_home_pages(
+    catalog: list[CatalogEntry],
+    lang: str,
+    settings: SiteSettings,
+    extra_section_links: tuple[tuple[str, str], ...] = (),
+) -> list[ListingPage]:
     """Homepage listings for one language (`/{lang}/` and `/{lang}/page/N/`)."""
     entries = [entry for entry in catalog if entry.placement.lang == lang]
     sections = _unique_sections(entries, lang)
@@ -144,7 +153,7 @@ def _language_home_pages(catalog: list[CatalogEntry], lang: str, settings: SiteS
         heading=settings.site_title,
         title=settings.site_title,
         crumbs=((ui_string(lang, "home"), path_to_url(lang)),),
-        section_links=tuple(sections),
+        section_links=tuple(sections) + extra_section_links,
         year_links=(),
         settings=settings,
     )

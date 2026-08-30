@@ -51,7 +51,7 @@ class ListingPage:
 ## 🔧 Function `collect_listing_pages`
 
 ```python
-def collect_listing_pages(catalog: list[CatalogEntry], settings: SiteSettings) -> list[ListingPage]
+def collect_listing_pages(catalog: list[CatalogEntry], settings: SiteSettings, extra_section_links: tuple[tuple[str, str], ...] = ()) -> list[ListingPage]
 ```
 
 Build homepage, language, section, year, category, and tag listing pages.
@@ -60,7 +60,11 @@ Build homepage, language, section, year, category, and tag listing pages.
 <summary>Code:</summary>
 
 ```python
-def collect_listing_pages(catalog: list[CatalogEntry], settings: SiteSettings) -> list[ListingPage]:
+def collect_listing_pages(
+    catalog: list[CatalogEntry],
+    settings: SiteSettings,
+    extra_section_links: tuple[tuple[str, str], ...] = (),
+) -> list[ListingPage]:
     pages: list[ListingPage] = []
     languages = sorted({entry.placement.lang for entry in catalog}) or [settings.default_language]
     site_mode = any(entry.placement.section for entry in catalog)
@@ -74,7 +78,7 @@ def collect_listing_pages(catalog: list[CatalogEntry], settings: SiteSettings) -
                 heading=settings.site_title,
                 title=settings.site_title,
                 crumbs=((ui_string(settings.default_language, "home"), "/"),),
-                section_links=(),
+                section_links=extra_section_links,
                 year_links=(),
                 settings=settings,
             )
@@ -82,7 +86,7 @@ def collect_listing_pages(catalog: list[CatalogEntry], settings: SiteSettings) -
         return pages
 
     default_lang = settings.default_language if settings.default_language in languages else languages[0]
-    default_home = _language_home_pages(catalog, default_lang, settings)
+    default_home = _language_home_pages(catalog, default_lang, settings, extra_section_links)
     pages.extend(default_home)
     for copy_page in default_home:
         if copy_page.rel_dir == Path(default_lang) or copy_page.rel_dir.parts[:1] == (default_lang,):
@@ -105,7 +109,7 @@ def collect_listing_pages(catalog: list[CatalogEntry], settings: SiteSettings) -
 
     for lang in languages:
         if lang != default_lang:
-            pages.extend(_language_home_pages(catalog, lang, settings))
+            pages.extend(_language_home_pages(catalog, lang, settings, extra_section_links))
         pages.extend(_section_and_taxonomy_pages(catalog, lang, settings))
     return pages
 ```

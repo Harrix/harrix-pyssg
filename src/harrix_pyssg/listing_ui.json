@@ -1,7 +1,8 @@
 {
   "sections": {
     "articles": { "ru": "Статьи", "en": "Articles" },
-    "games": { "ru": "Игры", "en": "Games" }
+    "games": { "ru": "Игры", "en": "Games" },
+    "icons": { "ru": "Иконки", "en": "Icons" }
   },
   "ui": {
     "ru": {
@@ -13,7 +14,9 @@
       "newer": "Новее",
       "older": "Старее",
       "page": "Страница",
-      "empty": "Пока нет опубликованных материалов."
+      "empty": "Пока нет опубликованных материалов.",
+      "search_icons": "Поиск иконок",
+      "all_icons": "Все иконки"
     },
     "en": {
       "home": "Home",
@@ -24,7 +27,9 @@
       "newer": "Newer",
       "older": "Older",
       "page": "Page",
-      "empty": "No published materials yet."
+      "empty": "No published materials yet.",
+      "search_icons": "Search icons",
+      "all_icons": "All icons"
     }
   }
 }

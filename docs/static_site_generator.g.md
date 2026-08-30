@@ -19,6 +19,8 @@ lang: en
   - [⚙️ Method `generate_site`](#%EF%B8%8F-method-generate_site)
   - [⚙️ Method `html_folder (property)`](#%EF%B8%8F-method-html_folder-property)
   - [⚙️ Method `html_folder (setter)`](#%EF%B8%8F-method-html_folder-setter)
+  - [⚙️ Method `icon_families (property)`](#%EF%B8%8F-method-icon_families-property)
+  - [⚙️ Method `icon_grid_pages (property)`](#%EF%B8%8F-method-icon_grid_pages-property)
   - [⚙️ Method `listing_pages (property)`](#%EF%B8%8F-method-listing_pages-property)
   - [⚙️ Method `md_folder (property)`](#%EF%B8%8F-method-md_folder-property)
   - [⚙️ Method `settings (property)`](#%EF%B8%8F-method-settings-property)
@@ -103,6 +105,9 @@ class StaticSiteGenerator:
         default_language: str = "ru",
         site_title: str = "Harrix",
         per_page: int = 20,
+        icons_dir: str | Path | None = None,
+        icons_per_page: int = 96,
+        icons_language: str = "en",
     ) -> None:
         """Collect Markdown files from folder and sub-folders.
 
@@ -117,6 +122,9 @@ class StaticSiteGenerator:
         - `default_language` (`str`): Language used when a repo has no `-en` suffix.
         - `site_title` (`str`): Title on the homepage and in listing `<title>` tags.
         - `per_page` (`int`): Articles per listing page. Defaults to `20`.
+        - `icons_dir` (`str | Path | None`): Harrix-Vector-Icons repo root or `icons/` folder.
+        - `icons_per_page` (`int`): Icons per catalog grid page. Defaults to `96`.
+        - `icons_language` (`str`): Fallback language for icon URLs. Defaults to `en`.
 
         Example:
 
@@ -136,8 +144,13 @@ class StaticSiteGenerator:
             default_language=default_language,
             site_title=site_title,
             per_page=per_page,
+            icons_per_page=icons_per_page,
+            icons_language=icons_language,
         )
+        self._icons_dir = Path(icons_dir) if icons_dir is not None else None
         self._listing_pages: list[ListingPage] = []
+        self._icon_families: list[IconFamily] = []
+        self._icon_grid_pages: list[IconGridPage] = []
 
         self._get_info_about_articles()
 
@@ -222,9 +235,22 @@ class StaticSiteGenerator:
                 site_root=self.html_folder if assembler is not None else None,
             )
 
-        self._listing_pages = collect_listing_pages(catalog, self._settings)
+        self._icon_families = []
+        if self._icons_dir is not None:
+            self._icon_families = load_icon_families(
+                self._icons_dir,
+                default_lang=self._settings.icons_language,
+            )
+            self._generate_icon_family_pages(assembler)
+
+        extra_links = icon_section_links(self._icon_families, self._settings)
+        self._listing_pages = collect_listing_pages(catalog, self._settings, extra_links)
         for listing in self._listing_pages:
             self._write_listing_page(listing, assembler)
+
+        self._icon_grid_pages = collect_icon_grid_pages(self._icon_families, self._settings)
+        for grid in self._icon_grid_pages:
+            self._write_icon_grid_page(grid, assembler)
 
         return self
 
@@ -268,6 +294,16 @@ class StaticSiteGenerator:
     @html_folder.setter
     def html_folder(self, new_value: str | Path) -> None:
         self._html_folder = Path(new_value)
+
+    @property
+    def icon_families(self) -> list[IconFamily]:
+        """Icon families loaded during the last `generate_site()` call."""
+        return self._icon_families
+
+    @property
+    def icon_grid_pages(self) -> list[IconGridPage]:
+        """Icon catalog grid pages created by the last `generate_site()` call."""
+        return self._icon_grid_pages
 
     @property
     def listing_pages(self) -> list[ListingPage]:
@@ -326,6 +362,27 @@ class StaticSiteGenerator:
             shutil.rmtree(self.html_folder)
         self.html_folder.mkdir(parents=True, exist_ok=True)
 
+    def _generate_icon_family_pages(self, assembler: PageAssembler | None) -> None:
+        """Write one themed page per icon note and copy featured SVG files."""
+        if self.html_folder is None or self._icons_dir is None:
+            return
+        repo_root = resolve_icons_repo_root(self._icons_dir)
+        for family in self._icon_families:
+            dest = self.html_folder / family.rel_output
+            dest.mkdir(parents=True, exist_ok=True)
+            note = family.note_path(repo_root)
+            if note is not None:
+                article = hsg.Article(note)
+                article.generate_html(
+                    dest,
+                    page_assembler=assembler,
+                    site_root=self.html_folder if assembler is not None else None,
+                )
+                continue
+            featured = family.featured_path(repo_root)
+            if featured is not None:
+                shutil.copy2(featured, dest / featured.name)
+
     def _get_info_about_articles(self) -> None:
         """Get info from all Markdown files and fill the list `self.articles`."""
         for item in filter(
@@ -334,6 +391,24 @@ class StaticSiteGenerator:
         ):
             if item.is_file() and item.suffix.lower() == ".md":
                 self.articles.append(hsg.Article(item))
+
+    def _write_icon_grid_page(self, grid: IconGridPage, assembler: PageAssembler | None) -> None:
+        """Write one icon-grid `index.html` without clearing family folders."""
+        if self.html_folder is None:
+            return
+        page_dir = self.html_folder / grid.rel_dir
+        page_dir.mkdir(parents=True, exist_ok=True)
+        content_html = render_icon_grid_html(grid)
+        if assembler is not None:
+            prefix = asset_prefix_for(page_dir, self.html_folder)
+            html = assembler.assemble(
+                content_html=content_html,
+                title=grid.title,
+                asset_prefix=prefix,
+            )
+        else:
+            html = content_html
+        (page_dir / "index.html").write_text(html, encoding="utf8")
 
     def _write_listing_page(self, listing: ListingPage, assembler: PageAssembler | None) -> None:
         """Write one listing `index.html` without clearing sibling article folders."""
@@ -359,7 +434,7 @@ class StaticSiteGenerator:
 ### ⚙️ Method `__init__`
 
 ```python
-def __init__(self, md_folder: str | Path, theme_dir: str | Path | None = None, *, site_name: str = 'harrix.dev', default_language: str = 'ru', site_title: str = 'Harrix', per_page: int = 20) -> None
+def __init__(self, md_folder: str | Path, theme_dir: str | Path | None = None, *, site_name: str = 'harrix.dev', default_language: str = 'ru', site_title: str = 'Harrix', per_page: int = 20, icons_dir: str | Path | None = None, icons_per_page: int = 96, icons_language: str = 'en') -> None
 ```
 
 Collect Markdown files from folder and sub-folders.
@@ -375,6 +450,9 @@ Args:
 - `default_language` (`str`): Language used when a repo has no `-en` suffix.
 - `site_title` (`str`): Title on the homepage and in listing `<title>` tags.
 - `per_page` (`int`): Articles per listing page. Defaults to `20`.
+- `icons_dir` (`str | Path | None`): Harrix-Vector-Icons repo root or `icons/` folder.
+- `icons_per_page` (`int`): Icons per catalog grid page. Defaults to `96`.
+- `icons_language` (`str`): Fallback language for icon URLs. Defaults to `en`.
 
 Example:
 
@@ -397,6 +475,9 @@ def __init__(
         default_language: str = "ru",
         site_title: str = "Harrix",
         per_page: int = 20,
+        icons_dir: str | Path | None = None,
+        icons_per_page: int = 96,
+        icons_language: str = "en",
     ) -> None:
         self._md_folder = Path(md_folder)
         self._articles: list[hsg.Article] = []
@@ -407,8 +488,13 @@ def __init__(
             default_language=default_language,
             site_title=site_title,
             per_page=per_page,
+            icons_per_page=icons_per_page,
+            icons_language=icons_language,
         )
+        self._icons_dir = Path(icons_dir) if icons_dir is not None else None
         self._listing_pages: list[ListingPage] = []
+        self._icon_families: list[IconFamily] = []
+        self._icon_grid_pages: list[IconGridPage] = []
 
         self._get_info_about_articles()
 ```
@@ -516,9 +602,22 @@ def generate_site(
                 site_root=self.html_folder if assembler is not None else None,
             )
 
-        self._listing_pages = collect_listing_pages(catalog, self._settings)
+        self._icon_families = []
+        if self._icons_dir is not None:
+            self._icon_families = load_icon_families(
+                self._icons_dir,
+                default_lang=self._settings.icons_language,
+            )
+            self._generate_icon_family_pages(assembler)
+
+        extra_links = icon_section_links(self._icon_families, self._settings)
+        self._listing_pages = collect_listing_pages(catalog, self._settings, extra_links)
         for listing in self._listing_pages:
             self._write_listing_page(listing, assembler)
+
+        self._icon_grid_pages = collect_icon_grid_pages(self._icon_families, self._settings)
+        for grid in self._icon_grid_pages:
+            self._write_icon_grid_page(grid, assembler)
 
         return self
 ```
@@ -587,6 +686,42 @@ _No docstring provided._
 ```python
 def html_folder(self, new_value: str | Path) -> None:
         self._html_folder = Path(new_value)
+```
+
+</details>
+
+### ⚙️ Method `icon_families (property)`
+
+```python
+def icon_families(self) -> list[IconFamily]
+```
+
+Icon families loaded during the last `generate_site()` call.
+
+<details>
+<summary>Code:</summary>
+
+```python
+def icon_families(self) -> list[IconFamily]:
+        return self._icon_families
+```
+
+</details>
+
+### ⚙️ Method `icon_grid_pages (property)`
+
+```python
+def icon_grid_pages(self) -> list[IconGridPage]
+```
+
+Icon catalog grid pages created by the last `generate_site()` call.
+
+<details>
+<summary>Code:</summary>
+
+```python
+def icon_grid_pages(self) -> list[IconGridPage]:
+        return self._icon_grid_pages
 ```
 
 </details>

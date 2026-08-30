@@ -13,6 +13,8 @@
 - [📦 Installation](#-installation)
 - [📚 List of functions](#-list-of-functions)
   - [📄 File `article.py`](#-file-articlepy)
+  - [📄 File `icon_catalog.py`](#-file-icon_catalogpy)
+  - [📄 File `icon_pages.py`](#-file-icon_pagespy)
   - [📄 File `listing.py`](#-file-listingpy)
   - [📄 File `marp_render.py`](#-file-marp_renderpy)
   - [📄 File `page_assembler.py`](#-file-page_assemblerpy)
@@ -61,6 +63,27 @@ Doc: [`article.g.md`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/arti
 | Function/Class                                                                                          | Description                                      |
 | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
 | 🏛️ Class [`Article`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/article.g.md#️-class-article) | All information about one article from the site. |
+
+### 📄 File `icon_catalog.py`
+
+Doc: [`icon_catalog.g.md`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/icon_catalog.g.md)
+
+| Function/Class                                                                                                                            | Description                                                       |
+| ----------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------- |
+| 🏛️ Class [`IconFamily`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/icon_catalog.g.md#️-class-iconfamily)                        | One icon family (note folder with a featured image and variants). |
+| 🔧 [`load_icon_families`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/icon_catalog.g.md#-function-load_icon_families)           | Load icon families from a repo root or an `icons/` folder.        |
+| 🔧 [`resolve_icons_repo_root`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/icon_catalog.g.md#-function-resolve_icons_repo_root) | Normalize a repo root or `icons/` folder to the repository root.  |
+
+### 📄 File `icon_pages.py`
+
+Doc: [`icon_pages.g.md`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/icon_pages.g.md)
+
+| Function/Class                                                                                                                          | Description                                                    |
+| --------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| 🏛️ Class [`IconGridPage`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/icon_pages.g.md#️-class-icongridpage)                    | One generated icon-grid listing page.                          |
+| 🔧 [`collect_icon_grid_pages`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/icon_pages.g.md#-function-collect_icon_grid_pages) | Build all-icons and per-category grid pages (with pagination). |
+| 🔧 [`icon_section_links`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/icon_pages.g.md#-function-icon_section_links)           | Homepage section buttons that open the icon catalog.           |
+| 🔧 [`render_icon_grid_html`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/icon_pages.g.md#-function-render_icon_grid_html)     | Render an Icons8-style icon grid (body HTML only).             |
 
 ### 📄 File `listing.py`
 
