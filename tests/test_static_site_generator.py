@@ -26,7 +26,7 @@ def test_static_site_generator() -> None:
     ):
         if item.is_file():
             count_files += 1
-    expected_file_count = 7
+    expected_file_count = 8
     assert count_files == expected_file_count
 
     # Test: generate_site method with html_folder setter

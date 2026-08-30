@@ -1,0 +1,30 @@
+{
+  "sections": {
+    "articles": { "ru": "Статьи", "en": "Articles" },
+    "games": { "ru": "Игры", "en": "Games" }
+  },
+  "ui": {
+    "ru": {
+      "home": "Главная",
+      "sections": "Разделы",
+      "years": "Годы",
+      "categories": "Категории",
+      "tags": "Теги",
+      "newer": "Новее",
+      "older": "Старее",
+      "page": "Страница",
+      "empty": "Пока нет опубликованных материалов."
+    },
+    "en": {
+      "home": "Home",
+      "sections": "Sections",
+      "years": "Years",
+      "categories": "Categories",
+      "tags": "Tags",
+      "newer": "Newer",
+      "older": "Older",
+      "page": "Page",
+      "empty": "No published materials yet."
+    }
+  }
+}

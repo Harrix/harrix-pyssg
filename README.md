@@ -13,8 +13,10 @@
 - [📦 Installation](#-installation)
 - [📚 List of functions](#-list-of-functions)
   - [📄 File `article.py`](#-file-articlepy)
+  - [📄 File `listing.py`](#-file-listingpy)
   - [📄 File `marp_render.py`](#-file-marp_renderpy)
   - [📄 File `page_assembler.py`](#-file-page_assemblerpy)
+  - [📄 File `site_layout.py`](#-file-site_layoutpy)
   - [📄 File `static_site_generator.py`](#-file-static_site_generatorpy)
   - [📄 File `theme_slicer.py`](#-file-theme_slicerpy)
 - [📄 License](#-license)
@@ -60,6 +62,18 @@ Doc: [`article.g.md`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/arti
 | ------------------------------------------------------------------------------------------------------- | ------------------------------------------------ |
 | 🏛️ Class [`Article`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/article.g.md#️-class-article) | All information about one article from the site. |
 
+### 📄 File `listing.py`
+
+Doc: [`listing.g.md`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/listing.g.md)
+
+| Function/Class                                                                                                                   | Description                                                               |
+| -------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| 🏛️ Class [`ListingPage`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/listing.g.md#️-class-listingpage)                  | One generated listing page (a directory with `index.html`).               |
+| 🔧 [`collect_listing_pages`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/listing.g.md#-function-collect_listing_pages) | Build homepage, language, section, year, category, and tag listing pages. |
+| 🔧 [`listing_rel_dir`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/listing.g.md#-function-listing_rel_dir)             | Return the output directory for listing page number `page_num`.           |
+| 🔧 [`paginate`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/listing.g.md#-function-paginate)                           | Split catalog entries into pages of `per_page` items (at least one page). |
+| 🔧 [`render_listing_html`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/listing.g.md#-function-render_listing_html)     | Render listing body HTML for one page (without theme chrome).             |
+
 ### 📄 File `marp_render.py`
 
 Doc: [`marp_render.g.md`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/marp_render.g.md)
@@ -81,6 +95,26 @@ Doc: [`page_assembler.g.md`](https://github.com/Harrix/harrix-pyssg/blob/main/do
 | 🔧 [`detect_page_features`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/page_assembler.g.md#-function-detect_page_features) | Detect optional features from rendered HTML, Markdown, and YAML. |
 | 🔧 [`extract_title`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/page_assembler.g.md#-function-extract_title)               | Extract plain-text title from the first `<h1>` in HTML.          |
 | 🔧 [`rewrite_asset_paths`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/page_assembler.g.md#-function-rewrite_asset_paths)   | Prefix theme asset `href`/`src` values with `asset_prefix`.      |
+
+### 📄 File `site_layout.py`
+
+Doc: [`site_layout.g.md`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/site_layout.g.md)
+
+| Function/Class                                                                                                                           | Description                                                               |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| 🏛️ Class [`ArticlePlacement`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/site_layout.g.md#️-class-articleplacement)            | Where one article lives on the generated site.                            |
+| 🏛️ Class [`CatalogEntry`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/site_layout.g.md#️-class-catalogentry)                    | Published article ready for listing pages.                                |
+| 🏛️ Class [`SiteSettings`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/site_layout.g.md#️-class-sitesettings)                    | Site-wide defaults used when placing articles and building listings.      |
+| 🔧 [`as_string_list`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/site_layout.g.md#-function-as_string_list)                   | Normalize a YAML list or scalar into a list of non-empty strings.         |
+| 🔧 [`build_catalog`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/site_layout.g.md#-function-build_catalog)                     | Build a newest-first catalog of published articles.                       |
+| 🔧 [`excerpt_from_markdown`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/site_layout.g.md#-function-excerpt_from_markdown)     | Take the first prose paragraph from Markdown as a short excerpt.          |
+| 🔧 [`is_published`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/site_layout.g.md#-function-is_published)                       | Return `False` only when YAML explicitly sets `published: false`.         |
+| 🔧 [`parse_content_repo_name`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/site_layout.g.md#-function-parse_content_repo_name) | Parse `{site}-{section}[-{year}][-{lang}]` into placement without a slug. |
+| 🔧 [`path_to_url`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/site_layout.g.md#-function-path_to_url)                         | Turn a relative output directory into a site-absolute folder URL.         |
+| 🔧 [`place_article`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/site_layout.g.md#-function-place_article)                     | Resolve the output directory and URL parts for one article.               |
+| 🔧 [`section_label`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/site_layout.g.md#-function-section_label)                     | Localized label for a content section (`articles`, `games`, …).           |
+| 🔧 [`slugify_term`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/site_layout.g.md#-function-slugify_term)                       | Make a URL segment from a category or tag.                                |
+| 🔧 [`ui_string`](https://github.com/Harrix/harrix-pyssg/blob/main/docs/site_layout.g.md#-function-ui_string)                             | Return a listing UI string for `lang`, falling back to English.           |
 
 ### 📄 File `static_site_generator.py`
 

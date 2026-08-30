@@ -6,7 +6,9 @@ import shutil
 from pathlib import Path
 
 import harrix_pyssg as hsg
-from harrix_pyssg.page_assembler import PageAssembler
+from harrix_pyssg.listing import ListingPage, collect_listing_pages, render_listing_html
+from harrix_pyssg.page_assembler import PageAssembler, asset_prefix_for
+from harrix_pyssg.site_layout import SiteSettings, build_catalog, place_article
 
 
 class StaticSiteGenerator:
@@ -68,7 +70,16 @@ class StaticSiteGenerator:
 
     """
 
-    def __init__(self, md_folder: str | Path, theme_dir: str | Path | None = None) -> None:
+    def __init__(
+        self,
+        md_folder: str | Path,
+        theme_dir: str | Path | None = None,
+        *,
+        site_name: str = "harrix.dev",
+        default_language: str = "ru",
+        site_title: str = "Harrix",
+        per_page: int = 20,
+    ) -> None:
         """Collect Markdown files from folder and sub-folders.
 
         Constructor `__init__` does not generate new files and folders.
@@ -78,6 +89,10 @@ class StaticSiteGenerator:
         - `md_folder` (`str | Path`): Folder with Markdown files. Example: `./tests/data`.
         - `theme_dir` (`str | Path | None`): Optional sliced theme directory. When set,
           generated pages are full HTML documents using theme chrome and assets.
+        - `site_name` (`str`): Site host and content-repo prefix. Defaults to `harrix.dev`.
+        - `default_language` (`str`): Language used when a repo has no `-en` suffix.
+        - `site_title` (`str`): Title on the homepage and in listing `<title>` tags.
+        - `per_page` (`int`): Articles per listing page. Defaults to `20`.
 
         Example:
 
@@ -92,6 +107,13 @@ class StaticSiteGenerator:
         self._articles: list[hsg.Article] = []
         self._html_folder = None
         self._theme_dir = Path(theme_dir) if theme_dir is not None else None
+        self._settings = SiteSettings(
+            site_name=site_name,
+            default_language=default_language,
+            site_title=site_title,
+            per_page=per_page,
+        )
+        self._listing_pages: list[ListingPage] = []
 
         self._get_info_about_articles()
 
@@ -161,15 +183,24 @@ class StaticSiteGenerator:
             assembler = PageAssembler(self._theme_dir)
             assembler.copy_assets_to(self.html_folder)
 
+        catalog = build_catalog(self.articles, self.md_folder, self._settings)
+        published = {id(entry.article) for entry in catalog}
+
         for article in self.articles:
-            parts = list(article.md_filename.parts[len(self.md_folder.parts) : -1])
-            html_folder_article = self.html_folder / "/".join(parts)
+            if id(article) not in published:
+                continue
+            placement = place_article(article, self.md_folder, self._settings)
+            html_folder_article = self.html_folder / placement.rel_output
             html_folder_article.mkdir(parents=True, exist_ok=True)
             article.generate_html(
                 html_folder_article,
                 page_assembler=assembler,
                 site_root=self.html_folder if assembler is not None else None,
             )
+
+        self._listing_pages = collect_listing_pages(catalog, self._settings)
+        for listing in self._listing_pages:
+            self._write_listing_page(listing, assembler)
 
         return self
 
@@ -215,6 +246,17 @@ class StaticSiteGenerator:
         self._html_folder = Path(new_value)
 
     @property
+    def listing_pages(self) -> list[ListingPage]:
+        """Listing pages created by the last `generate_site()` call.
+
+        Returns:
+
+        - `list[ListingPage]`: Homepage, section, year, and taxonomy pages.
+
+        """
+        return self._listing_pages
+
+    @property
     def md_folder(self) -> Path:
         r"""Folder with Markdown files (only getter).
 
@@ -235,6 +277,11 @@ class StaticSiteGenerator:
 
         """
         return self._md_folder.absolute()
+
+    @property
+    def settings(self) -> SiteSettings:
+        """Site settings used for URLs, language, and pagination."""
+        return self._settings
 
     @property
     def theme_dir(self) -> Path | None:
@@ -263,3 +310,21 @@ class StaticSiteGenerator:
         ):
             if item.is_file() and item.suffix.lower() == ".md":
                 self.articles.append(hsg.Article(item))
+
+    def _write_listing_page(self, listing: ListingPage, assembler: PageAssembler | None) -> None:
+        """Write one listing `index.html` without clearing sibling article folders."""
+        if self.html_folder is None:
+            return
+        page_dir = self.html_folder / listing.rel_dir
+        page_dir.mkdir(parents=True, exist_ok=True)
+        content_html = render_listing_html(listing)
+        if assembler is not None:
+            prefix = asset_prefix_for(page_dir, self.html_folder)
+            html = assembler.assemble(
+                content_html=content_html,
+                title=listing.title,
+                asset_prefix=prefix,
+            )
+        else:
+            html = content_html
+        (page_dir / "index.html").write_text(html, encoding="utf8")
