@@ -102,3 +102,22 @@ def test_static_site_generator() -> None:
 
         assert (test_html_folder / "test_01/img/test-image.png").exists()
         assert (test_html_folder / "test_02/img/test-image.png").exists()
+
+
+def test_generate_site_keeps_git_metadata(tmp_path: Path) -> None:
+    """Keep `.git` and `.gitignore` in the HTML output folder across regeneration."""
+    html_folder = tmp_path / "site"
+    html_folder.mkdir()
+    git_dir = html_folder / ".git"
+    git_dir.mkdir()
+    (git_dir / "HEAD").write_text("ref: refs/heads/main\n", encoding="utf8")
+    (html_folder / ".gitignore").write_text("# keep\n", encoding="utf8")
+    (html_folder / "stale.html").write_text("old", encoding="utf8")
+
+    sg = hsg.StaticSiteGenerator("./tests/data")
+    sg.generate_site(html_folder)
+
+    assert (git_dir / "HEAD").read_text(encoding="utf8") == "ref: refs/heads/main\n"
+    assert (html_folder / ".gitignore").read_text(encoding="utf8") == "# keep\n"
+    assert not (html_folder / "stale.html").exists()
+    assert (html_folder / "test_01" / "index.html").exists()

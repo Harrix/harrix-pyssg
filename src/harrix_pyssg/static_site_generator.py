@@ -12,6 +12,8 @@ from harrix_pyssg.listing import ListingPage, collect_listing_pages, render_list
 from harrix_pyssg.page_assembler import PageAssembler, asset_prefix_for
 from harrix_pyssg.site_layout import SiteSettings, build_catalog, place_article
 
+_KEEP_HTML_FOLDER_NAMES = frozenset({".git", ".gitignore", ".gitattributes"})
+
 
 class StaticSiteGenerator:
     """Static site generator. It collects Markdown files from folder and sub-folders.
@@ -331,12 +333,22 @@ class StaticSiteGenerator:
         return self._theme_dir.resolve() if self._theme_dir is not None else None
 
     def _clear_html_folder_directory(self) -> None:
-        """Clear `self.html_folder` with sub-directories."""
+        """Clear generated files in `self.html_folder`, keeping Git metadata.
+
+        Removes every child except `.git`, `.gitignore`, and `.gitattributes` so a
+        deploy repository in the HTML output folder survives regeneration.
+
+        """
         if self.html_folder is None:
             return
-        if self.html_folder.exists() and self.html_folder.is_dir():
-            shutil.rmtree(self.html_folder)
         self.html_folder.mkdir(parents=True, exist_ok=True)
+        for child in self.html_folder.iterdir():
+            if child.name in _KEEP_HTML_FOLDER_NAMES:
+                continue
+            if child.is_dir() and not child.is_symlink():
+                shutil.rmtree(child)
+            else:
+                child.unlink()
 
     def _generate_icon_family_pages(self, assembler: PageAssembler | None) -> None:
         """Write one themed page per icon note and copy featured SVG files."""
