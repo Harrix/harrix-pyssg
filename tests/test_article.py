@@ -1,6 +1,6 @@
 """Tests for the Article class."""
 
-import datetime
+import datetime as dt
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
@@ -40,7 +40,7 @@ tags: [CSS]
 
 
 TEST_MD_YAML_DICT = {
-    "date": datetime.date(2022, 9, 18),
+    "date": dt.date(2022, 9, 18),
     "categories": ["it", "web"],
     "tags": ["CSS"],
 }
@@ -71,7 +71,7 @@ def test_article() -> None:
 
     # Test: md_yaml_dict modification updates md_content
     a = hsg.Article(md_filename)
-    a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
+    a.md_yaml_dict["date"] = dt.date(2022, 11, 4)
     assert a.md_content.splitlines()[1] == "date: 2022-11-04"
 
     # Test: md_yaml_dict modification with lists
@@ -81,7 +81,7 @@ def test_article() -> None:
 
     # Test: save method
     a = hsg.Article(md_filename)
-    a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
+    a.md_yaml_dict["date"] = dt.date(2022, 11, 4)
     a.md_content_no_yaml = "# New title\n\nNew content"
     a.save()
     new_content = Path(md_filename).read_text(encoding="utf8").lstrip()

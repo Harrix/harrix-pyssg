@@ -69,7 +69,7 @@ class CatalogEntry:
     article: Article
     placement: ArticlePlacement
     title: str
-    date: datetime.date | None
+    date: dt.date | None
     excerpt: str
     featured_image: str | None
     categories: list[str] = field(default_factory=list)
@@ -160,6 +160,10 @@ def as_string_list(value: Any) -> list[str]
 
 Normalize a YAML list or scalar into a list of non-empty strings.
 
+Unquoted YAML list items like `- Needs: pen and paper` parse as one-key
+mappings. Restore them to `"key: value"` instead of `str(dict)`, which is
+unsuitable for tag/category folder names on Windows.
+
 <details>
 <summary>Code:</summary>
 
@@ -170,10 +174,13 @@ def as_string_list(value: Any) -> list[str]:
     if isinstance(value, str):
         item = value.strip()
         return [item] if item else []
+    if isinstance(value, dict):
+        text = _yaml_mapping_to_string(value)
+        return [text] if text else []
     if isinstance(value, list):
         result: list[str] = []
         for item in value:
-            text = str(item).strip()
+            text = _yaml_mapping_to_string(item) if isinstance(item, dict) else str(item).strip()
             if text:
                 result.append(text)
         return result
@@ -407,15 +414,25 @@ def slugify_term(value: str) -> str
 
 Make a URL segment from a category or tag.
 
+Percent-encodes characters that are unsafe in paths. When the encoded slug
+would exceed Windows' path-component limit, fall back to a short stable hash
+so listing folders can still be created.
+
 <details>
 <summary>Code:</summary>
 
 ```python
 def slugify_term(value: str) -> str:
     text = value.strip()
+    if not text:
+        return "empty"
     if _SAFE_SLUG_RE.fullmatch(text):
         return text
-    return quote(text.replace(" ", "-"), safe="-_.")
+    slug = quote(text.replace(" ", "-"), safe="-_.")
+    if len(slug) <= _MAX_TERM_SLUG_LEN:
+        return slug
+    digest = hashlib.sha256(text.encode("utf-8")).hexdigest()[:20]
+    return f"t-{digest}"
 ```
 
 </details>

@@ -2,7 +2,8 @@
 
 from __future__ import annotations
 
-import datetime
+import datetime as dt
+import hashlib
 import json
 import re
 from dataclasses import dataclass, field
@@ -27,6 +28,8 @@ _ARTICLE_FOLDER_MIN_PARTS = 2
 _SITE_TREE_MIN_PARTS = 3
 _SITE_TREE_WITH_YEAR_PARTS = 4
 _EXCERPT_LIMIT = 280
+# Windows path components max out at 255; keep margin under that limit.
+_MAX_TERM_SLUG_LEN = 240
 
 _UI_DATA = json.loads(Path(__file__).with_name("listing_ui.json").read_text(encoding="utf8"))
 SECTION_LABELS: dict[str, dict[str, str]] = _UI_DATA["sections"]
@@ -51,7 +54,7 @@ class CatalogEntry:
     article: Article
     placement: ArticlePlacement
     title: str
-    date: datetime.date | None
+    date: dt.date | None
     excerpt: str
     featured_image: str | None
     categories: list[str] = field(default_factory=list)
@@ -83,16 +86,25 @@ class SiteSettings:
 
 
 def as_string_list(value: Any) -> list[str]:
-    """Normalize a YAML list or scalar into a list of non-empty strings."""
+    """Normalize a YAML list or scalar into a list of non-empty strings.
+
+    Unquoted YAML list items like `- Needs: pen and paper` parse as one-key
+    mappings. Restore them to `"key: value"` instead of `str(dict)`, which is
+    unsuitable for tag/category folder names on Windows.
+
+    """
     if value is None:
         return []
     if isinstance(value, str):
         item = value.strip()
         return [item] if item else []
+    if isinstance(value, dict):
+        text = _yaml_mapping_to_string(value)
+        return [text] if text else []
     if isinstance(value, list):
         result: list[str] = []
         for item in value:
-            text = str(item).strip()
+            text = _yaml_mapping_to_string(item) if isinstance(item, dict) else str(item).strip()
             if text:
                 result.append(text)
         return result
@@ -228,11 +240,23 @@ def section_label(section: str, lang: str) -> str:
 
 
 def slugify_term(value: str) -> str:
-    """Make a URL segment from a category or tag."""
+    """Make a URL segment from a category or tag.
+
+    Percent-encodes characters that are unsafe in paths. When the encoded slug
+    would exceed Windows' path-component limit, fall back to a short stable hash
+    so listing folders can still be created.
+
+    """
     text = value.strip()
+    if not text:
+        return "empty"
     if _SAFE_SLUG_RE.fullmatch(text):
         return text
-    return quote(text.replace(" ", "-"), safe="-_.")
+    slug = quote(text.replace(" ", "-"), safe="-_.")
+    if len(slug) <= _MAX_TERM_SLUG_LEN:
+        return slug
+    digest = hashlib.sha256(text.encode("utf-8")).hexdigest()[:20]
+    return f"t-{digest}"
 
 
 def ui_string(lang: str, key: str) -> str:
@@ -241,7 +265,7 @@ def ui_string(lang: str, key: str) -> str:
     return table.get(key) or UI_STRINGS["en"].get(key, key)
 
 
-def _article_date(article: Article) -> datetime.date | None:
+def _article_date(article: Article) -> dt.date | None:
     """Resolve the article date from YAML or the filename."""
     resolved = resolve_note_date(article.md_content, file_name=article.md_filename.name)
     if resolved is None:
@@ -260,5 +284,34 @@ def _article_rel_output(lang: str, section: str, year: str | None, slug: str) ->
 
 def _catalog_sort_key(entry: CatalogEntry) -> tuple[int, str]:
     """Sort listings by date descending, then title."""
-    day = entry.date or datetime.date.min
+    day = entry.date or dt.date.min
     return (-day.toordinal(), entry.title.casefold())
+
+
+def _yaml_mapping_to_string(item: dict[Any, Any]) -> str:
+    """Turn a YAML mapping list item into a display/tag string."""
+    if not item:
+        return ""
+    if len(item) == 1:
+        key, val = next(iter(item.items()))
+        key_text = str(key).strip()
+        if not key_text:
+            return ""
+        if val is None:
+            return key_text
+        if isinstance(val, (list, dict)):
+            return key_text
+        val_text = str(val).strip()
+        return f"{key_text}: {val_text}" if val_text else key_text
+
+    parts: list[str] = []
+    for key, val in item.items():
+        key_text = str(key).strip()
+        if not key_text:
+            continue
+        if val is None or isinstance(val, (list, dict)):
+            parts.append(key_text)
+            continue
+        val_text = str(val).strip()
+        parts.append(f"{key_text}: {val_text}" if val_text else key_text)
+    return "; ".join(parts)

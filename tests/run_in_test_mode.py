@@ -1,6 +1,6 @@
 """Test runner script for manual testing of harrix_pyssg functionality."""
 
-import datetime
+import datetime as dt
 from pathlib import Path
 
 import harrix_pyssg as hsg
@@ -28,7 +28,7 @@ def run_test_article_md_content() -> None:
 def run_test_article_md_save() -> None:
     md_filename = "./tests/data/test_01/test_01.md"
     a = hsg.Article(md_filename)
-    a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
+    a.md_yaml_dict["date"] = dt.date(2022, 11, 4)
     a.md_content_no_yaml = "# New title\n\nNew content"
     a.save()  # Be careful!
     new_content = Path(md_filename).read_text(encoding="utf8").lstrip()
@@ -38,7 +38,7 @@ def run_test_article_md_save() -> None:
 def run_test_article_md_yaml() -> None:
     md_filename = "./tests/data/test_01/test_01.md"
     a = hsg.Article(md_filename)
-    a.md_yaml_dict["date"] = datetime.date(2022, 11, 4)
+    a.md_yaml_dict["date"] = dt.date(2022, 11, 4)
     print(a.md_content)
 
 
