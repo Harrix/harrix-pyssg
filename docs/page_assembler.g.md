@@ -122,21 +122,25 @@ class PageAssembler:
         optional_head = ("\n    ".join(optional_head_bits) + "\n") if optional_head_bits else ""
         optional_scripts = ("\n    ".join(optional_script_bits) + "\n") if optional_script_bits else ""
 
+        def prefixed(text: str) -> str:
+            return rewrite_asset_paths(text, asset_prefix)
+
         chunks = [
-            self.parts["head"],
-            self.parts["body_open"],
-            self.parts["chrome_header"],
-            self.parts["main"],
-            self.parts["chrome_footer"],
-            self.parts["scripts"],
-            self.parts["document_end"],
+            prefixed(self.parts["head"]),
+            prefixed(self.parts["body_open"]),
+            prefixed(self.parts["chrome_header"]),
+            prefixed(self.parts["main"]),
+            prefixed(self.parts["chrome_footer"]),
+            prefixed(self.parts["scripts"]),
+            prefixed(self.parts["document_end"]),
         ]
         page = "".join(chunks)
         page = page.replace(PLACEHOLDER_TITLE, _escape_html(title))
+        # Article images live next to the page (`img/photo.png`). Theme assets
+        # such as `img/logo.svg` are rewritten above, before the body is inserted.
         page = page.replace(PLACEHOLDER_CONTENT, content_html)
-        page = page.replace(PLACEHOLDER_OPTIONAL_HEAD, optional_head)
-        page = page.replace(PLACEHOLDER_OPTIONAL_SCRIPTS, optional_scripts)
-        return rewrite_asset_paths(page, asset_prefix)
+        page = page.replace(PLACEHOLDER_OPTIONAL_HEAD, prefixed(optional_head))
+        return page.replace(PLACEHOLDER_OPTIONAL_SCRIPTS, prefixed(optional_scripts))
 
     def copy_assets_to(self, site_root: str | Path) -> None:
         """Copy theme asset directories into the site output root.
@@ -252,21 +256,25 @@ def assemble(
         optional_head = ("\n    ".join(optional_head_bits) + "\n") if optional_head_bits else ""
         optional_scripts = ("\n    ".join(optional_script_bits) + "\n") if optional_script_bits else ""
 
+        def prefixed(text: str) -> str:
+            return rewrite_asset_paths(text, asset_prefix)
+
         chunks = [
-            self.parts["head"],
-            self.parts["body_open"],
-            self.parts["chrome_header"],
-            self.parts["main"],
-            self.parts["chrome_footer"],
-            self.parts["scripts"],
-            self.parts["document_end"],
+            prefixed(self.parts["head"]),
+            prefixed(self.parts["body_open"]),
+            prefixed(self.parts["chrome_header"]),
+            prefixed(self.parts["main"]),
+            prefixed(self.parts["chrome_footer"]),
+            prefixed(self.parts["scripts"]),
+            prefixed(self.parts["document_end"]),
         ]
         page = "".join(chunks)
         page = page.replace(PLACEHOLDER_TITLE, _escape_html(title))
+        # Article images live next to the page (`img/photo.png`). Theme assets
+        # such as `img/logo.svg` are rewritten above, before the body is inserted.
         page = page.replace(PLACEHOLDER_CONTENT, content_html)
-        page = page.replace(PLACEHOLDER_OPTIONAL_HEAD, optional_head)
-        page = page.replace(PLACEHOLDER_OPTIONAL_SCRIPTS, optional_scripts)
-        return rewrite_asset_paths(page, asset_prefix)
+        page = page.replace(PLACEHOLDER_OPTIONAL_HEAD, prefixed(optional_head))
+        return page.replace(PLACEHOLDER_OPTIONAL_SCRIPTS, prefixed(optional_scripts))
 ```
 
 </details>

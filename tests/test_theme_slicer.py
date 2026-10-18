@@ -60,6 +60,14 @@ def test_theme_slicer_and_page_assembler() -> None:
         assert "katex/katex.js" in with_math
         assert 'href="../css/app.css"' in with_math or 'href=".././css/app.css"' in with_math
 
+        with_photo = assembler.assemble(
+            content_html='<p><img src="img/photo.png" alt="Photo" /></p>',
+            title="Photo",
+            asset_prefix="../../",
+        )
+        assert 'src="img/photo.png"' in with_photo
+        assert 'href="../../css/app.css"' in with_photo or 'href="../.././css/app.css"' in with_photo
+
         with_stl = assembler.assemble(
             content_html='<div class="h-stl-viewer" data-src="model.stl"></div>',
             title="STL",
